@@ -3,9 +3,9 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="30" />
+   <connections preferredWidth="111" />
    <irq preferredWidth="34" />
-   <name preferredWidth="394" />
+   <name preferredWidth="517" />
    <inputclock preferredWidth="191" />
   </columns>
  </systemtable>
