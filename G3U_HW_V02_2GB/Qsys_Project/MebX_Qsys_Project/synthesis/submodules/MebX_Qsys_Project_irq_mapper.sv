@@ -22,7 +22,7 @@
 // Parameters
 //   NUM_RCVRS        : 24
 //   SENDER_IRW_WIDTH : 32
-//   IRQ_MAP          : 0:6,1:0,2:1,3:7,4:16,5:18,6:19,7:20,8:21,9:23,10:22,11:24,12:25,13:2,14:17,15:3,16:8,17:9,18:10,19:11,20:13,21:12,22:14,23:15
+//   IRQ_MAP          : 0:4,1:5,2:6,3:0,4:1,5:7,6:16,7:19,8:20,9:21,10:23,11:22,12:24,13:25,14:2,15:17,16:3,17:9,18:10,19:11,20:13,21:12,22:14,23:15
 //
 // -------------------------------------------------------
 
@@ -74,23 +74,23 @@ module MebX_Qsys_Project_irq_mapper
     always @* begin
 	sender_irq = 0;
 
-        sender_irq[6] = receiver0_irq;
-        sender_irq[0] = receiver1_irq;
-        sender_irq[1] = receiver2_irq;
-        sender_irq[7] = receiver3_irq;
-        sender_irq[16] = receiver4_irq;
-        sender_irq[18] = receiver5_irq;
-        sender_irq[19] = receiver6_irq;
-        sender_irq[20] = receiver7_irq;
-        sender_irq[21] = receiver8_irq;
-        sender_irq[23] = receiver9_irq;
-        sender_irq[22] = receiver10_irq;
-        sender_irq[24] = receiver11_irq;
-        sender_irq[25] = receiver12_irq;
-        sender_irq[2] = receiver13_irq;
-        sender_irq[17] = receiver14_irq;
-        sender_irq[3] = receiver15_irq;
-        sender_irq[8] = receiver16_irq;
+        sender_irq[4] = receiver0_irq;
+        sender_irq[5] = receiver1_irq;
+        sender_irq[6] = receiver2_irq;
+        sender_irq[0] = receiver3_irq;
+        sender_irq[1] = receiver4_irq;
+        sender_irq[7] = receiver5_irq;
+        sender_irq[16] = receiver6_irq;
+        sender_irq[19] = receiver7_irq;
+        sender_irq[20] = receiver8_irq;
+        sender_irq[21] = receiver9_irq;
+        sender_irq[23] = receiver10_irq;
+        sender_irq[22] = receiver11_irq;
+        sender_irq[24] = receiver12_irq;
+        sender_irq[25] = receiver13_irq;
+        sender_irq[2] = receiver14_irq;
+        sender_irq[17] = receiver15_irq;
+        sender_irq[3] = receiver16_irq;
         sender_irq[9] = receiver17_irq;
         sender_irq[10] = receiver18_irq;
         sender_irq[11] = receiver19_irq;

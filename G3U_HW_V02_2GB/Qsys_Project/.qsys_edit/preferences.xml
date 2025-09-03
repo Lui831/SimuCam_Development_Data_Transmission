@@ -10,7 +10,7 @@
   </columns>
  </systemtable>
  <library
-   expandedCategories="Library/Basic Functions,Library,Project,Library/Basic Functions/On Chip Memory" />
+   expandedCategories="Library,Library/Basic Functions,Project,Library/Basic Functions/On Chip Memory" />
  <window width="1938" height="1038" x="-9" y="-9" />
  <generation synthesis="VHDL" />
  <hdlexample language="VHDL" />
