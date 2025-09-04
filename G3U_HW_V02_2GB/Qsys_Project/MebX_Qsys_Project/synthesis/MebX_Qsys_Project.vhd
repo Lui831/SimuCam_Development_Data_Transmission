@@ -787,7 +787,7 @@ architecture rtl of MebX_Qsys_Project is
 			avalon_mm_agent_read_data_o     : out std_logic_vector(31 downto 0);                    -- readdata
 			avalon_mm_master_wait_request_i : in  std_logic                     := 'X';             -- waitrequest
 			avalon_mm_master_read_data_i    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
-			avalon_mm_master_address_o      : out std_logic_vector(31 downto 0);                    -- address
+			avalon_mm_master_addr_o         : out std_logic_vector(31 downto 0);                    -- address
 			avalon_mm_master_write_data_o   : out std_logic_vector(31 downto 0);                    -- writedata
 			avalon_mm_master_read_o         : out std_logic;                                        -- read
 			avalon_mm_master_write_o        : out std_logic;                                        -- write
@@ -2665,7 +2665,7 @@ architecture rtl of MebX_Qsys_Project is
 	signal ext_flash_tcm_data_in                                                                               : std_logic_vector(15 downto 0);  -- tristate_conduit_bridge_0:tcs_tcm_data_in -> ext_flash:tcm_data_in
 	signal codec_pus_v01_0_avalon_master_waitrequest                                                           : std_logic;                      -- mm_interconnect_0:codec_pus_v01_0_avalon_master_waitrequest -> codec_pus_v01_0:avalon_mm_master_wait_request_i
 	signal codec_pus_v01_0_avalon_master_readdata                                                              : std_logic_vector(31 downto 0);  -- mm_interconnect_0:codec_pus_v01_0_avalon_master_readdata -> codec_pus_v01_0:avalon_mm_master_read_data_i
-	signal codec_pus_v01_0_avalon_master_address                                                               : std_logic_vector(31 downto 0);  -- codec_pus_v01_0:avalon_mm_master_address_o -> mm_interconnect_0:codec_pus_v01_0_avalon_master_address
+	signal codec_pus_v01_0_avalon_master_address                                                               : std_logic_vector(31 downto 0);  -- codec_pus_v01_0:avalon_mm_master_addr_o -> mm_interconnect_0:codec_pus_v01_0_avalon_master_address
 	signal codec_pus_v01_0_avalon_master_read                                                                  : std_logic;                      -- codec_pus_v01_0:avalon_mm_master_read_o -> mm_interconnect_0:codec_pus_v01_0_avalon_master_read
 	signal codec_pus_v01_0_avalon_master_writedata                                                             : std_logic_vector(31 downto 0);  -- codec_pus_v01_0:avalon_mm_master_write_data_o -> mm_interconnect_0:codec_pus_v01_0_avalon_master_writedata
 	signal codec_pus_v01_0_avalon_master_write                                                                 : std_logic;                      -- codec_pus_v01_0:avalon_mm_master_write_o -> mm_interconnect_0:codec_pus_v01_0_avalon_master_write
@@ -4719,7 +4719,7 @@ begin
 			avalon_mm_agent_read_data_o     => mm_interconnect_3_codec_pus_v01_0_avalon_agent_readdata,                               --                      .readdata
 			avalon_mm_master_wait_request_i => codec_pus_v01_0_avalon_master_waitrequest,                                             --         avalon_master.waitrequest
 			avalon_mm_master_read_data_i    => codec_pus_v01_0_avalon_master_readdata,                                                --                      .readdata
-			avalon_mm_master_address_o      => codec_pus_v01_0_avalon_master_address,                                                 --                      .address
+			avalon_mm_master_addr_o         => codec_pus_v01_0_avalon_master_address,                                                 --                      .address
 			avalon_mm_master_write_data_o   => codec_pus_v01_0_avalon_master_writedata,                                               --                      .writedata
 			avalon_mm_master_read_o         => codec_pus_v01_0_avalon_master_read,                                                    --                      .read
 			avalon_mm_master_write_o        => codec_pus_v01_0_avalon_master_write,                                                   --                      .write
