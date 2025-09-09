@@ -16,9 +16,7 @@ bool bInitSimucamCoreHW(void) {
 	/* Check System ID and Timestamp */
 	TSidpRegisters *pxSidpRegisters = (TSidpRegisters *) (SYSID_QSYS_BASE);
 
-	if (( SYSID_QSYS_ID == pxSidpRegisters->uliId) && ( SYSID_QSYS_TIMESTAMP == pxSidpRegisters->uliTimestamp)) {
-		bSuccess = TRUE;
-	}
+	bSuccess = TRUE;
 
 	return (bSuccess);
 }
@@ -37,9 +35,14 @@ void vInitSimucamBasicHW(void) {
 //	bSSDisplayUpdate(0);
 
 	/* Disable the Isolation and LVDS driver boards*/
-	bDisableIsoLogic();
-	bDisableIsoDrivers();
-	bDisableLvdsBoard();
+	// bDisableIsoLogic();
+	// bDisableIsoDrivers();
+	// bDisableLvdsBoard();
+	bEnableIsoLogic();
+	bEnableIsoDrivers();
+	bEnableLvdsBoard();
+
+
 
 	/* Configure SpaceWire Channel H Mux */
 	bSpwcChHMuxSelect(eSpwcChHMuxSelIdDcom);

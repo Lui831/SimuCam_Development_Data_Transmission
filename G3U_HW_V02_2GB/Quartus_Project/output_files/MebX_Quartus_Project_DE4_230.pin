@@ -974,8 +974,8 @@ M2_DDR2_dqsn[6]              : D29       : bidir  : Differential 1.8-V SSTL Clas
 VCCIO8A                      : D30       : power  :                   : 1.8V    : 8A        :                
 FSM_D[15]                    : D31       : bidir  : 2.5 V             :         : 1A        : Y              
 VCCIO1A                      : D32       : power  :                   : 2.5V    : 1A        :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : D33       :        :                   :         : 1A        :                
-FSM_A[0]                     : D34       : output : 2.5 V             :         : 1A        : N              
+FSM_A[0]                     : D33       : output : 2.5 V             :         : 1A        : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : D34       :        :                   :         : 1A        :                
 FSM_D[11]                    : D35       : bidir  : 2.5 V             :         : 1A        : Y              
 GXB_NC                       : D36       :        :                   :         : QL2       :                
 GXB_NC                       : D37       :        :                   :         : QL2       :                
