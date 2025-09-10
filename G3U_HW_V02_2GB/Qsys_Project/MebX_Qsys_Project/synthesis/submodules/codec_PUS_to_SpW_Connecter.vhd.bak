@@ -109,8 +109,8 @@ begin
     begin
         if (rst_i = '1') then
   
-            spw_link_command_enable_o      <= '1';
-            spw_link_command_autostart_o   <= '1';
+            spw_link_command_enable_o      <= '0';
+            spw_link_command_autostart_o   <= '0';
             spw_link_command_linkstart_o   <= '0';
             spw_link_command_linkdis_o     <= '0';
             spw_link_command_txdivcnt_o    <= x"01";

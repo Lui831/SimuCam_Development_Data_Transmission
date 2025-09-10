@@ -975,7 +975,7 @@ VCCIO8A                      : D30       : power  :                   : 1.8V    
 FSM_D[15]                    : D31       : bidir  : 2.5 V             :         : 1A        : Y              
 VCCIO1A                      : D32       : power  :                   : 2.5V    : 1A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D33       :        :                   :         : 1A        :                
-FSM_A[0]                     : D34       : output : 2.5 V             :         : 1A        : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : D34       :        :                   :         : 1A        :                
 FSM_D[11]                    : D35       : bidir  : 2.5 V             :         : 1A        : Y              
 GXB_NC                       : D36       :        :                   :         : QL2       :                
 GXB_NC                       : D37       :        :                   :         : QL2       :                
@@ -1089,7 +1089,7 @@ M2_DDR2_dq[49]               : G27       : bidir  : SSTL-18 Class I   :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : G28       :        :                   :         : 8A        :                
 M2_DDR2_dq[55]               : G29       : bidir  : SSTL-18 Class I   :         : 8A        : Y              
 altera_reserved_tck          : G30       : input  : 2.5 V             :         : 1A        : N              
-RESERVED_INPUT_WITH_WEAK_PULLUP : G31       :        :                   :         : 1A        :                
+FSM_A[0]                     : G31       : output : 2.5 V             :         : 1A        : N              
 VCCIO1A                      : G32       : power  :                   : 2.5V    : 1A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : G33       :        :                   :         : 1A        :                
 VCCIO1A                      : G34       : power  :                   : 2.5V    : 1A        :                
