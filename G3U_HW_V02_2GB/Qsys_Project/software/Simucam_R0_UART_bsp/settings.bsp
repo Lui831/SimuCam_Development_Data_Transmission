@@ -2,9 +2,9 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Oct 21, 2024 12:11:41 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1729476701378</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>.\</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>09/09/2025 23:41:13</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1757472073841</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>C:\Users\Luiz\Documents\GitHub\SimuCam_Development_Data_Transmission\G3U_HW_V02_2GB\Qsys_Project\software\Simucam_R0_UART_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\MebX_Qsys_Project.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
@@ -1889,12 +1889,6 @@
                 <attributes>printable</attributes>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_1</slaveDescriptor>
-                <addressRange>0x80003000 - 0x800033FF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>RMAP_Memory_Subunit_Area_8</slaveDescriptor>
                 <addressRange>0x80004000 - 0x80007FFF</addressRange>
                 <addressSpan>16384</addressSpan>
@@ -2126,6 +2120,12 @@
                 <slaveDescriptor>FTDI_UMFT601A_Module</slaveDescriptor>
                 <addressRange>0x8A001000 - 0x8A0013FF</addressRange>
                 <addressSpan>1024</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>codec_pus_v01_0</slaveDescriptor>
+                <addressRange>0xA0000000 - 0xA000007F</addressRange>
+                <addressSpan>128</addressSpan>
                 <attributes/>
         </MemoryMap>
         <LinkerSection>

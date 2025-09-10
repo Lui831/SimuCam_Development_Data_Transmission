@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'MebX_Qsys_Project'
  * SOPC Builder design path: ../../MebX_Qsys_Project.sopcinfo
  *
- * Generated: Mon Oct 21 00:11:32 BRST 2024
+ * Generated: Tue Sep 09 23:41:14 BRT 2025
  */
 
 /*
@@ -162,6 +162,7 @@
 #define __ALTERA_GENERIC_TRISTATE_CONTROLLER
 #define __ALTERA_NIOS2_GEN2
 #define __ALTERA_UP_SD_CARD_AVALON_INTERFACE
+#define __CODEC_PUS_V01
 #define __DUMB_COMMUNICATION_MODULE_V2
 #define __FTDI_UMFT601A_MODULE
 #define __MEMORY_FILLER
@@ -169,20 +170,6 @@
 #define __RST_CONTROLLER
 #define __SYNC
 #define __UART_MODULE_TOP
-
-
-/*
- * Dumb_Communication_Module_v2_1 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_1 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_1_BASE 0x80003000
-#define DUMB_COMMUNICATION_MODULE_V2_1_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_1_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_1_NAME "/dev/Dumb_Communication_Module_v2_1"
-#define DUMB_COMMUNICATION_MODULE_V2_1_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_1_TYPE "Dumb_Communication_Module_v2"
 
 
 /*
@@ -476,6 +463,20 @@
 #define INCLUDE_TCP
 #define INICHE_DEFAULT_IF "NOT_USED"
 #define IP_FRAGMENTS
+
+
+/*
+ * codec_pus_v01_0 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_codec_pus_v01_0 codec_pus_v01
+#define CODEC_PUS_V01_0_BASE 0xa0000000
+#define CODEC_PUS_V01_0_IRQ -1
+#define CODEC_PUS_V01_0_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define CODEC_PUS_V01_0_NAME "/dev/codec_pus_v01_0"
+#define CODEC_PUS_V01_0_SPAN 128
+#define CODEC_PUS_V01_0_TYPE "codec_pus_v01"
 
 
 /*
@@ -1183,7 +1184,7 @@
 #define SYSID_QSYS_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_NAME "/dev/sysid_qsys"
 #define SYSID_QSYS_SPAN 8
-#define SYSID_QSYS_TIMESTAMP 1729476295
+#define SYSID_QSYS_TIMESTAMP 1757471413
 #define SYSID_QSYS_TYPE "altera_avalon_sysid_qsys"
 
 

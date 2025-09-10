@@ -94,53 +94,6 @@ int main(int argc, char* argv[], char* envp[]) {
 	vInitSimucamBasicHW();
 	bTestSimucamBasicHW();
 
-	/* Initialize SD Card */
-	bInitializeSDCard();
-
-	/* Load DEBUG Configurations from SD Card */
-	bLoadDefaultDebugConf();
-
-	/* Load RMAP Configurations from SD Card */
-	bLoadDefaultRmapConf();
-
-	/* Load ETH Configurations from SD Card */
-	bLoadDefaultEthConf();
-
-	/* Show loaded configurations from SD Card */
-#if DEBUG_ON
-	if (xConfDebug.usiDebugLevel <= xMajor) {
-		vShowDebugConfig();
-		vShowRmapConfig();
-		vShowEthConfig();
-	}
-#endif
-
-	/* Clear the RTOS timer */
-	OSTimeSet(0);
-
-#if DEBUG_ON
-	if (xConfDebug.usiDebugLevel <= xMajor) {
-		fprintf(fp, "\nSimucam Tasks initializing\n");
-	}
-#endif
-
-	/*
-	 * Create os data structures
-	 */
-	SimucamCreateOSQ();
-	DataCreateOSQ();
-
-	/*create the sub-units data structures*/
-	sub_unit_create_os_data_structs();
-
-	/* create the Simucam tasks */
-	SimucamCreateTasks();
-
-	/*
-	 * Start the OS
-	 */
-	OSStart();
-
 	while (1)
 		; /* Correct Program Flow never gets here. */
 

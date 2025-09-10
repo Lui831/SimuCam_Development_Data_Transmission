@@ -489,7 +489,6 @@ architecture bhv of MebX_TopLevel is
             rmap_echoing_echo_rst_sink_reset                            : in    std_logic                     := '0';             -- reset
             pio_rmap_echoing_module_reset_external_connection_export    : out   std_logic;                                        -- export
             --
-            dcom_1_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
             dcom_2_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
             dcom_3_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
             dcom_4_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
@@ -766,7 +765,6 @@ begin
             rmap_echoing_echo_rst_sink_reset                            => rmap_echoing_rst, --               rmap_echoing_echo_rst_sink.reset
             pio_rmap_echoing_module_reset_external_connection_export    => rmap_echoing_rst, -- pio_rmap_echoing_module_reset_external_connection.export
             --
-            dcom_1_sync_end_sync_channel_signal                         => spw_1_sync, --            comm_a_sync_end.sync_channel_signal
             dcom_2_sync_end_sync_channel_signal                         => spw_2_sync, --            comm_b_sync_end.sync_channel_signal
             dcom_3_sync_end_sync_channel_signal                         => spw_3_sync, --            comm_c_sync_end.sync_channel_signal
             dcom_4_sync_end_sync_channel_signal                         => spw_4_sync, --            comm_d_sync_end.sync_channel_signal
