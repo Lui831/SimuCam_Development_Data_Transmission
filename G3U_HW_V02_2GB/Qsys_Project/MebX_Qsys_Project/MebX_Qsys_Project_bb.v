@@ -8,7 +8,6 @@ module MebX_Qsys_Project (
 	csense_sdi_export,
 	csense_sdo_export,
 	ctrl_io_lvds_export,
-	dcom_1_sync_end_sync_channel_signal,
 	dcom_2_sync_end_sync_channel_signal,
 	dcom_3_sync_end_sync_channel_signal,
 	dcom_4_sync_end_sync_channel_signal,
@@ -290,7 +289,6 @@ module MebX_Qsys_Project (
 	output		csense_sdi_export;
 	input		csense_sdo_export;
 	output	[3:0]	ctrl_io_lvds_export;
-	input		dcom_1_sync_end_sync_channel_signal;
 	input		dcom_2_sync_end_sync_channel_signal;
 	input		dcom_3_sync_end_sync_channel_signal;
 	input		dcom_4_sync_end_sync_channel_signal;
