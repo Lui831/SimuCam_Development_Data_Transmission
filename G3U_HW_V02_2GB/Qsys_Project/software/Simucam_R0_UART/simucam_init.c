@@ -29,6 +29,8 @@ FILE* fp;
 int main(int argc, char* argv[], char* envp[]) {
 //  INT8U error_code;
 
+	vRstcReleaseSimucamReset(0);
+
 	/* Debug device initialization - JTAG USB */
 #if DEBUG_ON
 	fp = fopen(JTAG_UART_0_NAME, "r+");
@@ -91,6 +93,7 @@ int main(int argc, char* argv[], char* envp[]) {
 	}
 
 	/* Initialization and Test of basic HW */
+	vRstcReleaseSimucamReset(0);
 	vInitSimucamBasicHW();
 	bTestSimucamBasicHW();
 
