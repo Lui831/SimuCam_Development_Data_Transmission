@@ -13,6 +13,102 @@ bool bDdr2MemoryZeroFill(void);
 bool bTestSimucamCriticalHW(void) {
 	bool bSuccess;
 
+	bSuccess = bIdmaInitCh1Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 1!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 1 initiated.\n");
+#endif
+	}
+
+	bSuccess = bIdmaInitCh2Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 2!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 2 initiated.\n");
+#endif
+	}
+
+	bSuccess = bIdmaInitCh3Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 3!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 3 initiated.\n");
+#endif
+	}
+
+	bSuccess = bIdmaInitCh4Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 4!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 4 initiated.\n");
+#endif
+	}
+
+	bSuccess = bIdmaInitCh5Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 5!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 5 initiated.\n");
+#endif
+	}
+
+	bSuccess = bIdmaInitCh6Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 6!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 6 initiated.\n");
+#endif
+	}
+
+	bSuccess = bIdmaInitCh7Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 7!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 7 initiated.\n");
+#endif
+	}
+
+	bSuccess = bIdmaInitCh8Dma();
+	if ( FALSE == bSuccess) {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: CRITICAL! Could not initiate the DMA for DCOM Channel 8!\n");
+#endif
+		return (bSuccess);
+	} else {
+#if DEBUG_ON
+		fprintf(fp, "SimuCam Critical HW Test: DMA for DCOM Channel 8 initiated.\n");
+#endif
+	}
+
 //	bDdr2MemoryFastTest();
 
 	bSuccess = bDdr2MemoryZeroFill();

@@ -94,6 +94,21 @@ int main(int argc, char* argv[], char* envp[]) {
 	vInitSimucamBasicHW();
 	bTestSimucamBasicHW();
 
+	fprintf(fp, "CHEGUEI AQUI!\n");
+
+	/*
+	 * Channel initialization
+	 */
+	bDcomInitCh(&(xCh[4]), 4);
+
+	/* Disable SpaceWire Link */
+	bSpwcGetLinkConfig(&(xCh[4].xSpacewire));
+	xCh[4].xSpacewire.xSpwcLinkConfig.bEnable = TRUE;
+	xCh[4].xSpacewire.xSpwcLinkConfig.bAutostart = TRUE;
+	xCh[4].xSpacewire.xSpwcLinkConfig.bLinkStart = FALSE;
+	xCh[4].xSpacewire.xSpwcLinkConfig.bDisconnect = FALSE;
+	bSpwcSetLinkConfig(&(xCh[4].xSpacewire));
+
 	while (1){
 		// Codigo de teste
 	}
