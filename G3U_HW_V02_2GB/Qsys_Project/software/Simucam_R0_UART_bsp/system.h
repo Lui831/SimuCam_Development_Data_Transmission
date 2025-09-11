@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'MebX_Qsys_Project'
  * SOPC Builder design path: ../../MebX_Qsys_Project.sopcinfo
  *
- * Generated: Mon Oct 21 00:11:32 BRST 2024
+ * Generated: Wed Sep 10 20:55:49 GMT-03:00 2025
  */
 
 /*
@@ -165,122 +165,9 @@
 #define __DUMB_COMMUNICATION_MODULE_V2
 #define __FTDI_UMFT601A_MODULE
 #define __MEMORY_FILLER
-#define __RMAP_MEMORY_SUBUNIT_AREA
 #define __RST_CONTROLLER
 #define __SYNC
 #define __UART_MODULE_TOP
-
-
-/*
- * Dumb_Communication_Module_v2_1 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_1 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_1_BASE 0x80003000
-#define DUMB_COMMUNICATION_MODULE_V2_1_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_1_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_1_NAME "/dev/Dumb_Communication_Module_v2_1"
-#define DUMB_COMMUNICATION_MODULE_V2_1_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_1_TYPE "Dumb_Communication_Module_v2"
-
-
-/*
- * Dumb_Communication_Module_v2_2 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_2 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_2_BASE 0x80001000
-#define DUMB_COMMUNICATION_MODULE_V2_2_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_2_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_2_NAME "/dev/Dumb_Communication_Module_v2_2"
-#define DUMB_COMMUNICATION_MODULE_V2_2_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_2_TYPE "Dumb_Communication_Module_v2"
-
-
-/*
- * Dumb_Communication_Module_v2_3 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_3 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_3_BASE 0x80001400
-#define DUMB_COMMUNICATION_MODULE_V2_3_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_3_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_3_NAME "/dev/Dumb_Communication_Module_v2_3"
-#define DUMB_COMMUNICATION_MODULE_V2_3_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_3_TYPE "Dumb_Communication_Module_v2"
-
-
-/*
- * Dumb_Communication_Module_v2_4 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_4 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_4_BASE 0x80001800
-#define DUMB_COMMUNICATION_MODULE_V2_4_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_4_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_4_NAME "/dev/Dumb_Communication_Module_v2_4"
-#define DUMB_COMMUNICATION_MODULE_V2_4_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_4_TYPE "Dumb_Communication_Module_v2"
-
-
-/*
- * Dumb_Communication_Module_v2_5 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_5 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_5_BASE 0x80001c00
-#define DUMB_COMMUNICATION_MODULE_V2_5_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_5_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_5_NAME "/dev/Dumb_Communication_Module_v2_5"
-#define DUMB_COMMUNICATION_MODULE_V2_5_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_5_TYPE "Dumb_Communication_Module_v2"
-
-
-/*
- * Dumb_Communication_Module_v2_6 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_6 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_6_BASE 0x80002000
-#define DUMB_COMMUNICATION_MODULE_V2_6_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_6_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_6_NAME "/dev/Dumb_Communication_Module_v2_6"
-#define DUMB_COMMUNICATION_MODULE_V2_6_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_6_TYPE "Dumb_Communication_Module_v2"
-
-
-/*
- * Dumb_Communication_Module_v2_7 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_7 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_7_BASE 0x80002400
-#define DUMB_COMMUNICATION_MODULE_V2_7_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_7_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_7_NAME "/dev/Dumb_Communication_Module_v2_7"
-#define DUMB_COMMUNICATION_MODULE_V2_7_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_7_TYPE "Dumb_Communication_Module_v2"
-
-
-/*
- * Dumb_Communication_Module_v2_8 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_Dumb_Communication_Module_v2_8 Dumb_Communication_Module_v2
-#define DUMB_COMMUNICATION_MODULE_V2_8_BASE 0x80002800
-#define DUMB_COMMUNICATION_MODULE_V2_8_IRQ -1
-#define DUMB_COMMUNICATION_MODULE_V2_8_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define DUMB_COMMUNICATION_MODULE_V2_8_NAME "/dev/Dumb_Communication_Module_v2_8"
-#define DUMB_COMMUNICATION_MODULE_V2_8_SPAN 1024
-#define DUMB_COMMUNICATION_MODULE_V2_8_TYPE "Dumb_Communication_Module_v2"
 
 
 /*
@@ -326,118 +213,6 @@
 
 
 /*
- * RMAP_Memory_Subunit_Area_1 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_1 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_1_BASE 0x80020000
-#define RMAP_MEMORY_SUBUNIT_AREA_1_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_1_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_1_NAME "/dev/RMAP_Memory_Subunit_Area_1"
-#define RMAP_MEMORY_SUBUNIT_AREA_1_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_1_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
- * RMAP_Memory_Subunit_Area_2 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_2 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_2_BASE 0x8001c000
-#define RMAP_MEMORY_SUBUNIT_AREA_2_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_2_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_2_NAME "/dev/RMAP_Memory_Subunit_Area_2"
-#define RMAP_MEMORY_SUBUNIT_AREA_2_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_2_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
- * RMAP_Memory_Subunit_Area_3 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_3 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_3_BASE 0x80018000
-#define RMAP_MEMORY_SUBUNIT_AREA_3_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_3_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_3_NAME "/dev/RMAP_Memory_Subunit_Area_3"
-#define RMAP_MEMORY_SUBUNIT_AREA_3_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_3_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
- * RMAP_Memory_Subunit_Area_4 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_4 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_4_BASE 0x80014000
-#define RMAP_MEMORY_SUBUNIT_AREA_4_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_4_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_4_NAME "/dev/RMAP_Memory_Subunit_Area_4"
-#define RMAP_MEMORY_SUBUNIT_AREA_4_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_4_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
- * RMAP_Memory_Subunit_Area_5 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_5 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_5_BASE 0x80010000
-#define RMAP_MEMORY_SUBUNIT_AREA_5_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_5_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_5_NAME "/dev/RMAP_Memory_Subunit_Area_5"
-#define RMAP_MEMORY_SUBUNIT_AREA_5_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_5_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
- * RMAP_Memory_Subunit_Area_6 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_6 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_6_BASE 0x8000c000
-#define RMAP_MEMORY_SUBUNIT_AREA_6_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_6_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_6_NAME "/dev/RMAP_Memory_Subunit_Area_6"
-#define RMAP_MEMORY_SUBUNIT_AREA_6_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_6_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
- * RMAP_Memory_Subunit_Area_7 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_7 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_7_BASE 0x80008000
-#define RMAP_MEMORY_SUBUNIT_AREA_7_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_7_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_7_NAME "/dev/RMAP_Memory_Subunit_Area_7"
-#define RMAP_MEMORY_SUBUNIT_AREA_7_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_7_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
- * RMAP_Memory_Subunit_Area_8 configuration
- *
- */
-
-#define ALT_MODULE_CLASS_RMAP_Memory_Subunit_Area_8 RMAP_Memory_Subunit_Area
-#define RMAP_MEMORY_SUBUNIT_AREA_8_BASE 0x80004000
-#define RMAP_MEMORY_SUBUNIT_AREA_8_IRQ -1
-#define RMAP_MEMORY_SUBUNIT_AREA_8_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define RMAP_MEMORY_SUBUNIT_AREA_8_NAME "/dev/RMAP_Memory_Subunit_Area_8"
-#define RMAP_MEMORY_SUBUNIT_AREA_8_SPAN 16384
-#define RMAP_MEMORY_SUBUNIT_AREA_8_TYPE "RMAP_Memory_Subunit_Area"
-
-
-/*
  * System configuration
  *
  */
@@ -452,18 +227,24 @@
 #define ALT_NUM_EXTERNAL_INTERRUPT_CONTROLLERS 0
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
-#define ALT_STDERR "/dev/null"
-#define ALT_STDERR_BASE 0x0
-#define ALT_STDERR_DEV null
-#define ALT_STDERR_TYPE ""
-#define ALT_STDIN "/dev/null"
-#define ALT_STDIN_BASE 0x0
-#define ALT_STDIN_DEV null
-#define ALT_STDIN_TYPE ""
-#define ALT_STDOUT "/dev/null"
-#define ALT_STDOUT_BASE 0x0
-#define ALT_STDOUT_DEV null
-#define ALT_STDOUT_TYPE ""
+#define ALT_STDERR "/dev/jtag_uart_0"
+#define ALT_STDERR_BASE 0x80002c90
+#define ALT_STDERR_DEV jtag_uart_0
+#define ALT_STDERR_IS_JTAG_UART
+#define ALT_STDERR_PRESENT
+#define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
+#define ALT_STDIN "/dev/jtag_uart_0"
+#define ALT_STDIN_BASE 0x80002c90
+#define ALT_STDIN_DEV jtag_uart_0
+#define ALT_STDIN_IS_JTAG_UART
+#define ALT_STDIN_PRESENT
+#define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
+#define ALT_STDOUT "/dev/jtag_uart_0"
+#define ALT_STDOUT_BASE 0x80002c90
+#define ALT_STDOUT_DEV jtag_uart_0
+#define ALT_STDOUT_IS_JTAG_UART
+#define ALT_STDOUT_PRESENT
+#define ALT_STDOUT_TYPE "altera_avalon_jtag_uart"
 #define ALT_SYSTEM_NAME "MebX_Qsys_Project"
 
 
@@ -1183,7 +964,7 @@
 #define SYSID_QSYS_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_NAME "/dev/sysid_qsys"
 #define SYSID_QSYS_SPAN 8
-#define SYSID_QSYS_TIMESTAMP 1729476295
+#define SYSID_QSYS_TIMESTAMP 1757546236
 #define SYSID_QSYS_TYPE "altera_avalon_sysid_qsys"
 
 

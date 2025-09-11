@@ -8,22 +8,7 @@
 			csense_sdi_export                                                                                       : out   std_logic;                                        -- export
 			csense_sdo_export                                                                                       : in    std_logic                     := 'X';             -- export
 			ctrl_io_lvds_export                                                                                     : out   std_logic_vector(3 downto 0);                     -- export
-			dcom_2_sync_end_sync_channel_signal                                                                     : in    std_logic                     := 'X';             -- sync_channel_signal
-			dcom_3_sync_end_sync_channel_signal                                                                     : in    std_logic                     := 'X';             -- sync_channel_signal
-			dcom_4_sync_end_sync_channel_signal                                                                     : in    std_logic                     := 'X';             -- sync_channel_signal
-			dcom_5_sync_end_sync_channel_signal                                                                     : in    std_logic                     := 'X';             -- sync_channel_signal
-			dcom_6_sync_end_sync_channel_signal                                                                     : in    std_logic                     := 'X';             -- sync_channel_signal
-			dcom_7_sync_end_sync_channel_signal                                                                     : in    std_logic                     := 'X';             -- sync_channel_signal
-			dcom_8_sync_end_sync_channel_signal                                                                     : in    std_logic                     := 'X';             -- sync_channel_signal
 			dip_export                                                                                              : in    std_logic_vector(7 downto 0)  := (others => 'X'); -- export
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_echo_en_signal                                 : out   std_logic;                                        -- echo_en_signal
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_echo_id_en_signal                              : out   std_logic;                                        -- echo_id_en_signal
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_in_fifo_wrflag_signal                          : out   std_logic;                                        -- in_fifo_wrflag_signal
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_in_fifo_wrdata_signal                          : out   std_logic_vector(7 downto 0);                     -- in_fifo_wrdata_signal
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_in_fifo_wrreq_signal                           : out   std_logic;                                        -- in_fifo_wrreq_signal
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_out_fifo_wrflag_signal                         : out   std_logic;                                        -- out_fifo_wrflag_signal
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_out_fifo_wrdata_signal                         : out   std_logic_vector(7 downto 0);                     -- out_fifo_wrdata_signal
-			dumb_communication_module_v2_8_conduit_end_rmap_echo_out_out_fifo_wrreq_signal                          : out   std_logic;                                        -- out_fifo_wrreq_signal
 			dumb_communication_module_v2_timer_conduit_end_rmap_echo_out_echo_en_signal                             : out   std_logic;                                        -- echo_en_signal
 			dumb_communication_module_v2_timer_conduit_end_rmap_echo_out_echo_id_en_signal                          : out   std_logic;                                        -- echo_id_en_signal
 			dumb_communication_module_v2_timer_conduit_end_rmap_echo_out_in_fifo_wrflag_signal                      : out   std_logic;                                        -- in_fifo_wrflag_signal

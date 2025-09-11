@@ -489,14 +489,14 @@ architecture bhv of MebX_TopLevel is
             rmap_echoing_echo_rst_sink_reset                            : in    std_logic                     := '0';             -- reset
             pio_rmap_echoing_module_reset_external_connection_export    : out   std_logic;                                        -- export
             --
-            dcom_1_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
-            dcom_2_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
-            dcom_3_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
-            dcom_4_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
-            dcom_5_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
-            dcom_6_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
-            dcom_7_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
-            dcom_8_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_1_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_2_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_3_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_4_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_5_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_6_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_7_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
+--            dcom_8_sync_end_sync_channel_signal                         : in    std_logic                     := 'X'; -- sync_channel_signal
             --
             spwc_a_leds_spw_red_status_led_signal                       : out   std_logic; --                         -- spw_red_status_led_signal
             spwc_a_leds_spw_green_status_led_signal                     : out   std_logic; --                         -- spw_green_status_led_signal
@@ -766,14 +766,14 @@ begin
             rmap_echoing_echo_rst_sink_reset                            => rmap_echoing_rst, --               rmap_echoing_echo_rst_sink.reset
             pio_rmap_echoing_module_reset_external_connection_export    => rmap_echoing_rst, -- pio_rmap_echoing_module_reset_external_connection.export
             --
-            dcom_1_sync_end_sync_channel_signal                         => spw_1_sync, --            comm_a_sync_end.sync_channel_signal
-            dcom_2_sync_end_sync_channel_signal                         => spw_2_sync, --            comm_b_sync_end.sync_channel_signal
-            dcom_3_sync_end_sync_channel_signal                         => spw_3_sync, --            comm_c_sync_end.sync_channel_signal
-            dcom_4_sync_end_sync_channel_signal                         => spw_4_sync, --            comm_d_sync_end.sync_channel_signal
-            dcom_5_sync_end_sync_channel_signal                         => spw_5_sync, --            comm_e_sync_end.sync_channel_signal
-            dcom_6_sync_end_sync_channel_signal                         => spw_6_sync, --            comm_f_sync_end.sync_channel_signal
-            dcom_7_sync_end_sync_channel_signal                         => spw_7_sync, --            comm_g_sync_end.sync_channel_signal
-            dcom_8_sync_end_sync_channel_signal                         => spw_8_sync, --            comm_h_sync_end.sync_channel_signal
+--            dcom_1_sync_end_sync_channel_signal                         => spw_1_sync, --            comm_a_sync_end.sync_channel_signal
+--            dcom_2_sync_end_sync_channel_signal                         => spw_2_sync, --            comm_b_sync_end.sync_channel_signal
+--            dcom_3_sync_end_sync_channel_signal                         => spw_3_sync, --            comm_c_sync_end.sync_channel_signal
+--            dcom_4_sync_end_sync_channel_signal                         => spw_4_sync, --            comm_d_sync_end.sync_channel_signal
+--            dcom_5_sync_end_sync_channel_signal                         => spw_5_sync, --            comm_e_sync_end.sync_channel_signal
+--            dcom_6_sync_end_sync_channel_signal                         => spw_6_sync, --            comm_f_sync_end.sync_channel_signal
+--            dcom_7_sync_end_sync_channel_signal                         => spw_7_sync, --            comm_g_sync_end.sync_channel_signal
+--            dcom_8_sync_end_sync_channel_signal                         => spw_8_sync, --            comm_h_sync_end.sync_channel_signal
             --
             spwc_a_leds_spw_red_status_led_signal                       => spw_a_red_led, --       --                        spwc_a_leds.spw_red_status_led_signal
             spwc_a_leds_spw_green_status_led_signal                     => spw_a_green_led, --     --                                   .spw_green_status_led_signal

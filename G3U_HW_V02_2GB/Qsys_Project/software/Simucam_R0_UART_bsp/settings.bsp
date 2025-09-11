@@ -2,9 +2,9 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Oct 21, 2024 12:11:41 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1729476701378</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>.\</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>10/09/2025 20:55:41</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1757548541512</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>C:\WORKSPACE\Github\SimuCam_Development_Data_Transmission\G3U_HW_V02_2GB\Qsys_Project\software\Simucam_R0_UART_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\MebX_Qsys_Project.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
@@ -194,7 +194,7 @@
                 <SettingName>hal.stdin</SettingName>
                 <Identifier>none</Identifier>
                 <Type>UnquotedString</Type>
-                <Value>none</Value>
+                <Value>jtag_uart_0</Value>
                 <DefaultValue>none</DefaultValue>
                 <DestinationFile>system_h_define</DestinationFile>
                 <Description>Slave descriptor of STDIN character-mode device. This setting is used by the ALT_STDIN family of defines in system.h.</Description>
@@ -206,7 +206,7 @@
                 <SettingName>hal.stdout</SettingName>
                 <Identifier>none</Identifier>
                 <Type>UnquotedString</Type>
-                <Value>none</Value>
+                <Value>jtag_uart_0</Value>
                 <DefaultValue>none</DefaultValue>
                 <DestinationFile>system_h_define</DestinationFile>
                 <Description>Slave descriptor of STDOUT character-mode device. This setting is used by the ALT_STDOUT family of defines in system.h.</Description>
@@ -218,7 +218,7 @@
                 <SettingName>hal.stderr</SettingName>
                 <Identifier>none</Identifier>
                 <Type>UnquotedString</Type>
-                <Value>none</Value>
+                <Value>jtag_uart_0</Value>
                 <DefaultValue>none</DefaultValue>
                 <DestinationFile>system_h_define</DestinationFile>
                 <Description>Slave descriptor of STDERR character-mode device. This setting is used by the ALT_STDERR family of defines in system.h.</Description>
@@ -1829,48 +1829,6 @@
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_2</slaveDescriptor>
-                <addressRange>0x80001000 - 0x800013FF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_3</slaveDescriptor>
-                <addressRange>0x80001400 - 0x800017FF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_4</slaveDescriptor>
-                <addressRange>0x80001800 - 0x80001BFF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_5</slaveDescriptor>
-                <addressRange>0x80001C00 - 0x80001FFF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_6</slaveDescriptor>
-                <addressRange>0x80002000 - 0x800023FF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_7</slaveDescriptor>
-                <addressRange>0x80002400 - 0x800027FF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_8</slaveDescriptor>
-                <addressRange>0x80002800 - 0x80002BFF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>ddr2_address_span_extender_cntl</slaveDescriptor>
                 <addressRange>0x80002C00 - 0x80002C07</addressRange>
                 <addressSpan>8</addressSpan>
@@ -1887,60 +1845,6 @@
                 <addressRange>0x80002C90 - 0x80002C97</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>Dumb_Communication_Module_v2_1</slaveDescriptor>
-                <addressRange>0x80003000 - 0x800033FF</addressRange>
-                <addressSpan>1024</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_8</slaveDescriptor>
-                <addressRange>0x80004000 - 0x80007FFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_7</slaveDescriptor>
-                <addressRange>0x80008000 - 0x8000BFFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_6</slaveDescriptor>
-                <addressRange>0x8000C000 - 0x8000FFFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_5</slaveDescriptor>
-                <addressRange>0x80010000 - 0x80013FFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_4</slaveDescriptor>
-                <addressRange>0x80014000 - 0x80017FFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_3</slaveDescriptor>
-                <addressRange>0x80018000 - 0x8001BFFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_2</slaveDescriptor>
-                <addressRange>0x8001C000 - 0x8001FFFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>RMAP_Memory_Subunit_Area_1</slaveDescriptor>
-                <addressRange>0x80020000 - 0x80023FFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>onchip_memory</slaveDescriptor>

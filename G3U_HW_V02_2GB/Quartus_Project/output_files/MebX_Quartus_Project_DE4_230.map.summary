@@ -1,16 +1,16 @@
-Analysis & Synthesis Status : Successful - Tue Oct 22 06:46:23 2024
+Analysis & Synthesis Status : Successful - Wed Sep 10 21:14:53 2025
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Standard Edition
 Revision Name : MebX_Quartus_Project_DE4_230
 Top-level Entity Name : MebX_TopLevel
 Family : Stratix IV
 Logic utilization : N/A
-    Combinational ALUTs : 123,306
-    Memory ALUTs : 810
-    Dedicated logic registers : 97,177
-Total registers : 98465
+    Combinational ALUTs : 54,117
+    Memory ALUTs : 478
+    Dedicated logic registers : 50,090
+Total registers : 51378
 Total pins : 483
 Total virtual pins : 0
-Total block memory bits : 9,460,632
+Total block memory bits : 8,895,448
 DSP block 18-bit elements : 8
 Total GXB Receiver Channel PCS : 0
 Total GXB Receiver Channel PMA : 0
