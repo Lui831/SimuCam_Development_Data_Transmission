@@ -553,8 +553,8 @@ type t_avalon_mm_master_last_operation is (READ, WRITE, NONE);
 signal s_avalon_mm_master_last_operation : t_avalon_mm_master_last_operation := NONE;
 signal s_avalon_mm_master_prev_operation : t_avalon_mm_master_last_operation := NONE;
 
--- Signals to interconnect the avalon_agent sliced addr to the modules
-signal s_avalon_mm_agent_complete_addr : std_logic_vector(C_CCSDS_IN_AVALON_ADDR_WIDTH - 1 downto 0);
+-- Signal to pad the avalon mm agent address input
+signal s_avalon_mm_addr_padding_signal : std_logic_vector(C_CCSDS_IN_AVALON_ADDR_WIDTH - 1 downto 0);
 
 
 
@@ -800,7 +800,7 @@ Avalon_Write : codec_PUS_Avalon_Write
 
         -- Avalon Interface Input Signals
         cPAW_avalon_mm_write_i       => avalon_mm_agent_write_i,
-        cPAW_avalon_mm_address_i     => s_avalon_mm_agent_complete_addr,
+        cPAW_avalon_mm_address_i     => s_avalon_mm_addr_padding_signal,
         cPAW_avalon_mm_write_data_i  => avalon_mm_agent_write_data_i,
 
         -- Write registers from the Controller module
@@ -829,7 +829,7 @@ Avalon_Read : codec_PUS_Avalon_Read
 
         -- Avalon MM Interface Input Signals
         cPAR_avalon_mm_read_i    => avalon_mm_agent_read_i,
-        cPAR_avalon_mm_address_i => s_avalon_mm_agent_complete_addr,
+        cPAR_avalon_mm_address_i => s_avalon_mm_addr_padding_signal,
 
         -- Write and Read Registers from the Controller
         cPAR_controller_rd_regs  => s_Controller_Avalon_Read_rd_regs,
@@ -997,8 +997,10 @@ with s_avalon_mm_master_last_operation select
                                s_avalon_mm_master_write_addr when WRITE,
                                (others => '0') when others;
 
--- Slicing logic for the avalon mm address
-s_avalon_mm_agent_complete_addr <= "000000000000000000000000000" & avalon_mm_agent_addr_i;
+
+-- Pads the signal received from the avalon mm agent address input
+s_avalon_mm_addr_padding_signal <= "000000000000000000000000000" & avalon_mm_agent_addr_i;
+
 
         
 

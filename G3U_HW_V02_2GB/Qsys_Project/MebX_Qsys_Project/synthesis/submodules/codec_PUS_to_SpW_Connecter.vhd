@@ -28,7 +28,7 @@ port(
 
     -- Clock and reset signals
     clk_i          : in  std_logic;  -- Global clock signal
-    rst_i          : in  std_logic;  -- Global reset signal
+    rst_i     : in  std_logic;  -- Global reset signal
 
     -- Conduit signals that come from Codec PUS
     codec_PUS_conduit_inFIFO_rd_en_o         : in std_logic;

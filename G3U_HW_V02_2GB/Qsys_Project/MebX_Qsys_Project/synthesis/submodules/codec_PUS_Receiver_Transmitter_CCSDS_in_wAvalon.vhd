@@ -120,7 +120,7 @@ architecture rtl of codec_pus_receiver_transmitter_ccsds_in is
     signal s_CCSDS_data_reg : std_logic_vector(C_CCSDS_IN_DATA_REG_WIDTH - 1 downto 0);
 
     -- Sinal para aviso e confirmação de reset de memória de um processo para o outro
-    signal s_rst_mem_flags  : std_logic_vector(C_CCSDS_IN_MAX_SERVICES - 1 downto 0) := (others => '0');
+    signal s_rst_mem_flags  : std_logic;
 
     -- Sinal para armazenar o offset de memória do pacote atual
     signal s_mem_offset     : t_CCSDS_In_max_stored_bytes := 0;
@@ -179,7 +179,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                 s_eop_error              <= '0';
                 s_mem_offset              <= 0;
                 s_pkg_service             <= 0;
-                s_rst_mem_flags           <= (others => '0');
+                s_rst_mem_flags           <= '0';
                 s_CCSDS_data_reg          <= (others => '0');
                 v_ver_flags_reg           := (others => '0');
 
@@ -220,7 +220,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                         s_eop_error              <= '0';
                         s_mem_offset              <= 0;
                         s_pkg_service             <= 0;
-                        s_rst_mem_flags           <= (others => '0');
+                        s_rst_mem_flags           <= '0';
                         s_CCSDS_data_reg          <= (others => '0');
                         v_ver_flags_reg           := (others => '0');
 
@@ -609,7 +609,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                     when RESETING_MEM =>
 
                         -- Reseta as flags de reset de memória
-                        s_rst_mem_flags(s_pkg_service) <= '0';
+                        s_rst_mem_flags <= '0';
 
                         -- Caso o serviço em questão tenha alguma solicitação de reset de memória sob espera
                         if to_integer(unsigned(s_rst_mem.rst_value)) > 0 then 
@@ -618,7 +618,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                             s_byte_mem <= s_byte_mem - to_integer(unsigned(s_rst_mem.rst_value));
 
                             -- Aciona o sinal de sinalização de limpeza de memória
-                            s_rst_mem_flags(s_pkg_service) <= '1';
+                            s_rst_mem_flags <= '1';
 
                             -- Caso haja espaço suficiente para armazenar o pacote
                             if s_byte_mem - to_integer(unsigned(s_rst_mem.rst_value)) + s_data_field_len - 5 - s_byte_count - s_byte_acc <= to_integer(unsigned(cPRTCi_DMA_num_bytes_i)) then
@@ -641,7 +641,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                     when TRANSFERING =>
 
                         -- Reseta as flags de reset de memória
-                        s_rst_mem_flags(s_pkg_service) <= '0';
+                        s_rst_mem_flags <= '0';
 
                         -- Caso a operação de escrita não tenha sido realizada ainda
                         if s_byte_transfered = '0' then
@@ -894,19 +894,15 @@ begin
             end if;
 
             -- If some rst flag is active, it means that a reset was done correctly and the value must be updated
-            for service in 0 to C_CCSDS_IN_MAX_SERVICES - 1 loop
-                -- If the reset flag is active
-                if s_rst_mem_flags(service) = '1' then
+            -- If the reset flag is active
+            if s_rst_mem_flags = '1' then
 
-                    v_rst_mem_values := v_rst_mem_values - to_integer(unsigned(s_rst_mem.rst_value));
+                v_rst_mem_values := v_rst_mem_values - to_integer(unsigned(s_rst_mem.rst_value));
 
-                end if;
-            end loop;
+            end if;
 
             -- Redetermines the value of the reset memory for each service
-            for service in 0 to C_CCSDS_IN_MAX_SERVICES - 1 loop
-                s_rst_mem.rst_value <= std_logic_vector(to_unsigned(v_rst_mem_values, C_CCSDS_IN_PROC_RST_VALUE_WIDTH));
-            end loop;
+            s_rst_mem.rst_value <= std_logic_vector(to_unsigned(v_rst_mem_values, C_CCSDS_IN_PROC_RST_VALUE_WIDTH));
 
         end if;
 

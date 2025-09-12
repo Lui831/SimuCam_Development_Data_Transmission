@@ -1,6 +1,6 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="2f7635e5040c159b36e2"/>
+    <hash md5_digest_80b="b9d925ae8ce51ba3f9a8"/>
   </project>
   <file_info>
     <file device="EP4SGX230KF40C2" path="MebX_Quartus_Project_DE4_230.sof" usercode="0xFFFFFFFF"/>
@@ -143,8 +143,8 @@
         <parameter name="SLD_IP_VERSION" type="dec" value="6"/>
         <parameter name="SLD_IP_MINOR_VERSION" type="dec" value="0"/>
         <parameter name="SLD_COMMON_IP_VERSION" type="dec" value="0"/>
-        <parameter name="sld_data_bits" type="unknown" value="629"/>
-        <parameter name="sld_trigger_bits" type="unknown" value="629"/>
+        <parameter name="sld_data_bits" type="unknown" value="504"/>
+        <parameter name="sld_trigger_bits" type="unknown" value="504"/>
         <parameter name="SLD_NODE_CRC_BITS" type="dec" value="32"/>
         <parameter name="SLD_NODE_CRC_HIWORD" type="dec" value="41394"/>
         <parameter name="SLD_NODE_CRC_LOWORD" type="dec" value="50132"/>
@@ -162,7 +162,7 @@
         <parameter name="SLD_HPS_TRIGGER_OUT_ENABLED" type="dec" value="0"/>
         <parameter name="SLD_HPS_EVENT_ENABLED" type="dec" value="0"/>
         <parameter name="SLD_HPS_EVENT_ID" type="dec" value="0"/>
-        <parameter name="sld_advanced_trigger_entity" type="unknown" value="sld_reserved_MebX_Quartus_Project_DE4_230_auto_signaltap_0_1_5536,"/>
+        <parameter name="sld_advanced_trigger_entity" type="unknown" value="sld_reserved_MebX_Quartus_Project_DE4_230_auto_signaltap_0_1_2b2a,"/>
         <parameter name="sld_trigger_level_pipeline" type="unknown" value="1"/>
         <parameter name="sld_trigger_pipeline" type="unknown" value="0"/>
         <parameter name="sld_ram_pipeline" type="unknown" value="0"/>
@@ -185,7 +185,7 @@
         <parameter name="sld_state_flow_use_generated" type="unknown" value="0"/>
         <parameter name="sld_current_resource_width" type="unknown" value="1"/>
         <parameter name="sld_attribute_mem_mode" type="unknown" value="OFF"/>
-        <parameter name="sld_storage_qualifier_bits" type="unknown" value="629"/>
+        <parameter name="sld_storage_qualifier_bits" type="unknown" value="504"/>
         <parameter name="SLD_STORAGE_QUALIFIER_GAP_RECORD" type="dec" value="0"/>
         <parameter name="SLD_STORAGE_QUALIFIER_MODE" type="string" value="OFF"/>
         <parameter name="SLD_STORAGE_QUALIFIER_ENABLE_ADVANCED_CONDITION" type="dec" value="0"/>
@@ -202,7 +202,7 @@
   <sld_infos>
     <sld_info hpath="MebX_Qsys_Project:SOPC_INST" name="SOPC_INST">
       <assignment_values>
-        <assignment_value text="QSYS_NAME MebX_Qsys_Project HAS_SOPCINFO 1 GENERATION_ID 1757546236"/>
+        <assignment_value text="QSYS_NAME MebX_Qsys_Project HAS_SOPCINFO 1 GENERATION_ID 1757700376"/>
       </assignment_values>
       <parameters/>
     </sld_info>

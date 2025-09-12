@@ -9,7 +9,7 @@
    <inputclock preferredWidth="191" />
   </columns>
  </systemtable>
- <library expandedCategories="Library,Project" />
+ <library expandedCategories="Project,Library" />
  <window width="1920" height="1020" x="2616" y="33" />
  <generation synthesis="VHDL" />
  <hdlexample language="VHDL" />

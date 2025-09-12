@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'MebX_Qsys_Project'
  * SOPC Builder design path: ../../MebX_Qsys_Project.sopcinfo
  *
- * Generated: Wed Sep 10 20:55:49 GMT-03:00 2025
+ * Generated: Fri Sep 12 15:44:56 GMT-03:00 2025
  */
 
 /*
@@ -162,6 +162,7 @@
 #define __ALTERA_GENERIC_TRISTATE_CONTROLLER
 #define __ALTERA_NIOS2_GEN2
 #define __ALTERA_UP_SD_CARD_AVALON_INTERFACE
+#define __CODEC_PUS_V01
 #define __DUMB_COMMUNICATION_MODULE_V2
 #define __FTDI_UMFT601A_MODULE
 #define __MEMORY_FILLER
@@ -257,6 +258,20 @@
 #define INCLUDE_TCP
 #define INICHE_DEFAULT_IF "NOT_USED"
 #define IP_FRAGMENTS
+
+
+/*
+ * codec_pus_v01_0 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_codec_pus_v01_0 codec_pus_v01
+#define CODEC_PUS_V01_0_BASE 0x90000000
+#define CODEC_PUS_V01_0_IRQ -1
+#define CODEC_PUS_V01_0_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define CODEC_PUS_V01_0_NAME "/dev/codec_pus_v01_0"
+#define CODEC_PUS_V01_0_SPAN 128
+#define CODEC_PUS_V01_0_TYPE "codec_pus_v01"
 
 
 /*
@@ -964,7 +979,7 @@
 #define SYSID_QSYS_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_NAME "/dev/sysid_qsys"
 #define SYSID_QSYS_SPAN 8
-#define SYSID_QSYS_TIMESTAMP 1757546236
+#define SYSID_QSYS_TIMESTAMP 1757700376
 #define SYSID_QSYS_TYPE "altera_avalon_sysid_qsys"
 
 

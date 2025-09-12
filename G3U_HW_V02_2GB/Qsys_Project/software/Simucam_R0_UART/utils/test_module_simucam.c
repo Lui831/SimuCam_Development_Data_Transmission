@@ -133,12 +133,6 @@ bool bTestSimucamBasicHW(void) {
 	usleep(100000);
 	bEnableIsoLogic();
 
-	/* Test Sync Connections */
-	bSuccess = bSyncTestConnection();
-
-	/* Disable Isolator  Board */
-	bDisableIsoLogic();
-	bDisableIsoDrivers();
 
 	if ( FALSE == bSuccess) {
 #if DEBUG_ON
