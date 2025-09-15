@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Sep 12, 2025 4:04:55 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1757703895040</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Sep 15, 2025 2:19:34 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1757956774629</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\WORKSPACE\Github\SimuCam_Development_Data_Transmission\G3U_HW_V02_2GB\Qsys_Project\software\Simucam_R0_UART_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\MebX_Qsys_Project.sopcinfo</SopcDesignFile>
@@ -2037,6 +2037,12 @@
                 <addressRange>0x90000000 - 0x9000007F</addressRange>
                 <addressSpan>128</addressSpan>
                 <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>onchip_memory2_0</slaveDescriptor>
+                <addressRange>0xA0000000 - 0xA0000FFF</addressRange>
+                <addressSpan>4096</addressSpan>
+                <attributes>memory</attributes>
         </MemoryMap>
         <LinkerSection>
                 <sectionName>.text</sectionName>

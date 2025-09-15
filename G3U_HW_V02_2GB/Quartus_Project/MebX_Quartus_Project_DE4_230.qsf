@@ -3193,14 +3193,7 @@ set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STATE_BITS=11" -s
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_BUFFER_FULL_STOP=1" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_CURRENT_RESOURCE_WIDTH=1" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INCREMENTAL_ROUTING=1" -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[0] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[2] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[4] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[10] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[11] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[16] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[21] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[25] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_LEVEL=1" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_IN_ENABLED=0" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_PIPELINE=0" -section_id auto_signaltap_0
@@ -3208,21 +3201,17 @@ set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_RAM_PIPELINE=0" -
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_COUNTER_PIPELINE=0" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_LEVEL_PIPELINE=1" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ENABLE_ADVANCED_TRIGGER=1" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_clk -to OSC_50_BANK4 -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[1] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[12] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[13] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[17] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[18] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[20] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[22] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[24] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[27] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[30] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK=0000000000000000000000000" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK_LENGTH=25" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_SEGMENT_SIZE=2048" -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[29] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_SAMPLE_DEPTH=2048" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[293] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|IRQ_send_recv_o" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[294] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|IRQ_send_send_o" -section_id auto_signaltap_0
@@ -3398,43 +3387,6 @@ set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[463
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[464] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|avalon_mm_master_write_data_o[8]" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[465] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|avalon_mm_master_write_data_o[9]" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[466] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|avalon_mm_master_write_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[467] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|clk_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[468] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_almost_empty_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[469] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[0]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[470] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[1]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[471] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[2]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[472] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[3]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[473] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[4]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[474] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[5]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[475] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[6]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[476] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[7]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[477] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_empty_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[478] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_flag_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[479] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rd_en_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[480] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rxvalid_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[481] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_almost_full_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[482] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[0]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[483] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[1]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[484] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[2]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[485] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[3]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[486] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[4]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[487] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[5]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[488] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[6]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[489] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[7]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[490] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_flag_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[491] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_full_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[492] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_txrdy_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[493] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_wr_en_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[494] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|rst_sync_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[495] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.NONE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[496] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.READ" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[497] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.WRITE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[498] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.NONE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[499] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.READ" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[500] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.WRITE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[501] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_read_wait_request" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[502] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_write_wait_request" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[503] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_comb_rst" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[293] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|IRQ_send_recv_o" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[294] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|IRQ_send_send_o" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[295] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|WideNor0" -section_id auto_signaltap_0
@@ -3609,59 +3561,105 @@ set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[463] -
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[464] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|avalon_mm_master_write_data_o[8]" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[465] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|avalon_mm_master_write_data_o[9]" -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[466] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|avalon_mm_master_write_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[467] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|clk_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[468] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_almost_empty_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[469] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[0]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[470] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[1]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[471] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[2]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[472] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[3]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[473] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[4]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[474] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[5]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[475] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[6]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[476] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[7]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[477] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_empty_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[478] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_flag_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[479] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rd_en_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[480] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rxvalid_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[481] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_almost_full_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[482] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[0]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[483] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[1]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[484] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[2]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[485] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[3]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[486] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[4]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[487] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[5]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[488] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[6]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[489] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[7]" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[490] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_flag_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[491] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_full_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[492] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_txrdy_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[493] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_wr_en_o" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[494] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|rst_sync_i" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[495] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.NONE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[496] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.READ" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[497] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.WRITE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[498] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.NONE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[499] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.READ" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[500] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.WRITE" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[501] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_read_wait_request" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[502] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_write_wait_request" -section_id auto_signaltap_0
-set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[503] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_comb_rst" -section_id auto_signaltap_0
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_DATA_BITS=504" -section_id auto_signaltap_0
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_BITS=504" -section_id auto_signaltap_0
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STORAGE_QUALIFIER_BITS=504" -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[3] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[5] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[6] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[7] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[8] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[9] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[14] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[15] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[19] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[23] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[26] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[28] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[31] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ADVANCED_TRIGGER_ENTITY=sld_reserved_MebX_Quartus_Project_DE4_230_auto_signaltap_0_1_2b2a," -section_id auto_signaltap_0
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_clk -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|clk_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[467] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_almost_empty_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[468] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[0]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[469] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[1]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[470] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[2]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[471] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[3]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[472] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[4]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[473] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[5]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[474] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[6]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[475] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[7]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[476] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_empty_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[477] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_flag_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[478] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rd_en_o" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[479] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rxvalid_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[480] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_almost_full_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[481] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[0]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[482] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[1]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[483] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[2]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[484] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[3]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[485] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[4]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[486] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[5]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[487] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[6]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[488] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[7]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[489] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_flag_o" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[490] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_full_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[491] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_txrdy_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[492] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_wr_en_o" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[493] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|rst_sync_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[494] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.NONE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[495] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.READ" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[496] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.WRITE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[497] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.NONE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[498] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.READ" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[499] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.WRITE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[500] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_read_wait_request" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[501] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_write_wait_request" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[502] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_comb_rst" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[467] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_almost_empty_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[468] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[0]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[469] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[1]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[470] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[2]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[471] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[3]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[472] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[4]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[473] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[5]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[474] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[6]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[475] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_data_i[7]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[476] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_empty_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[477] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_flag_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[478] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rd_en_o" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[479] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_inFIFO_rxvalid_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[480] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_almost_full_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[481] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[0]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[482] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[1]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[483] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[2]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[484] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[3]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[485] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[4]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[486] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[5]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[487] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[6]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[488] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_data_o[7]" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[489] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_flag_o" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[490] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_full_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[491] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_txrdy_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[492] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|conduit_outFIFO_wr_en_o" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[493] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|rst_sync_i" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[494] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.NONE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[495] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.READ" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[496] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_last_operation.WRITE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[497] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.NONE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[498] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.READ" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[499] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_prev_operation.WRITE" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[500] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_read_wait_request" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[501] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_avalon_mm_master_write_wait_request" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[502] -to "MebX_Qsys_Project:SOPC_INST|codec_PUS_top:codec_pus_v01_0|s_comb_rst" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_DATA_BITS=503" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_BITS=503" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STORAGE_QUALIFIER_BITS=503" -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[0] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[2] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[5] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[6] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[8] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[10] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[11] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[15] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[16] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[17] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[21] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[22] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[25] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[26] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[28] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[29] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ADVANCED_TRIGGER_ENTITY=sld_reserved_MebX_Quartus_Project_DE4_230_auto_signaltap_0_1_8d19," -section_id auto_signaltap_0
 set_global_assignment -name SLD_FILE db/stp1_auto_stripped.stp
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

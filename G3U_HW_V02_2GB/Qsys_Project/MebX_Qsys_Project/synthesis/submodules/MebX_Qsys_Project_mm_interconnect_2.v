@@ -685,7 +685,7 @@ module MebX_Qsys_Project_mm_interconnect_2 (
 		.in_command_size_data (3'b000)                                             // (terminated)
 	);
 
-	MebX_Qsys_Project_mm_interconnect_2_avalon_st_adapter #(
+	MebX_Qsys_Project_mm_interconnect_0_avalon_st_adapter #(
 		.inBitsPerSymbol (34),
 		.inUsePackets    (0),
 		.inDataWidth     (34),

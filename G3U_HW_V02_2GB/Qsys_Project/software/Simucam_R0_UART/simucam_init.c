@@ -17,6 +17,7 @@
 #include "simucam_definitions.h"
 #include "utils/initialization_simucam.h"
 #include "utils/test_module_simucam.h"
+#include "driver/pus/codec_pus_drivers.h"
 
 /* Declaring file for JTAG debug */
 #if DEBUG_ON
