@@ -5,11 +5,11 @@
  version="1.0"
  fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2025.09.15.14:50:06 -->
+ <!-- 2025.09.18.17:46:00 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1757958605</value>
+  <value>1758228360</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -15410,7 +15410,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>s1</slaveName>
     <name>onchip_memory2_0.s1</name>
     <baseAddress>2281701376</baseAddress>
-    <span>4096</span>
+    <span>131072</span>
    </memoryBlock>
   </interface>
   <interface name="IRQ_sender_recv" kind="interrupt_sender" version="18.1">
@@ -56023,7 +56023,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="dataSlaveMapParam">
    <type>java.lang.String</type>
-   <value><![CDATA[<address-map><slave name='ddr2_address_span_extender.windowed_slave' start='0x0' end='0x80000000' type='altera_address_span_extender.windowed_slave' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x80000000' end='0x80000800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='uart_module_top_0.avalon_slave_uart' start='0x80000800' end='0x80000C00' type='uart_module_top.avalon_slave_uart' /><slave name='Dumb_Communication_Module_v2_Timer.avalon_slave_dcom' start='0x80000C00' end='0x80001000' type='Dumb_Communication_Module_v2.avalon_slave_dcom' /><slave name='ddr2_address_span_extender.cntl' start='0x80002C00' end='0x80002C08' type='altera_address_span_extender.cntl' /><slave name='sysid_qsys.control_slave' start='0x80002C80' end='0x80002C88' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x80002C90' end='0x80002C98' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='onchip_memory.s1' start='0x80200000' end='0x802C0000' type='altera_avalon_onchip_memory2.s1' /><slave name='Altera_UP_SD_Card_Avalon_Interface_0.avalon_sdcard_slave' start='0x82000000' end='0x82000400' type='Altera_UP_SD_Card_Avalon_Interface.avalon_sdcard_slave' /><slave name='sync.avalon_mm_slave' start='0x82000400' end='0x82000800' type='Sync.avalon_mm_slave' /><slave name='rst_controller.avalon_rst_controller_slave' start='0x82000800' end='0x82000840' type='rst_controller.avalon_rst_controller_slave' /><slave name='timer_1us.s1' start='0x82000840' end='0x82000860' type='altera_avalon_timer.s1' /><slave name='timer_1ms.s1' start='0x82000860' end='0x82000880' type='altera_avalon_timer.s1' /><slave name='pio_ctrl_io_lvds.s1' start='0x820008A0' end='0x820008B0' type='altera_avalon_pio.s1' /><slave name='pio_LED_painel.s1' start='0x82000900' end='0x82000910' type='altera_avalon_pio.s1' /><slave name='csense_adc_fo.s1' start='0x82000910' end='0x82000920' type='altera_avalon_pio.s1' /><slave name='csense_cs_n.s1' start='0x82000920' end='0x82000930' type='altera_avalon_pio.s1' /><slave name='csense_sck.s1' start='0x82000930' end='0x82000940' type='altera_avalon_pio.s1' /><slave name='csense_sdi.s1' start='0x82000940' end='0x82000950' type='altera_avalon_pio.s1' /><slave name='csense_sdo.s1' start='0x82000950' end='0x82000960' type='altera_avalon_pio.s1' /><slave name='m2_ddr2_i2c_scl.s1' start='0x82000960' end='0x82000970' type='altera_avalon_pio.s1' /><slave name='m2_ddr2_i2c_sda.s1' start='0x82000970' end='0x82000980' type='altera_avalon_pio.s1' /><slave name='temp_sda.s1' start='0x82000980' end='0x82000990' type='altera_avalon_pio.s1' /><slave name='temp_scl.s1' start='0x82000990' end='0x820009A0' type='altera_avalon_pio.s1' /><slave name='sd_card_wp_n.s1' start='0x820009A0' end='0x820009B0' type='altera_avalon_pio.s1' /><slave name='pio_EXT.s1' start='0x820009B0' end='0x820009C0' type='altera_avalon_pio.s1' /><slave name='pio_DIP.s1' start='0x820009C0' end='0x820009D0' type='altera_avalon_pio.s1' /><slave name='pio_LED.s1' start='0x820009D0' end='0x820009E0' type='altera_avalon_pio.s1' /><slave name='pio_BUTTON.s1' start='0x820009E0' end='0x820009F0' type='altera_avalon_pio.s1' /><slave name='m1_ddr2_i2c_scl.s1' start='0x820009F0' end='0x82000A00' type='altera_avalon_pio.s1' /><slave name='m1_ddr2_i2c_sda.s1' start='0x82000A00' end='0x82000A10' type='altera_avalon_pio.s1' /><slave name='pio_ftdi_umft601a_module_reset.s1' start='0x82000B00' end='0x82000B10' type='altera_avalon_pio.s1' /><slave name='pio_iso_logic_signal_enable.s1' start='0x82000B10' end='0x82000B20' type='altera_avalon_pio.s1' /><slave name='pio_rmap_echoing_module_reset.s1' start='0x82000C00' end='0x82000C10' type='altera_avalon_pio.s1' /><slave name='pio_spw_mux_ch_h_select.s1' start='0x82000D00' end='0x82000D10' type='altera_avalon_pio.s1' /><slave name='ext_flash.uas' start='0x84000000' end='0x88000000' type='altera_generic_tristate_controller.uas' /><slave name='onchip_memory2_0.s1' start='0x88000000' end='0x88001000' type='altera_avalon_onchip_memory2.s1' /><slave name='Memory_Filler.avalon_slave_config' start='0x8A000000' end='0x8A000400' type='Memory_Filler.avalon_slave_config' /><slave name='FTDI_UMFT601A_Module.avalon_slave_config' start='0x8A001000' end='0x8A001400' type='FTDI_UMFT601A_Module.avalon_slave_config' /><slave name='codec_pus_v01_0.avalon_agent' start='0x90000000' end='0x90000080' type='codec_pus_v01.avalon_agent' /></address-map>]]></value>
+   <value><![CDATA[<address-map><slave name='ddr2_address_span_extender.windowed_slave' start='0x0' end='0x80000000' type='altera_address_span_extender.windowed_slave' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x80000000' end='0x80000800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='uart_module_top_0.avalon_slave_uart' start='0x80000800' end='0x80000C00' type='uart_module_top.avalon_slave_uart' /><slave name='Dumb_Communication_Module_v2_Timer.avalon_slave_dcom' start='0x80000C00' end='0x80001000' type='Dumb_Communication_Module_v2.avalon_slave_dcom' /><slave name='ddr2_address_span_extender.cntl' start='0x80002C00' end='0x80002C08' type='altera_address_span_extender.cntl' /><slave name='sysid_qsys.control_slave' start='0x80002C80' end='0x80002C88' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x80002C90' end='0x80002C98' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='onchip_memory.s1' start='0x80200000' end='0x802C0000' type='altera_avalon_onchip_memory2.s1' /><slave name='Altera_UP_SD_Card_Avalon_Interface_0.avalon_sdcard_slave' start='0x82000000' end='0x82000400' type='Altera_UP_SD_Card_Avalon_Interface.avalon_sdcard_slave' /><slave name='sync.avalon_mm_slave' start='0x82000400' end='0x82000800' type='Sync.avalon_mm_slave' /><slave name='rst_controller.avalon_rst_controller_slave' start='0x82000800' end='0x82000840' type='rst_controller.avalon_rst_controller_slave' /><slave name='timer_1us.s1' start='0x82000840' end='0x82000860' type='altera_avalon_timer.s1' /><slave name='timer_1ms.s1' start='0x82000860' end='0x82000880' type='altera_avalon_timer.s1' /><slave name='pio_ctrl_io_lvds.s1' start='0x820008A0' end='0x820008B0' type='altera_avalon_pio.s1' /><slave name='pio_LED_painel.s1' start='0x82000900' end='0x82000910' type='altera_avalon_pio.s1' /><slave name='csense_adc_fo.s1' start='0x82000910' end='0x82000920' type='altera_avalon_pio.s1' /><slave name='csense_cs_n.s1' start='0x82000920' end='0x82000930' type='altera_avalon_pio.s1' /><slave name='csense_sck.s1' start='0x82000930' end='0x82000940' type='altera_avalon_pio.s1' /><slave name='csense_sdi.s1' start='0x82000940' end='0x82000950' type='altera_avalon_pio.s1' /><slave name='csense_sdo.s1' start='0x82000950' end='0x82000960' type='altera_avalon_pio.s1' /><slave name='m2_ddr2_i2c_scl.s1' start='0x82000960' end='0x82000970' type='altera_avalon_pio.s1' /><slave name='m2_ddr2_i2c_sda.s1' start='0x82000970' end='0x82000980' type='altera_avalon_pio.s1' /><slave name='temp_sda.s1' start='0x82000980' end='0x82000990' type='altera_avalon_pio.s1' /><slave name='temp_scl.s1' start='0x82000990' end='0x820009A0' type='altera_avalon_pio.s1' /><slave name='sd_card_wp_n.s1' start='0x820009A0' end='0x820009B0' type='altera_avalon_pio.s1' /><slave name='pio_EXT.s1' start='0x820009B0' end='0x820009C0' type='altera_avalon_pio.s1' /><slave name='pio_DIP.s1' start='0x820009C0' end='0x820009D0' type='altera_avalon_pio.s1' /><slave name='pio_LED.s1' start='0x820009D0' end='0x820009E0' type='altera_avalon_pio.s1' /><slave name='pio_BUTTON.s1' start='0x820009E0' end='0x820009F0' type='altera_avalon_pio.s1' /><slave name='m1_ddr2_i2c_scl.s1' start='0x820009F0' end='0x82000A00' type='altera_avalon_pio.s1' /><slave name='m1_ddr2_i2c_sda.s1' start='0x82000A00' end='0x82000A10' type='altera_avalon_pio.s1' /><slave name='pio_ftdi_umft601a_module_reset.s1' start='0x82000B00' end='0x82000B10' type='altera_avalon_pio.s1' /><slave name='pio_iso_logic_signal_enable.s1' start='0x82000B10' end='0x82000B20' type='altera_avalon_pio.s1' /><slave name='pio_rmap_echoing_module_reset.s1' start='0x82000C00' end='0x82000C10' type='altera_avalon_pio.s1' /><slave name='pio_spw_mux_ch_h_select.s1' start='0x82000D00' end='0x82000D10' type='altera_avalon_pio.s1' /><slave name='ext_flash.uas' start='0x84000000' end='0x88000000' type='altera_generic_tristate_controller.uas' /><slave name='onchip_memory2_0.s1' start='0x88000000' end='0x88020000' type='altera_avalon_onchip_memory2.s1' /><slave name='Memory_Filler.avalon_slave_config' start='0x8A000000' end='0x8A000400' type='Memory_Filler.avalon_slave_config' /><slave name='FTDI_UMFT601A_Module.avalon_slave_config' start='0x8A001000' end='0x8A001400' type='FTDI_UMFT601A_Module.avalon_slave_config' /><slave name='codec_pus_v01_0.avalon_agent' start='0x90000000' end='0x90000080' type='codec_pus_v01.avalon_agent' /></address-map>]]></value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -56999,7 +56999,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>s1</slaveName>
     <name>onchip_memory2_0.s1</name>
     <baseAddress>2281701376</baseAddress>
-    <span>4096</span>
+    <span>131072</span>
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
@@ -58898,7 +58898,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.GUI_RAM_BLOCK_TYPE</name>
-   <value>AUTO</value>
+   <value>M9K</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.INIT_CONTENTS_FILE</name>
@@ -58918,7 +58918,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.RAM_BLOCK_TYPE</name>
-   <value>AUTO</value>
+   <value>M9K</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.READ_DURING_WRITE_MODE</name>
@@ -58934,7 +58934,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.SIZE_VALUE</name>
-   <value>4096</value>
+   <value>131072</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.WRITABLE</name>
@@ -58986,7 +58986,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="blockType">
    <type>java.lang.String</type>
-   <value>AUTO</value>
+   <value>M9K</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -59066,7 +59066,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="memorySize">
    <type>long</type>
-   <value>4096</value>
+   <value>131072</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -59205,7 +59205,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_set_addr_width">
    <type>int</type>
-   <value>10</value>
+   <value>15</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -59213,7 +59213,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_set_addr_width2">
    <type>int</type>
-   <value>10</value>
+   <value>15</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -59237,7 +59237,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_gui_ram_block_type">
    <type>java.lang.String</type>
-   <value>Automatic</value>
+   <value>M9K</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -59350,7 +59350,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="addressSpan">
     <type>java.math.BigInteger</type>
-    <value>4096</value>
+    <value>131072</value>
     <derived>true</derived>
     <enabled>true</enabled>
     <visible>false</visible>
@@ -59438,7 +59438,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="explicitAddressSpan">
     <type>java.math.BigInteger</type>
-    <value>4096</value>
+    <value>131072</value>
     <derived>false</derived>
     <enabled>true</enabled>
     <visible>true</visible>
@@ -59649,7 +59649,7 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>address</name>
     <direction>Input</direction>
-    <width>10</width>
+    <width>15</width>
     <role>address</role>
    </port>
    <port>
@@ -70923,7 +70923,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1757958605</value>
+   <value>1758228360</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -70943,7 +70943,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1757958605</value>
+   <value>1758228360</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -70959,7 +70959,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1757958605</value>
+   <value>1758228360</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>

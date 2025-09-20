@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'MebX_Qsys_Project'
  * SOPC Builder design path: ../../MebX_Qsys_Project.sopcinfo
  *
- * Generated: Wed Sep 10 20:01:07 GMT-03:00 2025
+ * Generated: Thu Sep 18 19:56:02 GMT-03:00 2025
  */
 
 /*
@@ -55,11 +55,13 @@ MEMORY
     ext_flash_BEFORE_RESET : ORIGIN = 0x84000000, LENGTH = 33685504
     reset : ORIGIN = 0x86020000, LENGTH = 32
     ext_flash : ORIGIN = 0x86020020, LENGTH = 33423328
+    onchip_memory2_0 : ORIGIN = 0x88000000, LENGTH = 131072
 }
 
 /* Define symbols for each memory base-address */
 __alt_mem_onchip_memory = 0x80200000;
 __alt_mem_ext_flash = 0x84000000;
+__alt_mem_onchip_memory2_0 = 0x88000000;
 
 OUTPUT_FORMAT( "elf32-littlenios2",
                "elf32-littlenios2",
@@ -300,6 +302,16 @@ SECTIONS
     } > ext_flash
 
     PROVIDE (_alt_partition_ext_flash_load_addr = LOADADDR(.ext_flash));
+
+    .onchip_memory2_0 :
+    {
+        PROVIDE (_alt_partition_onchip_memory2_0_start = ABSOLUTE(.));
+        *(.onchip_memory2_0 .onchip_memory2_0. onchip_memory2_0.*)
+        . = ALIGN(4);
+        PROVIDE (_alt_partition_onchip_memory2_0_end = ABSOLUTE(.));
+    } > onchip_memory2_0
+
+    PROVIDE (_alt_partition_onchip_memory2_0_load_addr = LOADADDR(.onchip_memory2_0));
 
     /*
      * Stabs debugging sections.

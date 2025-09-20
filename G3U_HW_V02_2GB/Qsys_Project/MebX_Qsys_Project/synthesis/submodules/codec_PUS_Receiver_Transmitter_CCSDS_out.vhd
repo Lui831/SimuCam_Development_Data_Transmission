@@ -113,7 +113,7 @@ architecture rtl of codec_PUS_Receiver_Transmitter_CCSDS_out is
     signal s_Avalon_MM_read_done      : std_logic := '0';
 
     -- Signal for obtaining the addresses for the Avalon MM interface
-    signal s_cPRTCo_Avalon_MM_addr : natural := 0;
+    signal s_cPRTCo_Avalon_MM_addr : unsigned(31 downto 0) := (others => '0');
 
     -- Auxiliary signal to force a wait cycle
     signal s_wait_cycle : std_logic := '0';
@@ -198,7 +198,7 @@ begin
 
 
                     -- When in IDLE
-                    when IDLE=>
+                    when IDLE =>
 
                         -- Deactivates the rst signal for the CRC16 module
                         cPRTCo_CRC16_rst_sync_o <= '0';
@@ -359,7 +359,7 @@ begin
                                 if to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len)) - 9 > 0 then
 
                                     -- Determines the address offset of the packet
-                                    s_cPRTCo_Avalon_MM_addr <= to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_addr));
+                                    s_cPRTCo_Avalon_MM_addr <= unsigned(cPRTCo_inFIFO_data_i.PKG_addr);
 
                                     s_cPRTCo_state <= TRANSMITTING_III;
                                 else
@@ -401,15 +401,15 @@ begin
                             if s_read_request_done = '0' then
 
                                 -- Sets the address and the read signals
-                                cPRTCo_Avalon_MM_addr_o <= std_logic_vector(to_unsigned(s_cPRTCo_Avalon_MM_addr, c_cPRTCo_AVALON_MM_ADDR_WIDTH));
+                                cPRTCo_Avalon_MM_addr_o <= std_logic_vector(s_cPRTCo_Avalon_MM_addr);
                                 cPRTCo_Avalon_MM_read_o <= '1';
 
                                 -- Asserts the s_read_request_done signal
                                 s_read_request_done <= '1';
 
                                 -- Increases the addr in Avalon MM, returning to the base address if necessary
-                                if s_cPRTCo_Avalon_MM_addr + 4 > to_integer(unsigned(cPRTCo_DMA_start_addr_i)) + to_integer(unsigned(cPRTCo_DMA_num_bytes_i)) - 1 then
-                                    s_cPRTCo_Avalon_MM_addr <= to_integer(unsigned(cPRTCo_DMA_start_addr_i));
+                                if s_cPRTCo_Avalon_MM_addr + 4 > unsigned(cPRTCo_DMA_start_addr_i) + unsigned(cPRTCo_DMA_num_bytes_i) - 1 then
+                                    s_cPRTCo_Avalon_MM_addr <= unsigned(cPRTCo_DMA_start_addr_i);
                                 else
                                     s_cPRTCo_Avalon_MM_addr <= s_cPRTCo_Avalon_MM_addr + 4;
                                 end if;

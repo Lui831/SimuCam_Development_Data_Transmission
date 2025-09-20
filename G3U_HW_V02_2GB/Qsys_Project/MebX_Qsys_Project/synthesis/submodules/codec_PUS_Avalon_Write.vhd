@@ -157,7 +157,7 @@ begin
                 end if;
             else
                 cPAW_controller_wr_flag <= '0';
-                s_int_wait_request <= '0';
+                s_int_wait_request <= '1';
                 s_data_written <= '0';
             end if;
         end if;

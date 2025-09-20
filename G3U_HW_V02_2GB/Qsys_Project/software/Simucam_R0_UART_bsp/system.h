@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'MebX_Qsys_Project'
  * SOPC Builder design path: ../../MebX_Qsys_Project.sopcinfo
  *
- * Generated: Fri Sep 12 15:44:56 GMT-03:00 2025
+ * Generated: Thu Sep 18 19:56:02 GMT-03:00 2025
  */
 
 /*
@@ -643,6 +643,35 @@
 
 
 /*
+ * onchip_memory2_0 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_onchip_memory2_0 altera_avalon_onchip_memory2
+#define ONCHIP_MEMORY2_0_ALLOW_IN_SYSTEM_MEMORY_CONTENT_EDITOR 0
+#define ONCHIP_MEMORY2_0_ALLOW_MRAM_SIM_CONTENTS_ONLY_FILE 0
+#define ONCHIP_MEMORY2_0_BASE 0x88000000
+#define ONCHIP_MEMORY2_0_CONTENTS_INFO ""
+#define ONCHIP_MEMORY2_0_DUAL_PORT 0
+#define ONCHIP_MEMORY2_0_GUI_RAM_BLOCK_TYPE "M9K"
+#define ONCHIP_MEMORY2_0_INIT_CONTENTS_FILE "MebX_Qsys_Project_onchip_memory2_0"
+#define ONCHIP_MEMORY2_0_INIT_MEM_CONTENT 1
+#define ONCHIP_MEMORY2_0_INSTANCE_ID "NONE"
+#define ONCHIP_MEMORY2_0_IRQ -1
+#define ONCHIP_MEMORY2_0_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define ONCHIP_MEMORY2_0_NAME "/dev/onchip_memory2_0"
+#define ONCHIP_MEMORY2_0_NON_DEFAULT_INIT_FILE_ENABLED 0
+#define ONCHIP_MEMORY2_0_RAM_BLOCK_TYPE "M9K"
+#define ONCHIP_MEMORY2_0_READ_DURING_WRITE_MODE "DONT_CARE"
+#define ONCHIP_MEMORY2_0_SINGLE_CLOCK_OP 0
+#define ONCHIP_MEMORY2_0_SIZE_MULTIPLE 1
+#define ONCHIP_MEMORY2_0_SIZE_VALUE 131072
+#define ONCHIP_MEMORY2_0_SPAN 131072
+#define ONCHIP_MEMORY2_0_TYPE "altera_avalon_onchip_memory2"
+#define ONCHIP_MEMORY2_0_WRITABLE 1
+
+
+/*
  * pio_BUTTON configuration
  *
  */
@@ -979,7 +1008,7 @@
 #define SYSID_QSYS_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_NAME "/dev/sysid_qsys"
 #define SYSID_QSYS_SPAN 8
-#define SYSID_QSYS_TIMESTAMP 1757700376
+#define SYSID_QSYS_TIMESTAMP 1758228360
 #define SYSID_QSYS_TYPE "altera_avalon_sysid_qsys"
 
 

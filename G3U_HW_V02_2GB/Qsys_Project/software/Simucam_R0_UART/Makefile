@@ -178,6 +178,7 @@ C_SRCS += driver/dcom/report/report.c
 C_SRCS += driver/memory_filler/memory_filler.c
 C_SRCS += driver/ftdi/ftdi.c
 C_SRCS += network_utilities.c
+C_SRCS += driver/pus/codec_pus_drivers.c
 CXX_SRCS :=
 ASM_SRCS :=
 

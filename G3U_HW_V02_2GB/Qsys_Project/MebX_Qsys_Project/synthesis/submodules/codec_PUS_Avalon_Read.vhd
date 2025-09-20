@@ -189,7 +189,7 @@ begin
 
             else
 
-                s_int_wait_request <= '0';
+                s_int_wait_request <= '1';
                 s_data_acquired <= '0';
 
             end if;

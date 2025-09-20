@@ -233,11 +233,11 @@ package codec_PUS_main_pkg is
     end record t_CCSDS_In_PROC_rst_mem_i;
 
     -- Tipo relacionado ao tamanho máximo do número de bytes a serem recebidos
-    subtype t_CCSDS_In_max_recv_bytes is natural range 0 to 65536 + 8;
+    subtype t_CCSDS_In_max_recv_bytes is unsigned(31 downto 0);
 
 
-    -- Tipk relacionado ao tamanho máximo do número de bytes a serem recebidos, sem processamento
-    subtype t_CCSDS_In_max_stored_bytes is natural range 0 to (65536 + 8)*8;
+    -- Tipo relacionado ao tamanho máximo do número de bytes a serem recebidos, sem processamento
+    subtype t_CCSDS_In_max_stored_bytes is unsigned(31 downto 0);
 
     -- Subtipo relacionado aos serviços disponíveis
     subtype t_CCSDS_In_services_available is natural range 0 to 255;

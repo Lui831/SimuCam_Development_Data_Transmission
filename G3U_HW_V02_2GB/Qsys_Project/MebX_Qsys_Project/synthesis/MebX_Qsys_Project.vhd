@@ -1084,7 +1084,7 @@ architecture rtl of MebX_Qsys_Project is
 	component MebX_Qsys_Project_onchip_memory2_0 is
 		port (
 			clk        : in  std_logic                     := 'X';             -- clk
-			address    : in  std_logic_vector(9 downto 0)  := (others => 'X'); -- address
+			address    : in  std_logic_vector(14 downto 0) := (others => 'X'); -- address
 			clken      : in  std_logic                     := 'X';             -- clken
 			chipselect : in  std_logic                     := 'X';             -- chipselect
 			write      : in  std_logic                     := 'X';             -- write
@@ -1436,7 +1436,7 @@ architecture rtl of MebX_Qsys_Project is
 			onchip_memory_s1_byteenable                                      : out std_logic_vector(3 downto 0);                     -- byteenable
 			onchip_memory_s1_chipselect                                      : out std_logic;                                        -- chipselect
 			onchip_memory_s1_clken                                           : out std_logic;                                        -- clken
-			onchip_memory2_0_s1_address                                      : out std_logic_vector(9 downto 0);                     -- address
+			onchip_memory2_0_s1_address                                      : out std_logic_vector(14 downto 0);                    -- address
 			onchip_memory2_0_s1_write                                        : out std_logic;                                        -- write
 			onchip_memory2_0_s1_readdata                                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			onchip_memory2_0_s1_writedata                                    : out std_logic_vector(31 downto 0);                    -- writedata
@@ -2158,7 +2158,7 @@ architecture rtl of MebX_Qsys_Project is
 	signal nios2_gen2_0_instruction_master_burstcount                                              : std_logic_vector(3 downto 0);   -- nios2_gen2_0:i_burstcount -> mm_interconnect_0:nios2_gen2_0_instruction_master_burstcount
 	signal mm_interconnect_0_onchip_memory2_0_s1_chipselect                                        : std_logic;                      -- mm_interconnect_0:onchip_memory2_0_s1_chipselect -> onchip_memory2_0:chipselect
 	signal mm_interconnect_0_onchip_memory2_0_s1_readdata                                          : std_logic_vector(31 downto 0);  -- onchip_memory2_0:readdata -> mm_interconnect_0:onchip_memory2_0_s1_readdata
-	signal mm_interconnect_0_onchip_memory2_0_s1_address                                           : std_logic_vector(9 downto 0);   -- mm_interconnect_0:onchip_memory2_0_s1_address -> onchip_memory2_0:address
+	signal mm_interconnect_0_onchip_memory2_0_s1_address                                           : std_logic_vector(14 downto 0);  -- mm_interconnect_0:onchip_memory2_0_s1_address -> onchip_memory2_0:address
 	signal mm_interconnect_0_onchip_memory2_0_s1_byteenable                                        : std_logic_vector(3 downto 0);   -- mm_interconnect_0:onchip_memory2_0_s1_byteenable -> onchip_memory2_0:byteenable
 	signal mm_interconnect_0_onchip_memory2_0_s1_write                                             : std_logic;                      -- mm_interconnect_0:onchip_memory2_0_s1_write -> onchip_memory2_0:write
 	signal mm_interconnect_0_onchip_memory2_0_s1_writedata                                         : std_logic_vector(31 downto 0);  -- mm_interconnect_0:onchip_memory2_0_s1_writedata -> onchip_memory2_0:writedata

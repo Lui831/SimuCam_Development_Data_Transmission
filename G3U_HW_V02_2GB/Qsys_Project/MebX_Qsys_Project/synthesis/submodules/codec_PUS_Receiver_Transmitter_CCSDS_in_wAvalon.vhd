@@ -93,16 +93,16 @@ architecture rtl of codec_pus_receiver_transmitter_ccsds_in is
 
     ---- Declaracao de sinais auxiliares --
     -- Sinal de contagem de bytes recebidos / transferidos
-    signal s_byte_count     : t_CCSDS_In_max_recv_bytes := 0;
+    signal s_byte_count     : t_CCSDS_In_max_recv_bytes := (others => '0');
 
     -- Sinal de contagem de bytes acumulados e de transferência
-    signal s_byte_acc       : t_CCSDS_In_max_recv_bytes := 0;
+    signal s_byte_acc       : t_CCSDS_In_max_recv_bytes := (others => '0');
 
     -- Sinal de contagem de bytes armazenados na memória até então para todos os serviços
-    signal s_byte_mem       : t_CCSDS_In_max_recv_bytes := 0;
+    signal s_byte_mem       : t_CCSDS_In_max_recv_bytes := (others => '0');
 
     -- Sinal de iteração sobre a memória de serviços
-    signal s_byte_itrt      : t_CCSDS_In_max_recv_bytes := 0;
+    signal s_byte_itrt      : t_CCSDS_In_max_recv_bytes := (others => '0');
 
     -- Sinal de memória para recebidos de bytes
     signal s_byte_transfered  : std_logic                 := '0';
@@ -111,7 +111,7 @@ architecture rtl of codec_pus_receiver_transmitter_ccsds_in is
     signal s_CRC16_reached    : std_logic                 := '0';
 
     -- Sinal para o tamanho esperado de bytes a serem recebidos no data field
-    signal s_data_field_len : t_CCSDS_In_max_recv_bytes := 0;
+    signal s_data_field_len : t_CCSDS_In_max_recv_bytes := (others => '0');
 
     -- Sinal para lembrar se o sistema já esteve em erro
     signal s_eop_error     : std_logic := '0';
@@ -123,7 +123,7 @@ architecture rtl of codec_pus_receiver_transmitter_ccsds_in is
     signal s_rst_mem_flags  : std_logic;
 
     -- Sinal para armazenar o offset de memória do pacote atual
-    signal s_mem_offset     : t_CCSDS_In_max_stored_bytes := 0;
+    signal s_mem_offset     : t_CCSDS_In_max_stored_bytes := (others => '0');
 
     -- Sinal para armazenar o serviço do pacote que está sendo recebido em questão
     signal s_pkg_service    : t_CCSDS_In_services_available := 0;
@@ -169,15 +169,15 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                 cPRTCi_Avalon_MM_write_data_o    <= (others => '0');
 
                 -- Reseta todos os sinais auxiliares
-                s_byte_count              <= 0;
-                s_byte_acc                <= 0;
-                s_byte_mem                <= 0;
-                s_byte_itrt               <= 0;
+                s_byte_count              <= (others => '0');
+                s_byte_acc                <= (others => '0');
+                s_byte_mem                <= (others => '0');
+                s_byte_itrt               <= (others => '0');
                 s_byte_transfered         <= '0';
-                s_data_field_len          <= 0;
+                s_data_field_len          <= (others => '0');
                 s_CRC16_reached           <= '0';
                 s_eop_error              <= '0';
-                s_mem_offset              <= 0;
+                s_mem_offset              <= (others => '0');
                 s_pkg_service             <= 0;
                 s_rst_mem_flags           <= '0';
                 s_CCSDS_data_reg          <= (others => '0');
@@ -210,15 +210,15 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                         cPRTCi_Avalon_MM_write_data_o    <= (others => '0');
 
                         -- Reseta todos os sinais auxiliares
-                        s_byte_count              <= 0;
-                        s_byte_acc                <= 0;
-                        s_byte_mem                <= 0;
-                        s_byte_itrt               <= 0;
+                        s_byte_count              <= (others => '0');
+                        s_byte_acc                <= (others => '0');
+                        s_byte_mem                <= (others => '0');
+                        s_byte_itrt               <= (others => '0');
                         s_byte_transfered         <= '0';
-                        s_data_field_len          <= 0;
+                        s_data_field_len          <= (others => '0');
                         s_CRC16_reached           <= '0';
                         s_eop_error              <= '0';
-                        s_mem_offset              <= 0;
+                        s_mem_offset              <= (others => '0');
                         s_pkg_service             <= 0;
                         s_rst_mem_flags           <= '0';
                         s_CCSDS_data_reg          <= (others => '0');
@@ -270,32 +270,32 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                                 case s_byte_count is
     
                                     -- Para o primeiro, recebe os 8 bits menos significativos
-                                    when 0 =>
+                                    when x"00000000" =>
                                         s_CCSDS_data_reg(47 downto 40) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                 <= s_byte_count + 1;
     
                                     -- Para o segundo...
-                                    when 1 =>
+                                    when x"00000001" =>
                                         s_CCSDS_data_reg(39 downto 32) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
                                     -- Para o terceiro...
-                                    when 2 =>
+                                    when x"00000002" =>
                                         s_CCSDS_data_reg(31 downto 24) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
                                     -- Para o quarto...
-                                    when 3 =>
+                                    when x"00000003" =>
                                         s_CCSDS_data_reg(23 downto 16) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
                                     -- Para o quinto...
-                                    when 4 =>
+                                    when x"00000004" =>
                                         s_CCSDS_data_reg(15 downto 8) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
                                     -- Para o sexto...
-                                    when 5 =>
+                                    when x"00000005" =>
                                         s_CCSDS_data_reg(7 downto 0) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
     
@@ -333,7 +333,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                             s_CCSDS_in_state             <= INTERPRETING_I;
     
                             -- Reseta o contador de bytes
-                            s_byte_count                 <= 0;
+                            s_byte_count                 <= (others => '0');
 
                         end if;
 
@@ -374,7 +374,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                         end if;
 
                         -- Obtém o packet data length e preenche os campos dos registradores de PKG PRIM HEADER
-                        s_data_field_len <= to_integer(unsigned(s_CCSDS_data_reg(15 downto 0)));
+                        s_data_field_len <= "0000000000000000" & unsigned(s_CCSDS_data_reg(15 downto 0));
 
                         cPRTCi_outFIFO_data_o.PKG_PRIM_HDR.pkg_vernum     <= s_CCSDS_data_reg(47 downto 45);
                         cPRTCi_outFIFO_data_o.PKG_PRIM_HDR.pkg_type       <= s_CCSDS_data_reg(44 downto 44);
@@ -411,27 +411,27 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                                 case s_byte_count is
 
                                     -- Para o primeiro, recebe os 8 bits menos significativos
-                                    when 0 =>
+                                    when x"00000000" =>
                                         s_CCSDS_data_reg(39 downto 32) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                 <= s_byte_count + 1;
 
                                     -- Para o segundo...
-                                    when 1 =>
+                                    when x"00000001" =>
                                         s_CCSDS_data_reg(31 downto 24) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
                                     -- Para o terceiro...
-                                    when 2 =>
+                                    when x"00000002" =>
                                         s_CCSDS_data_reg(23 downto 16) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
                                     -- Para o quarto...
-                                    when 3 =>
+                                    when x"00000003" =>
                                         s_CCSDS_data_reg(15 downto 8) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
                                     -- Para o quinto...
-                                    when 4 =>
+                                    when x"00000004" =>
                                         s_CCSDS_data_reg(7 downto 0) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
 
@@ -466,7 +466,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                             s_byte_transfered              <= '0';
 
                             -- Reseta o contador de bytes
-                            s_byte_count                 <= 0;
+                            s_byte_count                 <= (others => '0');
 
                             -- Transiciona para o estado de INTERPRETING_I
                             s_CCSDS_in_state             <= INTERPRETING_II;
@@ -505,7 +505,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                         s_pkg_service <= to_integer(unsigned(s_CCSDS_data_reg(31 downto 24)));
 
                         -- Stores the current offset based on the service number
-                        s_mem_offset <= s_byte_itrt;
+                        s_mem_offset <= s_byte_itrt + unsigned(cPRTCi_DMA_start_addr_i);
 
                         -- Reseta o registrador de armazenamento
                         s_CCSDS_data_reg                <= (others => '0');
@@ -533,22 +533,22 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                                 case s_byte_acc is
     
                                     -- Para o primeiro, recebe os 8 bits menos significativos
-                                    when 0 =>
+                                    when x"00000000" =>
                                         s_CCSDS_data_reg(31 downto 24) <= cPRTCi_inFIFO_data_i;
                                         s_byte_acc                   <= s_byte_acc + 1;
     
                                     -- Para o segundo...
-                                    when 1 =>
+                                    when x"00000001" =>
                                         s_CCSDS_data_reg(23 downto 16) <= cPRTCi_inFIFO_data_i;
                                         s_byte_acc                    <= s_byte_acc + 1;
 
                                     -- Para o terceiro...
-                                    when 2 =>
+                                    when x"00000002" =>
                                         s_CCSDS_data_reg(15 downto 8) <= cPRTCi_inFIFO_data_i;
                                         s_byte_acc                     <= s_byte_acc + 1;
 
                                     -- Para o quarto...
-                                    when 3 =>
+                                    when x"00000003" =>
                                         s_CCSDS_data_reg(7 downto 0) <= cPRTCi_inFIFO_data_i;
                                         s_byte_acc                     <= s_byte_acc + 1;
 
@@ -647,7 +647,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                         if s_byte_transfered = '0' then
 
                             -- Determina o que será escrito e o addr no Avalon MM
-                            cPRTCi_Avalon_MM_addr_o       <= std_logic_vector(to_unsigned(s_byte_itrt, c_CCSDS_IN_AVALON_ADDR_WIDTH));
+                            cPRTCi_Avalon_MM_addr_o       <= std_logic_vector(s_byte_itrt + unsigned(cPRTCi_DMA_start_addr_i));
                             cPRTCi_Avalon_MM_write_data_o <= s_CCSDS_data_reg(31 downto 0);
 
                             -- Ativa o sinal de escrita
@@ -676,10 +676,10 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                                 s_byte_mem <= s_byte_mem + s_byte_acc;
 
                                 -- Atualiza o sinal de byte_itrt, sinalizando o próximo byte a ser escrito
-                                s_byte_itrt <= to_integer(unsigned(cPRTCi_DMA_start_addr_i)) + ((s_byte_itrt + 4) mod to_integer(unsigned(cPRTCi_DMA_num_bytes_i)));
+                                s_byte_itrt <= (s_byte_itrt + 4) and (unsigned(cPRTCi_DMA_num_bytes_i) - 1);
                                 
                                 -- Reseta o sinal de bytes acumulados
-                                s_byte_acc        <= 0;
+                                s_byte_acc        <= (others => '0');
 
                                 -- Desativa o sinal de escrita
                                 cPRTCi_Avalon_MM_write_o <= '0';
@@ -726,17 +726,17 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                                 case s_byte_acc is
     
                                     -- Para o primeiro, recebe os 8 bits menos significativos
-                                    when 0 =>
+                                    when x"00000000" =>
                                         s_CCSDS_data_reg(15 downto 8) <= cPRTCi_inFIFO_data_i;
                                         s_byte_acc                   <= s_byte_acc + 1;
     
                                     -- Para o segundo...
-                                    when 1 =>
+                                    when x"00000001" =>
                                         s_CCSDS_data_reg(7 downto 0) <= cPRTCi_inFIFO_data_i;
                                         s_byte_acc                    <= s_byte_acc + 1;
 
                                     -- Para o terceiro (EOP)...
-                                    when 2 =>
+                                    when x"00000002" =>
                                         
                                         -- If the last byte data is 00 and its flag is 1, sets the s_eop_error to '0'
                                         if cPRTCi_inFIFO_data_i /= X"00" or cPRTCi_inFIFO_flag_i /= '1' then
@@ -811,7 +811,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
 
                             -- Escreve os sinais de PKG addr e status flags na FIFO de saída
                             cPRTCi_outFIFO_data_o.status_flags.ver_flags <= v_ver_flags_reg;
-                            cPRTCi_outFIFO_data_o.PKG_addr         <= std_logic_vector(to_unsigned(s_mem_offset, C_CCSDS_IN_AVALON_ADDR_WIDTH));
+                            cPRTCi_outFIFO_data_o.PKG_addr         <= std_logic_vector(s_mem_offset);
 
                             -- Ativa o sinal de escrita na FIFO de saída
                             cPRTCi_outFIFO_wr_en_o <= '1';
@@ -844,13 +844,13 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
 
 
                         -- Reseta todos os sinais auxiliares
-                        s_byte_count              <= 0;
-                        s_byte_acc                <= 0;
+                        s_byte_count              <= (others => '0');
+                        s_byte_acc                <= (others => '0');
                         s_byte_transfered         <= '0';
-                        s_data_field_len          <= 0;
+                        s_data_field_len          <= (others => '0');
                         s_eop_error              <= '0';
                         s_CRC16_reached           <= '0';
-                        s_mem_offset              <= 0;
+                        s_mem_offset              <= (others => '0');
                         s_pkg_service             <= 0;
                         s_CCSDS_data_reg          <= (others => '0');
                         v_ver_flags_reg           := (others => '0');
@@ -867,7 +867,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
 p_CCSDS_in_reset_mem: process(clk_i, rst_sync_i) is
 
     -- Creates a variable to store the value of the reset memory
-    variable v_rst_mem_values : t_CCSDS_In_max_stored_bytes := 0;
+    variable v_rst_mem_values : t_CCSDS_In_max_stored_bytes := (others => '0');
 
 begin
 
@@ -880,7 +880,7 @@ begin
             -- Resets the signals and the variables
             s_rst_mem <= C_CCSDS_In_PROC_rst_mem_reset;
 
-            v_rst_mem_values  := 0;
+            v_rst_mem_values  := (others => '0');
 
         -- Caso contrário
         else
@@ -889,7 +889,7 @@ begin
             if cPRTCi_PROC_rst_i = '1' then
 
                 -- Based on the service number, stores the value
-                v_rst_mem_values := v_rst_mem_values + to_integer(unsigned(cPRTCi_PROC_rst_mem_value_i));
+                v_rst_mem_values := v_rst_mem_values + unsigned(cPRTCi_PROC_rst_mem_value_i);
 
             end if;
 
@@ -897,12 +897,12 @@ begin
             -- If the reset flag is active
             if s_rst_mem_flags = '1' then
 
-                v_rst_mem_values := v_rst_mem_values - to_integer(unsigned(s_rst_mem.rst_value));
+                v_rst_mem_values := v_rst_mem_values - unsigned(s_rst_mem.rst_value);
 
             end if;
 
             -- Redetermines the value of the reset memory for each service
-            s_rst_mem.rst_value <= std_logic_vector(to_unsigned(v_rst_mem_values, C_CCSDS_IN_PROC_RST_VALUE_WIDTH));
+            s_rst_mem.rst_value <= std_logic_vector(v_rst_mem_values);
 
         end if;
 

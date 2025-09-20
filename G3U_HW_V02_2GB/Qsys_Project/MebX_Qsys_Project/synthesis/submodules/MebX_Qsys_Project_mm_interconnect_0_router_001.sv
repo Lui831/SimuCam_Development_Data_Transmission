@@ -144,7 +144,7 @@ module MebX_Qsys_Project_mm_interconnect_0_router_001
     localparam PAD7 = log2ceil(64'h80300000 - 64'h80200000); 
     localparam PAD8 = log2ceil(64'h82001000 - 64'h82000000); 
     localparam PAD9 = log2ceil(64'h88000000 - 64'h84000000); 
-    localparam PAD10 = log2ceil(64'h88001000 - 64'h88000000); 
+    localparam PAD10 = log2ceil(64'h88020000 - 64'h88000000); 
     localparam PAD11 = log2ceil(64'h8a000400 - 64'h8a000000); 
     localparam PAD12 = log2ceil(64'h8a001400 - 64'h8a001000); 
     localparam PAD13 = log2ceil(64'h90000080 - 64'h90000000); 
@@ -266,7 +266,7 @@ module MebX_Qsys_Project_mm_interconnect_0_router_001
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 7;
     end
 
-    // ( 0x88000000 .. 0x88001000 )
+    // ( 0x88000000 .. 0x88020000 )
     if ( {address[RG:PAD10],{PAD10{1'b0}}} == 32'h88000000   ) begin
             src_channel = 14'b00000000000001;
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 10;

@@ -2,28 +2,28 @@ Core: MebX_Qsys_Project_m2_ddr2_memory_p0 - Instance: SOPC_INST|m2_ddr2_memory
 Path, Setup Margin, Hold Margin
 "Address Command (Slow 900mV 85C Model)",0.112,0.659
 "Bus Turnaround Time (Slow 900mV 85C Model)",5.444,--
-"Core (Slow 900mV 85C Model)",0.439,0.175
-"Core Recovery/Removal (Slow 900mV 85C Model)",0.889,0.494
+"Core (Slow 900mV 85C Model)",0.56,0.144
+"Core Recovery/Removal (Slow 900mV 85C Model)",0.875,0.502
 "Read Capture (Slow 900mV 85C Model)",0.152,0.104
-"Read Resync (Slow 900mV 85C Model)",2.753,5.28
+"Read Resync (Slow 900mV 85C Model)",2.915,5.385
 "Write (Slow 900mV 85C Model)",-0.084,-0.084
 "Write Leveling tDQSS (Slow 900mV 85C Model)",0.392,0.392
 "Write Leveling tDSS/tDSH (Slow 900mV 85C Model)",0.42,0.42
 "Address Command (Slow 900mV 0C Model)",0.101,0.714
 "Bus Turnaround Time (Slow 900mV 0C Model)",5.474,--
-"Core (Slow 900mV 0C Model)",0.702,0.213
-"Core Recovery/Removal (Slow 900mV 0C Model)",1.14,0.474
+"Core (Slow 900mV 0C Model)",0.702,0.208
+"Core Recovery/Removal (Slow 900mV 0C Model)",1.133,0.48
 "Read Capture (Slow 900mV 0C Model)",0.155,0.107
-"Read Resync (Slow 900mV 0C Model)",2.788,5.32
+"Read Resync (Slow 900mV 0C Model)",2.955,5.391
 "Write (Slow 900mV 0C Model)",-0.066,-0.066
 "Write Leveling tDQSS (Slow 900mV 0C Model)",0.392,0.392
 "Write Leveling tDSS/tDSH (Slow 900mV 0C Model)",0.42,0.42
 "Address Command (Fast 900mV 0C Model)",0.075,0.871
 "Bus Turnaround Time (Fast 900mV 0C Model)",5.524,--
-"Core (Fast 900mV 0C Model)",0.681,0.146
-"Core Recovery/Removal (Fast 900mV 0C Model)",2.507,0.27
-"Read Capture (Fast 900mV 0C Model)",0.182,0.134
-"Read Resync (Fast 900mV 0C Model)",3.238,5.792
+"Core (Fast 900mV 0C Model)",0.618,0.135
+"Core Recovery/Removal (Fast 900mV 0C Model)",2.357,0.274
+"Read Capture (Fast 900mV 0C Model)",0.181,0.133
+"Read Resync (Fast 900mV 0C Model)",3.31,5.778
 "Write (Fast 900mV 0C Model)",-0.07,-0.07
 "Write Leveling tDQSS (Fast 900mV 0C Model)",0.392,0.392
 "Write Leveling tDSS/tDSH (Fast 900mV 0C Model)",0.42,0.42
