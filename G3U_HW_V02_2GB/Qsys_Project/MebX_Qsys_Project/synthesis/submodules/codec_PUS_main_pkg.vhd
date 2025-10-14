@@ -336,7 +336,7 @@ package codec_PUS_main_pkg is
     constant c_cPRTCo_PKG_SEC_HDR_SUBSERVICE_ID_WIDTH : integer := 8;
     constant c_cPRTCo_PKG_SEC_HDR_MSG_TYPE_CONT_WIDTH : integer := 16;
     constant c_cPRTCo_PKG_SEC_HDR_DEST_ID_WIDTH : integer := 16;
-    constant c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH : integer := 16;
+    constant c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH : integer := 56;
 
     -- Constant for defining the size of the std_logic_vector that will be used to store the PUS channel
     constant C_cPRTCo_PUS_CHANNEL_WIDTH : natural := 8;
@@ -364,7 +364,7 @@ package codec_PUS_main_pkg is
         subservice_id : std_logic_vector(c_cPRTCo_PKG_SEC_HDR_SUBSERVICE_ID_WIDTH - 1 downto 0);--8
         msg_type_counter : std_logic_vector(c_cPRTCo_PKG_SEC_HDR_MSG_TYPE_CONT_WIDTH - 1 downto 0);--16
         dest_id : std_logic_vector(c_cPRTCo_PKG_SEC_HDR_DEST_ID_WIDTH - 1 downto 0);--16
-        time    : std_logic_vector(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 1 downto 0);--16
+        time    : std_logic_vector(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 1 downto 0);--56
     end record t_cPRTCo_PKG_SEC_HDR_in;
 
      -- Type for defining the PKG_PRIM_HDR output signal, with the addition of the PKG seq count
@@ -495,6 +495,12 @@ package codec_PUS_main_pkg is
         status_flags : std_logic_vector(C_CCSDS_IN_STATUS_FLAGS_WIDTH - 1 downto 0);
     end record t_codec_PUS_recv_status_reg;
 
+    -- Registrador de Informação Adicional de Protocolo Externo (RD - Nesse caso SpW ADDR e status)
+    type t_codec_PUS_recv_extra_info_reg is record
+        spw_addr : std_logic_vector(C_CODEC_PUS_SPW_DATA_WIDTH - 1 downto 0);
+        status   : std_logic_vector(8 - 1 downto 0); -- Status do SpW (se aplicável)
+    end record t_codec_PUS_recv_extra_info_reg;
+
     -- WR Registers --
 
     -- Registrador de PKG_PRIM_HDR1 de Envio (WR)
@@ -523,13 +529,23 @@ package codec_PUS_main_pkg is
 
     -- Terceiro registrador de PKG_SEC_HDR de Envio (WR)
     type t_codec_PUS_send_PKG_SEC_HDR3_reg is record
-        time : std_logic_vector(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 1 downto 0);
+        time : std_logic_vector(32 - 1 downto 0);
     end record t_codec_PUS_send_PKG_SEC_HDR3_reg;
+
+    -- Quarto registrador de PKG_SEC_HDR de Envio (WR)
+    type t_codec_PUS_send_PKG_SEC_HDR4_reg is record
+        time_ext : std_logic_vector(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 32 - 1 downto 0);
+    end record t_codec_PUS_send_PKG_SEC_HDR4_reg;
 
     -- Registrador de Endereçamento de pacote de Envio (WR)
     type t_codec_PUS_send_pkg_addr_reg is record
         pkg_addr : std_logic_vector(C_CODEC_PUS_AVALON_ADDR_WIDTH - 1 downto 0);
     end record t_codec_PUS_send_pkg_addr_reg;
+
+    -- Registrador de Informação Adicional de Protocolo Externo (WR - Nesse caso SpW ADDR)
+    type t_codec_PUS_send_extra_info_reg is record
+        spw_addr : std_logic_vector(C_CODEC_PUS_SPW_DATA_WIDTH - 1 downto 0);
+    end record t_codec_PUS_send_extra_info_reg;
 
     -- Registrador de Manipulação (WR*) (virtualmente separado em um de escrita e um de leitura)
     type t_codec_PUS_handling_reg is record
@@ -562,6 +578,11 @@ package codec_PUS_main_pkg is
         fifo_size : std_logic_vector(C_CODEC_PUS_AVALON_ADDR_WIDTH - 1 downto 0);
     end record t_codec_PUS_send_fifo_size_reg;
 
+    -- Registrador de Configuração de Protocolo Externo (WR - Nesse caso SpW Addr)
+    type t_codec_PUS_external_proto_cfg_reg is record
+        spw_addr : std_logic_vector(C_CODEC_PUS_SPW_DATA_WIDTH - 1 downto 0);
+    end record t_codec_PUS_external_proto_cfg_reg;
+
     ----------------------------------------------------------------------------------------------------------------------------------------------------
     -- Important types, constants and aliases for the codec_PUS_Avalon_Read module
 
@@ -586,17 +607,21 @@ package codec_PUS_main_pkg is
         recv_PKG_SEC_HDR2   : t_codec_PUS_recv_PKG_SEC_HDR2_reg;
         recv_pkg_addr       : t_codec_PUS_recv_pkg_addr_reg;
         recv_status         : t_codec_PUS_recv_status_reg;
+        recv_extra_info    : t_codec_PUS_recv_extra_info_reg;
         send_PKG_PRIM_HDR1  : t_codec_PUS_send_PKG_PRIM_HDR1_reg;
         send_PKG_PRIM_HDR2  : t_codec_PUS_send_PKG_PRIM_HDR2_reg;
         send_PKG_SEC_HDR1   : t_codec_PUS_send_PKG_SEC_HDR1_reg;
         send_PKG_SEC_HDR2   : t_codec_PUS_send_PKG_SEC_HDR2_reg;
         send_PKG_SEC_HDR3   : t_codec_PUS_send_PKG_SEC_HDR3_reg;
+        send_PKG_SEC_HDR4   : t_codec_PUS_send_PKG_SEC_HDR4_reg;
         send_pkg_addr       : t_codec_PUS_send_pkg_addr_reg;
+        send_extra_info    : t_codec_PUS_send_extra_info_reg;
         handling            : t_codec_PUS_handling_reg;
         recv_mem_offset     : t_codec_PUS_recv_mem_offset_reg; -- Offset de memória para DMA de entrada
         recv_fifo_size      : t_codec_PUS_recv_fifo_size_reg; -- Tamanho de fila de DMA de entrada
         send_mem_offset     : t_codec_PUS_send_mem_offset_reg; -- Offset de memória
         send_fifo_size      : t_codec_PUS_send_fifo_size_reg; -- Tamanho de fila de DMA de saída
+        external_proto_cfg  : t_codec_PUS_external_proto_cfg_reg; -- Configuração de protocolo externo (nesse caso SpW ADDR)
 
     end record t_codec_PUS_rd_regs;
 
@@ -662,6 +687,10 @@ package codec_PUS_main_pkg is
         time => (others => '0')
     );
 
+    constant C_codec_PUS_send_PKG_SEC_HDR4_reg_reset : t_codec_PUS_send_PKG_SEC_HDR4_reg := (
+        time_ext => (others => '0')
+    );
+
     constant C_codec_PUS_send_pkg_addr_reg_reset : t_codec_PUS_send_pkg_addr_reg := (
         pkg_addr => (others => '0')
     );
@@ -706,6 +735,19 @@ package codec_PUS_main_pkg is
         fifo_size => (others => '0')
     );
 
+    constant C_codec_PUS_recv_extra_info_reg_reset : t_codec_PUS_recv_extra_info_reg := (
+        spw_addr => (others => '0'),
+        status   => (others => '0')
+    );
+
+    constant C_codec_PUS_send_extra_info_reg_reset : t_codec_PUS_send_extra_info_reg := (
+        spw_addr => (others => '0')
+    );
+
+    constant C_codec_PUS_external_proto_cfg_reg_reset : t_codec_PUS_external_proto_cfg_reg := (
+        spw_addr => (others => '0')
+    );
+
     constant c_CODEC_PUS_RD_REGS_RST : t_codec_PUS_rd_regs := (
         control_reg        => C_codec_PUS_control_reg_reset,
         recv_PKG_PRIM_HDR1 => C_codec_PUS_recv_PKG_PRIM_HDR1_reg_reset,
@@ -714,17 +756,21 @@ package codec_PUS_main_pkg is
         recv_PKG_SEC_HDR2  => C_codec_PUS_recv_PKG_SEC_HDR2_reg_reset,
         recv_pkg_addr      => C_codec_PUS_recv_pkg_addr_reg_reset,
         recv_status        => C_codec_PUS_recv_status_reg_reset,
+        recv_extra_info   => C_codec_PUS_recv_extra_info_reg_reset,
         send_PKG_PRIM_HDR1 => C_codec_PUS_send_PKG_PRIM_HDR1_reg_reset,
         send_PKG_PRIM_HDR2 => C_codec_PUS_send_PKG_PRIM_HDR2_reg_reset,
         send_PKG_SEC_HDR1  => C_codec_PUS_send_PKG_SEC_HDR1_reg_reset,
         send_PKG_SEC_HDR2  => C_codec_PUS_send_PKG_SEC_HDR2_reg_reset,
         send_PKG_SEC_HDR3  => C_codec_PUS_send_PKG_SEC_HDR3_reg_reset,
+        send_PKG_SEC_HDR4  => C_codec_PUS_send_PKG_SEC_HDR4_reg_reset,
         send_pkg_addr      => C_codec_PUS_send_pkg_addr_reg_reset,
+        send_extra_info   => C_codec_PUS_send_extra_info_reg_reset,
         handling           => C_codec_PUS_handling_reg_reset,
         recv_mem_offset    => C_codec_PUS_recv_mem_offset_reg_reset,
         recv_fifo_size     => C_codec_PUS_recv_fifo_size_reg_reset,
         send_mem_offset    => C_codec_PUS_send_mem_offset_reg_reset,
-        send_fifo_size     => C_codec_PUS_send_fifo_size_reg_reset
+        send_fifo_size     => C_codec_PUS_send_fifo_size_reg_reset,
+        external_proto_cfg => C_codec_PUS_external_proto_cfg_reg_reset
 
     );
     
@@ -751,12 +797,15 @@ package codec_PUS_main_pkg is
         send_PKG_SEC_HDR1   : t_codec_PUS_send_PKG_SEC_HDR1_reg;
         send_PKG_SEC_HDR2   : t_codec_PUS_send_PKG_SEC_HDR2_reg;
         send_PKG_SEC_HDR3   : t_codec_PUS_send_PKG_SEC_HDR3_reg;
+        send_PKG_SEC_HDR4   : t_codec_PUS_send_PKG_SEC_HDR4_reg;
         send_pkg_addr       : t_codec_PUS_send_pkg_addr_reg;
+        send_extra_info    : t_codec_PUS_send_extra_info_reg;
         handling            : t_codec_PUS_handling_reg;
         recv_mem_offset     : t_codec_PUS_recv_mem_offset_reg; -- Offset de memória para DMA de entrada
         recv_fifo_size      : t_codec_PUS_recv_fifo_size_reg; -- Tamanho de
         send_mem_offset     : t_codec_PUS_send_mem_offset_reg; -- Offset de memória
         send_fifo_size      : t_codec_PUS_send_fifo_size_reg; -- Tamanho de fila de DMA de saída
+        external_proto_cfg  : t_codec_PUS_external_proto_cfg_reg; -- Configuração de protocolo externo (nesse caso SpW ADDR)
 
     end record t_codec_PUS_wr_regs;
 
@@ -776,12 +825,15 @@ package codec_PUS_main_pkg is
         send_PKG_SEC_HDR1 => C_codec_PUS_send_PKG_SEC_HDR1_reg_reset,
         send_PKG_SEC_HDR2 => C_codec_PUS_send_PKG_SEC_HDR2_reg_reset,
         send_PKG_SEC_HDR3 => C_codec_PUS_send_PKG_SEC_HDR3_reg_reset,
+        send_PKG_SEC_HDR4 => C_codec_PUS_send_PKG_SEC_HDR4_reg_reset,
         send_pkg_addr     => C_codec_PUS_send_pkg_addr_reg_reset,
+        send_extra_info   => C_codec_PUS_send_extra_info_reg_reset,
         handling          => C_codec_PUS_handling_reg_reset,
         recv_mem_offset   => C_codec_PUS_recv_mem_offset_reg_reset,
         recv_fifo_size    => C_codec_PUS_recv_fifo_size_reg_reset,
         send_mem_offset   => C_codec_PUS_send_mem_offset_reg_reset,
-        send_fifo_size    => C_codec_PUS_send_fifo_size_reg_reset
+        send_fifo_size    => C_codec_PUS_send_fifo_size_reg_reset,
+        external_proto_cfg => C_codec_PUS_external_proto_cfg_reg_reset
     );
 
     ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -815,6 +867,70 @@ package codec_PUS_main_pkg is
     -- Important types for the module
 
     -- Important RESET constants for the module
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    -- Important types, constants and aliases for the codec_PUS_SpW_FIFO module
+
+    -- Important aliases for the module
+
+    -- Important constants for the module
+    constant c_cPSAF_DATA_WIDTH : integer := 8;
+    constant c_cPSAF_FIFO_DEPTH : integer := 16;
+    constant c_cPSAF_STATUS_WIDTH : integer := 8;
+
+    -- Important types for the module
+
+    -- Record type for defining the data to be stored in the FIFO
+    type t_cPSAF_FIFO_data is record
+        spw_addr   : std_logic_vector(c_cPSAF_DATA_WIDTH - 1 downto 0);
+        spw_status : std_logic_vector(c_cPSAF_STATUS_WIDTH - 1 downto 0);
+    end record t_cPSAF_FIFO_data;
+
+    -- Status flags for the spw_status
+    type t_cPSAF_status_flags is (ADDR_ERROR, PROTOCOL_ID_ERROR);
+
+    -- Important RESET constants for the module
+    constant C_cPSAF_FIFO_data_reset : t_cPSAF_FIFO_data := (
+        spw_addr => (others => '0'),
+        spw_status => (others => '0')
+    );
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    -- Important types, constants and aliases for the codec_PUS_SpW_adapter module
+
+    -- Important aliases for the module
+    constant c_cPSA_SpW_DATA_WIDTH   : integer := C_CODEC_PUS_SPW_DATA_WIDTH;
+    constant c_cPSA_CCSDS_DATA_WIDTH : integer := C_CCSDS_DATA_WIDTH;
+    constant c_cPSA_SpW_ADDR_WIDTH   : integer := c_cPSAF_DATA_WIDTH;
+    constant c_cPSA_FIFO_data_reset  : t_cPSAF_FIFO_data := C_cPSAF_FIFO_data_reset;
+    constant c_cPSA_STATUS_WIDTH     : integer := c_cPSAF_STATUS_WIDTH;
+
+    alias t_cPSA_status_flags is t_cPSAF_status_flags;
+    alias t_cPSA_FIFO_data is t_cPSAF_FIFO_data;
+
+    -- Important constants for the module
+
+    -- Protocol ID for PUS expected in SpW packets
+    constant c_cPSA_PROTOCOL_ID_PUS : std_logic_vector(7 downto 0) := x"02";
+
+    -- Important types for the module
+
+    -- Type for defining the states of the SpW to PUS adapter
+    type t_cPSA_SpW_to_PUS_states is (RESET, IDLE, RECEIVING_HDR, RECEIVING_CCSDS);
+
+    -- Type for defining the states of the PUS to SpW adapter
+    type t_cPSa_PUS_to_SpW_states is (RESET, IDLE, SENDING_HDR, SENDING_CCSDS);
+
+    -- Declares the function that converts a t_cPSAF_status_flags to std_logic_vector
+    function f_spw_status_to_std_logic_vector_mask(spw_status_reg : std_logic_vector(c_cPSAF_STATUS_WIDTH - 1 downto 0); spw_status : t_cPSAF_status_flags) return std_logic_vector;
+
+    -- Important RESET constants for the module
+
+
 
     
 end package codec_PUS_main_pkg;
@@ -862,6 +978,30 @@ package body codec_PUS_main_pkg is
                 return v_ver_flags_reg;
         end case;
     end function f_ver_flags_to_std_logic_vector_mask;
+
+    --------------------------------------------------------------------------------------
+    -- Important functions for the codec_PUS_SpW_adapter --
+
+    -- Função que atualiza o valor de spw_status a partir de um t_cPSAF_status_flags
+    function f_spw_status_to_std_logic_vector_mask(spw_status_reg : std_logic_vector(c_cPSAF_STATUS_WIDTH - 1 downto 0); spw_status : t_cPSAF_status_flags) return std_logic_vector is
+        -- Variável local para armazenar o valor de spw_status_reg
+        variable v_spw_status_reg : std_logic_vector(c_cPSAF_STATUS_WIDTH - 1 downto 0) := (others => '0');
+    begin
+        case spw_status is
+            when ADDR_ERROR =>
+                v_spw_status_reg := (others => '0');
+                v_spw_status_reg(0) := '1';
+                v_spw_status_reg := v_spw_status_reg or spw_status_reg;
+                return v_spw_status_reg;
+            when PROTOCOL_ID_ERROR =>
+                v_spw_status_reg := (others => '0');
+                v_spw_status_reg(1) := '1';
+                v_spw_status_reg := v_spw_status_reg or spw_status_reg;
+                return v_spw_status_reg;
+            when others =>
+                return v_spw_status_reg;
+        end case;
+    end function f_spw_status_to_std_logic_vector_mask;
 
 
 end package body codec_PUS_main_pkg;

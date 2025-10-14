@@ -101,6 +101,9 @@ void codec_pus_config(t_codec_pus *pCodecPUS){
     // Configures the available space for the send DMA as the full size of the FIFO
     pCodecPUS->u32CurrentSendDmaAvailableSpace = pCodecPUS->oCodecPUSSendDmaConfig.u32DmaFifoSize;
 
+    // Configures the SpW ADDR
+    CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_EXT_PROTOCOL_INFO_REG_OFFSET, pCodecPUS->oCodecPUSExtProtocolConfig.u8CodecPusSpWADDR);
+
 }
 
 
@@ -251,6 +254,13 @@ alt_u8 codec_pus_get_recv_tc_nb(t_codec_pus *pCodecPUS, t_codec_pus_tc_recv_info
     CODEC_PUS_REG_READ(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_RECV_PKG_STATUS_REG_OFFSET, u32TempVal);
     pRecvInfo->u8StatusBits = (u32TempVal & CODEC_PUS_RECV_STATUS_STATUS_FLAGS_MASK) >> CODEC_PUS_RECV_STATUS_STATUS_FLAGS_OFFSET;
 
+
+    // Reads the EXT PROTOCOL INFO register and stores it
+    CODEC_PUS_REG_READ(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_RECV_PKG_EXTRA_INFO_REG_OFFSET, u32TempVal);
+    pRecvInfo->oExtProtocolInfo.u8SpWADDR = (u32TempVal & CODEC_PUS_RECV_EXTRA_INFO_SPW_ADDR_MASK) >> CODEC_PUS_RECV_EXTRA_INFO_SPW_ADDR_OFFSET;
+    pRecvInfo->oExtProtocolInfo.u8SpWStatusBits = (u32TempVal & CODEC_PUS_RECV_EXTRA_INFO_STATUS_MASK) >> CODEC_PUS_RECV_EXTRA_INFO_STATUS_OFFSET;
+
+
     /* -------------------------------------------------------------- */
 
     // If there is an Application Data, reads it from the DMA FIFO
@@ -321,6 +331,12 @@ void codec_pus_get_recv_tc_b(t_codec_pus *pCodecPUS, t_codec_pus_tc_recv_info *p
     // Reads the STATUS register and stores it
     CODEC_PUS_REG_READ(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_RECV_PKG_STATUS_REG_OFFSET, u32TempVal);
     pRecvInfo->u8StatusBits = (u32TempVal & CODEC_PUS_RECV_STATUS_STATUS_FLAGS_MASK) >> CODEC_PUS_RECV_STATUS_STATUS_FLAGS_OFFSET;
+
+
+    // Reads the EXT PROTOCOL INFO register and stores it
+    CODEC_PUS_REG_READ(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_RECV_PKG_EXTRA_INFO_REG_OFFSET, u32TempVal);
+    pRecvInfo->oExtProtocolInfo.u8SpWADDR = (u32TempVal & CODEC_PUS_RECV_EXTRA_INFO_SPW_ADDR_MASK) >> CODEC_PUS_RECV_EXTRA_INFO_SPW_ADDR_OFFSET;
+    pRecvInfo->oExtProtocolInfo.u8SpWStatusBits = (u32TempVal & CODEC_PUS_RECV_EXTRA_INFO_STATUS_MASK) >> CODEC_PUS_RECV_EXTRA_INFO_STATUS_OFFSET;
 
     /* -------------------------------------------------------------- */
 
@@ -428,10 +444,16 @@ alt_u8 codec_pus_send_tm_nb(t_codec_pus *pCodecPUS, t_codec_pus_tm_send_info *pS
 	u32TempVal = 0;
 
 	// Writes to the TIME register. Maximum allowed size is 32 bits
-	for (alt_u32 cont = 0; cont < CODEC_PUS_TIME_FIELD_SIZE; cont++)
-		u32TempVal |= (pSendInfo->oPkgSecHdr.u8Time[cont] << (8*(CODEC_PUS_TIME_FIELD_SIZE - cont - 1)));
+	for (alt_u32 cont = 0; cont < 4; cont++)
+		u32TempVal |= (pSendInfo->oPkgSecHdr.u8Time[cont] << (8*(CODEC_PUS_TIME_FIELD_SIZE - cont)));
 
 	CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_SEC_HDR3_REG_OFFSET, u32TempVal);
+
+    u32TempVal = 0;
+    for (alt_u32 cont = 0; cont < CODEC_PUS_TIME_FIELD_SIZE - 4; cont++)
+        u32TempVal |= (pSendInfo->oPkgSecHdr.u8Time[cont + 4] << (8*(CODEC_PUS_TIME_FIELD_SIZE - cont - 1)));
+
+    CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_SEC_HDR4_REG_OFFSET, u32TempVal);
 
 
 	// Writes to the PKG_ADDR register, based on the DMA value
@@ -440,6 +462,14 @@ alt_u8 codec_pus_send_tm_nb(t_codec_pus *pCodecPUS, t_codec_pus_tm_send_info *pS
 	u32TempVal |= ((pCodecPUS->u32CurrentSendDmaOffset + pCodecPUS->oCodecPUSSendDmaConfig.u32DmaMemBaseAddr) << CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_OFFSET) & CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_MASK;
 
 	CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_ADDR_REG_OFFSET, u32TempVal);
+
+
+    // Writes to the PKG_EXTRA_INFO register
+    u32TempVal = 0;
+
+    u32TempVal |= (pSendInfo->oExtProtocolInfo.u8SpWADDR << CODEC_PUS_SEND_PKG_EXTRA_INFO_SPW_ADDR_OFFSET) & CODEC_PUS_SEND_PKG_EXTRA_INFO_SPW_ADDR_MASK;
+    
+    CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_EXTRA_INFO_REG_OFFSET, u32TempVal);
 
 
 	/* -------------------------------------------------------------- */
@@ -510,18 +540,32 @@ void codec_pus_send_tm_b(t_codec_pus *pCodecPUS, t_codec_pus_tm_send_info *pSend
 	u32TempVal = 0;
 
 	// Writes to the TIME register. Maximum allowed size is 32 bits
-	for (alt_u32 cont = 0; cont < CODEC_PUS_TIME_FIELD_SIZE; cont++)
+	for (alt_u32 cont = 0; cont < 4; cont++)
 		u32TempVal |= (pSendInfo->oPkgSecHdr.u8Time[cont] << (8*(CODEC_PUS_TIME_FIELD_SIZE - cont - 1)));
 
 	CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_SEC_HDR3_REG_OFFSET, u32TempVal);
+
+    u32TempVal = 0;
+    for (alt_u32 cont = 4; cont < CODEC_PUS_TIME_FIELD_SIZE - 4; cont++)
+        u32TempVal |= (pSendInfo->oPkgSecHdr.u8Time[cont] << (8*(CODEC_PUS_TIME_FIELD_SIZE - cont - 1)));
+
+    CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_SEC_HDR4_REG_OFFSET, u32TempVal);
 
 
 	// Writes to the PKG_ADDR register, based on the DMA value
 	u32TempVal = 0;
 
-	u32TempVal |= (pCodecPUS->u32CurrentSendDmaOffset << CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_OFFSET) & CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_MASK;
+	u32TempVal |= ((pCodecPUS->u32CurrentSendDmaOffset + pCodecPUS->oCodecPUSSendDmaConfig.u32DmaMemBaseAddr) << CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_OFFSET) & CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_MASK;
 
 	CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_ADDR_REG_OFFSET, u32TempVal);
+
+
+    // Writes to the PKG_EXTRA_INFO register
+    u32TempVal = 0;
+
+    u32TempVal |= (pSendInfo->oExtProtocolInfo.u8SpWADDR << CODEC_PUS_SEND_PKG_EXTRA_INFO_SPW_ADDR_OFFSET) & CODEC_PUS_SEND_PKG_EXTRA_INFO_SPW_ADDR_MASK;
+    
+    CODEC_PUS_REG_WRITE(pCodecPUS->u32CodecPUSBaseAddr, CODEC_PUS_SEND_PKG_EXTRA_INFO_REG_OFFSET, u32TempVal);
 
 
 	/* -------------------------------------------------------------- */

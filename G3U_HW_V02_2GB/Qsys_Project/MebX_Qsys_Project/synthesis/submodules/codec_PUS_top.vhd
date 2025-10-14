@@ -243,14 +243,13 @@ component codec_PUS_CRC16CITT_module is
 end component;
 
 component codec_PUS_Registers_Controller_Module is
-
     port(
 
         -- Input Signals --
 
-        -- Reset and clock signals
-        clk_i                              : in std_logic;
-        rst_sync_i                         : in std_logic;
+        -- Reset and Clock signals
+        clk_i      : in std_logic;
+        rst_sync_i : in std_logic;
 
         -- Input Header FIFO signals
         cPRCM_input_hdr_fifo_data_i         : in t_cPFi_FIFO_data;
@@ -263,12 +262,24 @@ component codec_PUS_Registers_Controller_Module is
         cPRCM_output_hdr_fifo_full_i        : in std_logic;
         cPRCM_output_hdr_fifo_almost_full_i : in std_logic;
 
+        -- IN SpW ADDR FIFO signals
+        cPRCM_IN_SpW_ADDR_FIFO_txrdy_i       : in std_logic;
+        cPRCM_IN_SpW_ADDR_FIFO_full_i        : in std_logic;
+        cPRCM_IN_SpW_ADDR_FIFO_almost_full_i : in std_logic;
+
+        -- OUT SpW ADDR FIFO signals
+        cPRCM_OUT_SpW_ADDR_FIFO_rxvalid_i      : in std_logic;
+        cPRCM_OUT_SpW_ADDR_FIFO_empty_i        : in std_logic;
+        cPRCM_OUT_SpW_ADDR_FIFO_almost_empty_i : in std_logic;
+        cPRCM_OUT_SpW_ADDR_FIFO_data_i         : in t_cPSAF_FIFO_data;
+
         -- Agent Write signals
         cPRCM_agent_write_wr_regs_i : in t_codec_PUS_wr_regs;
         cPRCM_agent_write_wr_flag_i : in std_logic;
 
         -- CCSDS out signals
         cPRCM_CCSDS_out_rst_i : in std_logic;
+
 
 
         -- Output Signals --
@@ -279,6 +290,13 @@ component codec_PUS_Registers_Controller_Module is
         -- Output Header FIFO signals
         cPRCM_output_hdr_fifo_wr_en_o : out std_logic;
         cPRCM_output_hdr_fifo_data_o  : out t_cPFo_FIFO_data;
+
+        -- IN SpW ADDR FIFO signals
+        cPRCM_IN_SpW_ADDR_FIFO_wr_en_o : out std_logic;
+        cPRCM_IN_SpW_ADDR_FIFO_data_o  : out t_cPSAF_FIFO_data;
+
+        -- OUT SpW ADDR FIFO signals
+        cPRCM_OUT_SpW_ADDR_FIFO_rd_en_o : out std_logic;
 
         -- Agent Read signals
         cPRCM_avalon_read_rd_regs_o : out t_codec_PUS_rd_regs;
@@ -292,8 +310,8 @@ component codec_PUS_Registers_Controller_Module is
         cPRCM_IRQ_controller_send_IRQ_trigger_o : out std_logic;
 
         -- CCSDS in signals
-        cPRCM_CCSDS_in_rst_o       : out std_logic;
-        cPRCM_CCSDS_in_rst_value_o : out std_logic_vector(c_CPRCM_RST_VALUE_WIDTH - 1 downto 0);
+        cPRCM_CCSDS_in_rst_o        : out std_logic;
+        cPRCM_CCSDS_in_rst_value_o  : out std_logic_vector(c_CPRCM_RST_VALUE_WIDTH - 1 downto 0);
         cPRCM_CCSDS_in_mem_offset_o : out std_logic_vector(c_CPRCM_MEM_OFFSET_WIDTH - 1 downto 0);
         cPRCM_CCSDS_in_fifo_size_o  : out std_logic_vector(c_CPRCM_FIFO_SIZE_WIDTH - 1 downto 0);
 
@@ -302,10 +320,11 @@ component codec_PUS_Registers_Controller_Module is
         cPRCM_CCSDS_out_fifo_size_o  : out std_logic_vector(c_CPRCM_FIFO_SIZE_WIDTH - 1 downto 0);
 
         -- General reset signal for the inner parts of the Codec PUS
-        cPRCM_gen_proc_rst_o         : out std_logic
-                                    
-    );
+        cPRCM_gen_proc_rst_o : out std_logic;
 
+        -- External protocol adapter configuration signals
+        cPRCM_external_proto_cfg_spw_addr_o : out std_logic_vector(7 downto 0)
+    );
 end component;
 
 component codec_PUS_Input_Header_FIFO is
@@ -378,6 +397,111 @@ component codec_PUS_Output_Header_FIFO is
 
     );
 
+end component;
+
+component codec_PUS_SpW_ADDR_FIFO is
+    generic(
+
+        -- Generic for the FIFO's length
+        c_cPSAF_LENGTH : natural := C_CPSAF_FIFO_DEPTH
+    );
+
+    port(
+
+        -- Clock and Reset
+        clk_i        : in  std_logic;
+        rst_sync_i   : in  std_logic;
+
+        -- FIFO Write Interface (Codec PUS side)
+        cPSAF_wr_en_i : in  std_logic;
+        cPSAF_data_i  : in  t_cPSAF_FIFO_data;
+
+        -- FIFO Read Interface (SpaceWire side)
+        cPSAF_rd_en_i : in  std_logic;
+
+        -- FIFO Status Outputs
+        cPSAF_empty_o         : out std_logic;
+        cPSAF_almost_empty_o  : out std_logic;
+        cPSAF_txrdy_o         : out std_logic;
+        cPSAF_full_o          : out std_logic;
+        cPSAF_almost_full_o   : out std_logic;
+        cPSAF_data_o          : out t_cPSAF_FIFO_data;
+        cPSAF_rxvalid_o       : out std_logic
+    );
+
+end component;
+
+component codec_PUS_SpW_adapter is
+    port(
+
+        -- Input Signals --
+
+        -- Clock and Reset
+        clk_i        : in  std_logic;  -- Global clock
+        rst_sync_i   : in  std_logic;  -- Global synchronous reset (active high)
+
+        -- Input signals from the CCSDS In module
+        cPSa_CCSDS_in_rd_en_i : in std_logic;
+
+        -- Input signals from the CCSDS Out module
+        cPSa_CCSDS_out_data_i    : in std_logic_vector(c_cPSA_CCSDS_DATA_WIDTH - 1 downto 0);
+        cPSa_CCSDS_out_end_pkg_i : in std_logic;
+        cPSa_CCSDS_out_wr_en_i   : in std_logic;
+
+        -- Input signals from the Registers and Controller Module
+        cPSa_controller_SpW_node_ADDR_i : in std_logic_vector(c_cPSA_SpW_ADDR_WIDTH - 1 downto 0);
+
+        -- Input signals from the OUT SpW ADDR FIFO module
+        cPSa_OUT_SpW_ADDR_FIFO_full_i        : in std_logic;
+        cPSa_OUT_SpW_ADDR_FIFO_almost_full_i : in std_logic;
+        cPSa_OUT_SpW_ADDR_FIFO_txrdy_i       : in std_logic;
+
+        -- Input signals from the IN SpW ADDR FIFO module
+        cPSa_IN_SpW_ADDR_FIFO_data_i         : in t_cPSAF_FIFO_data;
+        cPSa_IN_SpW_ADDR_FIFO_rxvalid_i      : in std_logic;
+        cPSa_IN_SpW_ADDR_FIFO_empty_i        : in std_logic;
+        cPSa_IN_SpW_ADDR_FIFO_almost_empty_i : in std_logic;
+
+        -- Input signals from the SpW Connecter module
+        cPSa_SpW_connecter_data_in_i         : in std_logic_vector(c_cPSA_SpW_DATA_WIDTH - 1 downto 0);
+        cPSA_SpW_connecter_flag_in_i         : in std_logic;
+        cPSA_SpW_connecter_empty_in_i        : in std_logic;
+        cPSA_SpW_connecter_almost_empty_in_i : in std_logic;
+        cPSA_SpW_connecter_rxvalid_in_i      : in std_logic;
+
+        cPSa_SpW_connecter_full_out_i        : in std_logic;
+        cPSa_SpW_connecter_almost_full_out_i : in std_logic;
+        cPSa_SpW_connecter_txrdy_out_i       : in std_logic;
+
+
+
+        -- Output Signals --
+
+        -- Output signals to the CCSDS In module
+        cPSa_CCSDS_in_data_o         : out std_logic_vector(c_cPSA_CCSDS_DATA_WIDTH - 1 downto 0);
+        cPSa_CCSDS_in_end_pkg_o      : out std_logic;
+        cPSA_CCSDS_in_rxvalid_o      : out std_logic;
+        cPSa_CCSDS_in_empty_o        : out std_logic;
+        cPSa_CCSDS_in_almost_empty_o : out std_logic;
+
+        -- Output signals to the CCSDS Out module
+        cPSa_CCSDS_out_full_o        : out std_logic;
+        cPSa_CCSDS_out_almost_full_o : out std_logic;
+        cPSa_CCSDS_out_txrdy_o       : out std_logic;
+
+        -- Output signals to the OUT SpW ADDR FIFO module
+        cPSa_OUT_SpW_ADDR_FIFO_data_o   : out t_cPSAF_FIFO_data;
+        cPSa_OUT_SpW_ADDR_FIFO_wr_en_o  : out std_logic;
+
+        -- Output signals to the IN SpW ADDR FIFO module
+        cPSa_IN_SpW_ADDR_FIFO_rd_en_o : out std_logic;
+
+        -- Output signals to the SpW connecter module
+        cPSa_SpW_connecter_rd_en_in_o : out std_logic;
+        cPSa_SpW_connecter_data_out_o  : out std_logic_vector(c_cPSA_SpW_DATA_WIDTH - 1 downto 0);
+        cPSa_SpW_connecter_flag_out_o  : out std_logic;
+        cPSa_SpW_connecter_wr_en_out_o : out std_logic
+    );
 end component;
 
 component codec_PUS_Avalon_Write is
@@ -525,6 +649,53 @@ signal s_Controller_CCSDS_out_rst : std_logic;
 signal s_Controller_CCSDS_out_DMA_start_addr : std_logic_vector(C_CCSDS_IN_AVALON_ADDR_WIDTH - 1 downto 0);
 signal s_Controller_CCSDS_out_DMA_num_bytes : std_logic_vector(C_CCSDS_IN_AVALON_ADDR_WIDTH - 1 downto 0);
 
+-- Signals for interconnecting the Controller module with the SpW Adapter module
+signal s_Controller_SpW_adapter_SpW_node_ADDR : std_logic_vector(c_cPSA_SpW_ADDR_WIDTH - 1 downto 0);
+
+-- Signals for interconnecting the Controller module with the IN SpW ADDR FIFO module
+signal s_Controller_IN_SpW_ADDR_FIFO_wr_en : std_logic;
+signal s_Controller_IN_SpW_ADDR_FIFO_data : t_cPSAF_FIFO_data;
+signal s_Controller_IN_SpW_ADDR_FIFO_full : std_logic;
+signal s_Controller_IN_SpW_ADDR_FIFO_almost_full : std_logic;
+signal s_Controller_IN_SpW_ADDR_FIFO_txrdy : std_logic;
+
+-- Signals for interconnecting the Controller module with the OUT SpW ADDR FIFO module
+signal s_Controller_OUT_SpW_ADDR_FIFO_rd_en : std_logic;
+signal s_Controller_OUT_SpW_ADDR_FIFO_data : t_cPSAF_FIFO_data;
+signal s_Controller_OUT_SpW_ADDR_FIFO_empty : std_logic;
+signal s_Controller_OUT_SpW_ADDR_FIFO_almost_empty : std_logic;
+signal s_Controller_OUT_SpW_ADDR_FIFO_rxvalid : std_logic;
+
+-- Signals for interconnecting the SpW Adapter module with the IN SpW ADDR FIFO module
+signal s_SpW_adapter_IN_SpW_ADDR_FIFO_rd_en : std_logic;
+signal s_SpW_adapter_IN_SpW_ADDR_FIFO_data : t_cPSAF_FIFO_data;
+signal s_SpW_adapter_IN_SpW_ADDR_FIFO_empty : std_logic;
+signal s_SpW_adapter_IN_SpW_ADDR_FIFO_almost_empty : std_logic;
+signal s_SpW_adapter_IN_SpW_ADDR_FIFO_rxvalid : std_logic;
+
+-- Signals for interconnecting the SpW Adapter module with the OUT SpW ADDR FIFO module
+signal s_SpW_adapter_OUT_SpW_ADDR_FIFO_data : t_cPSAF_FIFO_data;
+signal s_SpW_adapter_OUT_SpW_ADDR_FIFO_full : std_logic;
+signal s_SpW_adapter_OUT_SpW_ADDR_FIFO_almost_full : std_logic;
+signal s_SpW_adapter_OUT_SpW_ADDR_FIFO_txrdy : std_logic;
+signal s_SpW_adapter_OUT_SpW_ADDR_FIFO_wr_en : std_logic;
+
+-- Signals for interconnecting the SpW Adapter module with the CCSDS In module
+signal s_SpW_adapter_CCSDS_in_data : std_logic_vector(c_cPSA_CCSDS_DATA_WIDTH - 1 downto 0);
+signal s_SpW_adapter_CCSDS_in_end_pkg : std_logic;
+signal s_SpW_adapter_CCSDS_in_rxvalid : std_logic;
+signal s_SpW_adapter_CCSDS_in_empty : std_logic;
+signal s_SpW_adapter_CCSDS_in_almost_empty : std_logic;
+signal s_SpW_adapter_CCSDS_in_rd_en : std_logic;
+
+-- Signals for interconnecting the SpW Adapter module with the CCSDS Out module
+signal s_SpW_adapter_CCSDS_out_full : std_logic;
+signal s_SpW_adapter_CCSDS_out_almost_full : std_logic;
+signal s_SpW_adapter_CCSDS_out_txrdy : std_logic;
+signal s_SpW_adapter_CCSDS_out_data : std_logic_vector(c_cPSA_CCSDS_DATA_WIDTH - 1 downto 0);
+signal s_SpW_adapter_CCSDS_out_end_pkg : std_logic;
+signal s_SpW_adapter_CCSDS_out_wr_en : std_logic;
+
 -- Codec PUS general reset signal from the Controller module
 signal s_Controller_gen_proc_rst : std_logic;
 
@@ -574,12 +745,12 @@ CCSDS_Input : codec_pus_receiver_transmitter_ccsds_in
         rst_sync_i               => s_comb_rst,
 
         -- Input FIFO signals
-        cPRTCi_inFIFO_data_i         => conduit_inFIFO_data_i,
-        cPRTCi_inFIFO_flag_i         => conduit_inFIFO_flag_i,
-        cPRTCi_inFIFO_almost_empty_i => conduit_inFIFO_almost_empty_i,
-        cPRTCi_inFIFO_empty_i        => conduit_inFIFO_empty_i,
-        cPRTCi_inFIFO_rxvalid_i      => conduit_inFIFO_rxvalid_i,
-        cPRTCi_inFIFO_rd_en_o        => conduit_inFIFO_rd_en_o,
+        cPRTCi_inFIFO_data_i         => s_SpW_adapter_CCSDS_in_data,
+        cPRTCi_inFIFO_flag_i         => s_SpW_adapter_CCSDS_in_end_pkg,
+        cPRTCi_inFIFO_almost_empty_i => s_SpW_adapter_CCSDS_in_almost_empty,
+        cPRTCi_inFIFO_empty_i        => s_SpW_adapter_CCSDS_in_empty,
+        cPRTCi_inFIFO_rxvalid_i      => s_SpW_adapter_CCSDS_in_rxvalid,
+        cPRTCi_inFIFO_rd_en_o        => s_SpW_adapter_CCSDS_in_rd_en,
 
         -- CRC16 module signals
         cPRTCi_CRC16_crc_i           => s_CCSDS_in_CRC16_crc,
@@ -650,9 +821,9 @@ CCSDS_Output: codec_PUS_Receiver_Transmitter_CCSDS_Out
         rst_sync_i              => s_comb_rst,
 
         -- Output FIFO flags
-        cPRTCo_outFIFO_full_i        => conduit_outFIFO_full_i,
-        cPRTCo_outFIFO_almost_full_i => conduit_outFIFO_almost_full_i,
-        cPRTCo_outFIFO_txrdy_i       => conduit_outFIFO_txrdy_i,
+        cPRTCo_outFIFO_full_i        => s_SpW_adapter_CCSDS_out_full,
+        cPRTCo_outFIFO_almost_full_i => s_SpW_adapter_CCSDS_out_almost_full,
+        cPRTCo_outFIFO_txrdy_i       => s_SpW_adapter_CCSDS_out_txrdy,
 
         -- Input FIFO data and flags
         cPRTCo_inFIFO_empty_i        => s_CCSDS_out_Output_Header_FIFO_empty,
@@ -675,9 +846,9 @@ CCSDS_Output: codec_PUS_Receiver_Transmitter_CCSDS_Out
         -- Output signals --
 
         -- Output FIFO data and wr flag
-        cPRTCo_outFIFO_data_o  => conduit_outFIFO_data_o,
-        cPRTCo_outFIFO_flag_o  => conduit_outFIFO_flag_o,
-        cPRTCo_outFIFO_wr_en_o => conduit_outFIFO_wr_en_o,
+        cPRTCo_outFIFO_data_o  => s_SpW_adapter_CCSDS_out_data,
+        cPRTCo_outFIFO_flag_o  => s_SpW_adapter_CCSDS_out_end_pkg,
+        cPRTCo_outFIFO_wr_en_o => s_SpW_adapter_CCSDS_out_wr_en,
 
         -- Input FIFO rd en flag
         cPRTCo_inFIFO_rd_en_o  => s_CCSDS_Out_Output_Header_FIFO_rd_en,
@@ -748,6 +919,17 @@ Controller: codec_PUS_Registers_Controller_Module
         cPRCM_output_hdr_fifo_full_i        => s_Output_Header_FIFO_Controller_full, 
         cPRCM_output_hdr_fifo_almost_full_i => s_Output_Header_FIFO_Controller_almost_full,
 
+        -- IN SpW ADDR FIFO signals
+        cPRCM_IN_SpW_ADDR_FIFO_txrdy_i        => s_Controller_IN_SpW_ADDR_FIFO_txrdy,
+        cPRCM_IN_SpW_ADDR_FIFO_full_i         => s_Controller_IN_SpW_ADDR_FIFO_full,
+        cPRCM_IN_SpW_ADDR_FIFO_almost_full_i  => s_Controller_IN_SpW_ADDR_FIFO_almost_full,
+
+        -- OUT SpW ADDR FIFO signals
+        cPRCM_OUT_SpW_ADDR_FIFO_rxvalid_i      => s_Controller_OUT_SpW_ADDR_FIFO_rxvalid,
+        cPRCM_OUT_SpW_ADDR_FIFO_empty_i        => s_Controller_OUT_SpW_ADDR_FIFO_empty,
+        cPRCM_OUT_SpW_ADDR_FIFO_almost_empty_i => s_Controller_OUT_SpW_ADDR_FIFO_almost_empty,
+        cPRCM_OUT_SpW_ADDR_FIFO_data_i         => s_Controller_OUT_SpW_ADDR_FIFO_data,
+
         -- Agent Write signals
         cPRCM_agent_write_wr_regs_i         => s_Controller_Avalon_Write_wr_regs,
         cPRCM_agent_write_wr_flag_i         => s_Controller_Avalon_Write_wr_flag, 
@@ -755,20 +937,23 @@ Controller: codec_PUS_Registers_Controller_Module
         -- CCSDS out signals
         cPRCM_CCSDS_out_rst_i               => s_Controller_CCSDS_out_rst,
 
-        -- Output Signals --
-
-        -- Input Header FIFO signals
-        cPRCM_input_hdr_fifo_rd_en_o        => s_Input_Header_FIFO_Controller_rd_en, 
-
         -- Output Header FIFO signals
+        cPRCM_input_hdr_fifo_rd_en_o        => s_Input_Header_FIFO_Controller_rd_en, 
         cPRCM_output_hdr_fifo_wr_en_o       => s_Output_Header_FIFO_Controller_wr_en,
         cPRCM_output_hdr_fifo_data_o        => s_Output_Header_FIFO_Controller_data, 
+
+        -- IN SpW ADDR FIFO signals
+        cPRCM_IN_SpW_ADDR_FIFO_wr_en_o      => s_Controller_IN_SpW_ADDR_FIFO_wr_en,
+        cPRCM_IN_SpW_ADDR_FIFO_data_o       => s_Controller_IN_SpW_ADDR_FIFO_data,
+
+        -- OUT SpW ADDR FIFO signals
+        cPRCM_OUT_SpW_ADDR_FIFO_rd_en_o     => s_Controller_OUT_SpW_ADDR_FIFO_rd_en,
 
         -- Agent Read signals
         cPRCM_avalon_read_rd_regs_o         => s_Controller_Avalon_Read_rd_regs, 
 
         -- Agent Write signals
-        cPRCM_agent_write_wr_regs_o        => s_Controller_Avalon_Write_feedback_wr_regs,
+        cPRCM_agent_write_wr_regs_o         => s_Controller_Avalon_Write_feedback_wr_regs,
 
         -- IRQ Controller signals
         cPRCM_IRQ_controller_wr_regs_o          => s_Controller_IRQ_Controller_wr_regs,
@@ -786,7 +971,10 @@ Controller: codec_PUS_Registers_Controller_Module
         cPRCM_CCSDS_out_fifo_size_o  => s_Controller_CCSDS_out_DMA_num_bytes,
 
         -- General reset signal for the inner parts of the Codec PUS
-        cPRCM_gen_proc_rst_o         => s_Controller_gen_proc_rst
+        cPRCM_gen_proc_rst_o         => s_Controller_gen_proc_rst,
+
+        -- SpW Adapter signals
+        cPRCM_external_proto_cfg_spw_addr_o => s_Controller_SpW_adapter_SpW_node_ADDR
     );
 
 -- Instantiation of the Avalon Write module.
@@ -881,6 +1069,130 @@ IRQ_Controller : codec_PUS_IRQ_Controller
 
         cPIC_avalon_IRQ_recv_IRQ_o => IRQ_send_recv_o,
         cPIC_avalon_IRQ_send_IRQ_o => IRQ_send_send_o
+    );
+
+-- Instantiation of the SpW Adapter module
+SpW_Adapter : codec_PUS_SpW_Adapter
+    port map(
+        -- Input Signals --
+
+        -- Clock and Reset
+        clk_i        => clk_i,
+        rst_sync_i   => s_comb_rst,
+
+        -- Input signals from the CCSDS In module
+        cPSa_CCSDS_in_rd_en_i => s_SpW_adapter_CCSDS_in_rd_en,
+
+        -- Input signals from the CCSDS Out module
+        cPSa_CCSDS_out_data_i    => s_SpW_adapter_CCSDS_out_data,
+        cPSa_CCSDS_out_end_pkg_i => s_SpW_adapter_CCSDS_out_end_pkg,
+        cPSa_CCSDS_out_wr_en_i   => s_SpW_adapter_CCSDS_out_wr_en,
+
+        -- Input signals from the Registers and Controller Module
+        cPSa_controller_SpW_node_ADDR_i => s_Controller_SpW_adapter_SpW_node_ADDR,
+
+        -- Input signals from the OUT SpW ADDR FIFO module
+        cPSa_OUT_SpW_ADDR_FIFO_full_i        => s_SpW_adapter_OUT_SpW_ADDR_FIFO_full,
+        cPSa_OUT_SpW_ADDR_FIFO_almost_full_i => s_SpW_adapter_OUT_SpW_ADDR_FIFO_almost_full,
+        cPSa_OUT_SpW_ADDR_FIFO_txrdy_i       => s_SpW_adapter_OUT_SpW_ADDR_FIFO_txrdy,
+
+        -- Input signals from the IN SpW ADDR FIFO module
+        cPSa_IN_SpW_ADDR_FIFO_data_i         => s_SpW_adapter_IN_SpW_ADDR_FIFO_data,
+        cPSa_IN_SpW_ADDR_FIFO_rxvalid_i      => s_SpW_adapter_IN_SpW_ADDR_FIFO_rxvalid,
+        cPSa_IN_SpW_ADDR_FIFO_empty_i        => s_SpW_adapter_IN_SpW_ADDR_FIFO_empty,
+        cPSa_IN_SpW_ADDR_FIFO_almost_empty_i => s_SpW_adapter_IN_SpW_ADDR_FIFO_almost_empty,
+
+        -- Input signals from the SpW Connecter module
+        cPSa_SpW_connecter_data_in_i         => conduit_inFIFO_data_i,
+        cPSA_SpW_connecter_flag_in_i         => conduit_inFIFO_flag_i,
+        cPSA_SpW_connecter_empty_in_i        => conduit_inFIFO_empty_i,
+        cPSA_SpW_connecter_almost_empty_in_i => conduit_inFIFO_almost_empty_i,
+        cPSA_SpW_connecter_rxvalid_in_i      => conduit_inFIFO_rxvalid_i,
+
+        cPSa_SpW_connecter_full_out_i        => conduit_outFIFO_full_i,
+        cPSa_SpW_connecter_almost_full_out_i => conduit_outFIFO_almost_full_i,
+        cPSa_SpW_connecter_txrdy_out_i       => conduit_outFIFO_txrdy_i,
+
+        -- Output Signals --
+
+        -- Output signals to the CCSDS In module
+        cPSa_CCSDS_in_data_o         => s_SpW_adapter_CCSDS_in_data,
+        cPSa_CCSDS_in_end_pkg_o      => s_SpW_adapter_CCSDS_in_end_pkg,
+        cPSA_CCSDS_in_rxvalid_o      => s_SpW_adapter_CCSDS_in_rxvalid,
+        cPSa_CCSDS_in_empty_o        => s_SpW_adapter_CCSDS_in_empty,
+        cPSa_CCSDS_in_almost_empty_o => s_SpW_adapter_CCSDS_in_almost_empty,
+
+        -- Output signals to the CCSDS Out module
+        cPSa_CCSDS_out_full_o        => s_SpW_adapter_CCSDS_out_full,
+        cPSa_CCSDS_out_almost_full_o => s_SpW_adapter_CCSDS_out_almost_full,
+        cPSa_CCSDS_out_txrdy_o       => s_SpW_adapter_CCSDS_out_txrdy,
+
+        -- Output signals to the OUT SpW ADDR FIFO module
+        cPSa_OUT_SpW_ADDR_FIFO_data_o   => s_SpW_adapter_OUT_SpW_ADDR_FIFO_data,
+        cPSa_OUT_SpW_ADDR_FIFO_wr_en_o  => s_SpW_adapter_OUT_SpW_ADDR_FIFO_wr_en,
+
+        -- Output signals to the IN SpW ADDR FIFO module
+        cPSa_IN_SpW_ADDR_FIFO_rd_en_o => s_SpW_adapter_IN_SpW_ADDR_FIFO_rd_en,
+
+        -- Output signals to the SpW connecter module
+        cPSa_SpW_connecter_rd_en_in_o => conduit_inFIFO_rd_en_o,
+        cPSa_SpW_connecter_data_out_o  => conduit_outFIFO_data_o,
+        cPSa_SpW_connecter_flag_out_o  => conduit_outFIFO_flag_o,
+        cPSa_SpW_connecter_wr_en_out_o => conduit_outFIFO_wr_en_o
+    );
+
+-- Instantiation of the IN SpW ADDR FIFO module
+IN_SpW_ADDR_FIFO: codec_PUS_SpW_ADDR_FIFO
+    generic map(
+        c_cPSAF_LENGTH => C_CPSAF_FIFO_DEPTH
+    )
+    port map(
+        -- Clock and Reset
+        clk_i        => clk_i,
+        rst_sync_i   => s_comb_rst,
+
+        -- FIFO Write Interface (Codec PUS side)
+        cPSAF_wr_en_i => s_Controller_IN_SpW_ADDR_FIFO_wr_en,
+        cPSAF_data_i  => s_Controller_IN_SpW_ADDR_FIFO_data,
+
+        -- FIFO Read Interface (SpaceWire side)
+        cPSAF_rd_en_i => s_SpW_adapter_IN_SpW_ADDR_FIFO_rd_en,
+
+        -- FIFO Status Outputs
+        cPSAF_empty_o         => s_SpW_adapter_IN_SpW_ADDR_FIFO_empty,
+        cPSAF_almost_empty_o  => s_SpW_adapter_IN_SpW_ADDR_FIFO_almost_empty,
+        cPSAF_txrdy_o         => s_Controller_IN_SpW_ADDR_FIFO_txrdy,
+        cPSAF_full_o          => s_Controller_IN_SpW_ADDR_FIFO_full,
+        cPSAF_almost_full_o   => s_Controller_IN_SpW_ADDR_FIFO_almost_full,
+        cPSAF_data_o          => s_SpW_adapter_IN_SpW_ADDR_FIFO_data,
+        cPSAF_rxvalid_o       => s_SpW_adapter_IN_SpW_ADDR_FIFO_rxvalid
+    );
+
+-- Instantiation of the OUT SpW ADDR FIFO module
+OUT_SpW_ADDR_FIFO: codec_PUS_SpW_ADDR_FIFO
+    generic map(
+        c_cPSAF_LENGTH => C_CPSAF_FIFO_DEPTH
+    )
+    port map(
+        -- Clock and Reset
+        clk_i        => clk_i,
+        rst_sync_i   => s_comb_rst,
+
+        -- FIFO Write Interface (Codec PUS side)
+        cPSAF_wr_en_i => s_SpW_adapter_OUT_SpW_ADDR_FIFO_wr_en,
+        cPSAF_data_i  => s_SpW_adapter_OUT_SpW_ADDR_FIFO_data,
+
+        -- FIFO Read Interface (SpaceWire side)
+        cPSAF_rd_en_i => s_Controller_OUT_SpW_ADDR_FIFO_rd_en,
+
+        -- FIFO Status Outputs
+        cPSAF_empty_o         => s_Controller_OUT_SpW_ADDR_FIFO_empty,
+        cPSAF_almost_empty_o  => s_Controller_OUT_SpW_ADDR_FIFO_almost_empty,
+        cPSAF_txrdy_o         => s_SpW_adapter_OUT_SpW_ADDR_FIFO_txrdy,
+        cPSAF_full_o          => s_SpW_adapter_OUT_SpW_ADDR_FIFO_full,
+        cPSAF_almost_full_o   => s_SpW_adapter_OUT_SpW_ADDR_FIFO_almost_full,
+        cPSAF_data_o          => s_Controller_OUT_SpW_ADDR_FIFO_data,
+        cPSAF_rxvalid_o       => s_Controller_OUT_SpW_ADDR_FIFO_rxvalid
     );
 
 -- Combined reset signal for the inner parts of the Codec PUS

@@ -79,50 +79,58 @@ begin
                     s_wr_regs.control_reg.irq_en      <= write_data_i(4);
                     s_wr_regs.control_reg.recv_irq_en <= write_data_i(5);
                     s_wr_regs.control_reg.send_irq_en <= write_data_i(6);
-                when 7 =>
+                when 8 =>
                     -- SEND_PKG_PRIM_HDR1
                     s_wr_regs.send_PKG_PRIM_HDR1.apid         <= write_data_i(10 downto 0);
                     s_wr_regs.send_PKG_PRIM_HDR1.pkg_data_len <= write_data_i(26 downto 11);
-                when 8 =>
+                when 9 =>
                     -- SEND_PKG_PRIM_HDR2
                     s_wr_regs.send_PKG_PRIM_HDR2.seq_count <= write_data_i(13 downto 0);
-                when 9 =>
+                when 10 =>
                     -- SEND_PKG_SEC_HDR1
                     s_wr_regs.send_PKG_SEC_HDR1.spacecraft_time_ref <= write_data_i(3 downto 0);
                     s_wr_regs.send_PKG_SEC_HDR1.service_id          <= write_data_i(11 downto 4);
                     s_wr_regs.send_PKG_SEC_HDR1.subservice_id       <= write_data_i(19 downto 12);
-                when 10 =>
+                when 11 =>
                     -- SEND_PKG_SEC_HDR2
                     s_wr_regs.send_PKG_SEC_HDR2.msg_type_counter <= write_data_i(15 downto 0);
                     s_wr_regs.send_PKG_SEC_HDR2.dest_id          <= write_data_i(31 downto 16);
-                when 11 =>
-                    -- SEND_PKG_SEC_HDR3
-                    s_wr_regs.send_PKG_SEC_HDR3.time <= write_data_i(15 downto 0);
                 when 12 =>
+                    -- SEND_PKG_SEC_HDR3
+                    s_wr_regs.send_PKG_SEC_HDR3.time <= write_data_i(31 downto 0);
+                when 13 =>
+                    -- SEND_PKG_SEC_HDR4
+                    s_wr_regs.send_PKG_SEC_HDR4.time_ext <= write_data_i(23 downto 0);
+                when 14 =>
                     -- SEND_PKG_ADDR
                     s_wr_regs.send_pkg_addr.pkg_addr <= write_data_i;
-                when 13 =>
+                when 15 =>
+                    -- SEND EXTRA INFO
+                    s_wr_regs.send_extra_info.spw_addr <= write_data_i(7 downto 0);
+                when 16 =>
                     -- HANDLING SEND
                     s_wr_regs.handling.data_send_wr_flag      <= write_data_i(9);
                     s_wr_regs.handling.irq_send_clr           <= write_data_i(0);
-                when 14 =>
+                when 17 =>
                     -- HANDLING RECV
                     s_wr_regs.handling.irq_rcv_clr            <= write_data_i(0);
                     s_wr_regs.handling.data_rcv_rd_flag       <= write_data_i(1);
-                when 15 =>
+                when 18 =>
                     -- RECV_MEM_OFFSET
                     s_wr_regs.recv_mem_offset.mem_offset <= write_data_i;
-                when 16 =>
+                when 19 =>
                     -- RECV_FIFO_SIZE
                     s_wr_regs.recv_fifo_size.fifo_size   <= write_data_i;
-                when 17 =>
+                when 20 =>
                     -- SEND_MEM_OFFSET
                     s_wr_regs.send_mem_offset.mem_offset <= write_data_i;
-                when 18 =>
+                when 21 =>
                     -- SEND_FIFO_SIZE
                     s_wr_regs.send_fifo_size.fifo_size   <= write_data_i;
+                when 22 =>
+                    -- EXTERNAL PROTO CFG
+                    s_wr_regs.external_proto_cfg.spw_addr <= write_data_i(7 downto 0);
                     
-    
                 when others =>
                     null;
             end case;

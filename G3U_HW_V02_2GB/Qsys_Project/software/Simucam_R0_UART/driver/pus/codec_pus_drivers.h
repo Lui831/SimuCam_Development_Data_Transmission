@@ -23,7 +23,7 @@
 // Codec PUS General constants
 
 // Determines the TIME field size, in bytes
-#define CODEC_PUS_TIME_FIELD_SIZE 2
+#define CODEC_PUS_TIME_FIELD_SIZE 7
 
 // Defines the maximum size of the Codec PUS Recv and Send Header Stack fifos
 #define CODEC_PUS_RECV_HEADER_STACK_SIZE 1024
@@ -70,6 +70,14 @@ typedef struct t_codec_pus_dma_config{
 } t_codec_pus_dma_config;
 
 
+// Codec PUS External Protocol Config (SpW)
+typedef struct t_codec_pus_ext_protocol_config{
+
+    // SpW address of the node
+    alt_u8 u8CodecPusSpWADDR;
+
+} t_codec_pus_ext_protocol_config;
+
 // Codec PUS General Struct
 typedef struct t_codec_pus{
 
@@ -91,6 +99,9 @@ typedef struct t_codec_pus{
     // Current offset and available space (in bytes) for the send DMA
     alt_u32 u32CurrentSendDmaOffset;
     alt_u32 u32CurrentSendDmaAvailableSpace;
+
+    // External Protocol Config (SpW)
+    t_codec_pus_ext_protocol_config oCodecPUSExtProtocolConfig;
 
 } t_codec_pus;
 
@@ -167,6 +178,26 @@ typedef struct t_codec_pus_tm_pkg_sec_hdr{
 } t_codec_pus_tm_pkg_sec_hdr;
 
 
+// Codec PUS TC External Protocol Info
+typedef struct t_codec_pus_tc_ext_protocol_info{
+
+    // Received SpW Addr
+    alt_u8 u8SpWADDR;
+
+    // Received Ext Protocol Status flags
+    alt_u8 u8SpWStatusBits;
+
+} t_codec_pus_tc_ext_protocol_info;
+
+
+// Codec PUS TM External Protocol Info
+typedef struct t_codec_pus_tm_ext_protocol_info{
+
+    // Send SpW Addr
+    alt_u8 u8SpWADDR;
+
+} t_codec_pus_tm_ext_protocol_info;
+
 // Codec PUS TC headers struct + App data definition
 typedef struct t_codec_pus_tc_recv_info{
 
@@ -184,6 +215,9 @@ typedef struct t_codec_pus_tc_recv_info{
 
     // Pointer to the App data already initialized
     alt_u8* pAppData;
+
+    // External Protocol Info (SpW)
+    t_codec_pus_tc_ext_protocol_info oExtProtocolInfo;
 
 } t_codec_pus_tc_recv_info;
 
@@ -203,6 +237,9 @@ typedef struct t_codec_pus_tm_send_info{
     // Pointer to the App data already initialized
     alt_u8* pAppData;
 
+    // External Protocol Info (SpW)
+    t_codec_pus_tm_ext_protocol_info oExtProtocolInfo;
+
 } t_codec_pus_tm_send_info;
 
 
@@ -220,22 +257,27 @@ typedef struct t_codec_pus_tm_send_info{
 #define CODEC_PUS_RECV_PKG_SEC_HDR2_REG_OFFSET 16
 #define CODEC_PUS_RECV_PKG_ADDR_REG_OFFSET 20
 #define CODEC_PUS_RECV_PKG_STATUS_REG_OFFSET 24
+#define CODEC_PUS_RECV_PKG_EXTRA_INFO_REG_OFFSET 28
 
-#define CODEC_PUS_SEND_PKG_PRIM_HDR_REG_OFFSET 28
-#define CODEC_PUS_SEND_PKG_PRIM_HDR2_REG_OFFSET 32
-#define CODEC_PUS_SEND_PKG_SEC_HDR1_REG_OFFSET 36
-#define CODEC_PUS_SEND_PKG_SEC_HDR2_REG_OFFSET 40
-#define CODEC_PUS_SEND_PKG_SEC_HDR3_REG_OFFSET 44
-#define CODEC_PUS_SEND_PKG_ADDR_REG_OFFSET 48
+#define CODEC_PUS_SEND_PKG_PRIM_HDR_REG_OFFSET 32
+#define CODEC_PUS_SEND_PKG_PRIM_HDR2_REG_OFFSET 36
+#define CODEC_PUS_SEND_PKG_SEC_HDR1_REG_OFFSET 40
+#define CODEC_PUS_SEND_PKG_SEC_HDR2_REG_OFFSET 44
+#define CODEC_PUS_SEND_PKG_SEC_HDR3_REG_OFFSET 48
+#define CODEC_PUS_SEND_PKG_SEC_HDR4_REG_OFFSET 52
+#define CODEC_PUS_SEND_PKG_ADDR_REG_OFFSET 56
+#define CODEC_PUS_SEND_PKG_EXTRA_INFO_REG_OFFSET 60
 
-#define CODEC_PUS_SEND_HANDLING_REG_OFFSET 52
-#define CODEC_PUS_RECV_HANDLING_REG_OFFSET 56
+#define CODEC_PUS_SEND_HANDLING_REG_OFFSET 64
+#define CODEC_PUS_RECV_HANDLING_REG_OFFSET 68
 
-#define CODEC_PUS_RECV_DMA_MEM_OFFSET_REG_OFFSET 60
-#define CODEC_PUS_RECV_DMA_FIFO_SIZE_REG_OFFSET 64
+#define CODEC_PUS_RECV_DMA_MEM_OFFSET_REG_OFFSET 72
+#define CODEC_PUS_RECV_DMA_FIFO_SIZE_REG_OFFSET 76
 
-#define CODEC_PUS_SEND_DMA_MEM_OFFSET_REG_OFFSET 68
-#define CODEC_PUS_SEND_DMA_FIFO_SIZE_REG_OFFSET 72
+#define CODEC_PUS_SEND_DMA_MEM_OFFSET_REG_OFFSET 80
+#define CODEC_PUS_SEND_DMA_FIFO_SIZE_REG_OFFSET 84
+
+#define CODEC_PUS_EXT_PROTOCOL_INFO_REG_OFFSET 88
 
 
 // Defines important flags and default value for the cntrl register
@@ -315,6 +357,14 @@ typedef struct t_codec_pus_tm_send_info{
 #define CODEC_PUS_RECV_STATUS_STATUS_FLAGS_OFFSET     0
 
 
+// Define important flags for the RECV_EXTRA_INFO
+#define CODEC_PUS_RECV_EXTRA_INFO_SPW_ADDR_MASK 0xFF // bits 7:0
+#define CODEC_PUS_RECV_EXTRA_INFO_SPW_ADDR_OFFSET 0
+
+#define CODEC_PUS_RECV_EXTRA_INFO_STATUS_MASK 0xFF00 //bits 15:8
+#define CODEC_PUS_RECV_EXTRA_INFO_STATUS_OFFSET 8
+
+
 // Defines important flags and default value for the SEND_PKG_PRIM_HDR
 #define CODEC_PUS_SEND_PKG_PRIM_HDR1_APID_MASK 0x7FF       // bits 10:0
 #define CODEC_PUS_SEND_PKG_PRIM_HDR1_APID_OFFSET 0
@@ -348,13 +398,23 @@ typedef struct t_codec_pus_tm_send_info{
 
 
 // Defines important flags and default values for the SEND_PKG_SEC_HDR3
-#define CODEC_PUS_SEND_PKG_SEC_HDR3_TIME_MASK         0xFFFF      // bits 15:0
+#define CODEC_PUS_SEND_PKG_SEC_HDR3_TIME_MASK         0xFFFFFFFF      // bits 31:0
 #define CODEC_PUS_SEND_PKG_SEC_HDR3_TIME_OFFSET       0
+
+
+// Defines important flags and default values for the SEND_PKG_SEC_HDR4
+#define CODEC_PUS_SEND_PKG_SEC_HDR4_TIME_EXT_MASK 0xFFFFFF // bits 23:0
+#define CODEC_PUS_SEND_PKG_SEC_HDR4_TIME_EXT_OFFSET 0
 
 
 // Defines important flags and default values for the SEND_PKG_ADDR
 #define CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_MASK         0xFFFFFFFF  // bits 31:0
 #define CODEC_PUS_SEND_PKG_ADDR_PKG_ADDR_OFFSET       0
+
+
+// Defines important flags and default values for the SEND_PKG_EXTRA_INFO
+#define CODEC_PUS_SEND_PKG_EXTRA_INFO_SPW_ADDR_MASK 0xFF
+#define CODEC_PUS_SEND_PKG_EXTRA_INFO_SPW_ADDR_OFFSET 0
 
 
 // Defines important flags and default values for the SEND_HANDLING
@@ -400,6 +460,11 @@ typedef struct t_codec_pus_tm_send_info{
 // Defines important flags and default values for the SEND_FIFO_SIZE
 #define CODEC_PUS_SEND_FIFO_SIZE_FIFO_SIZE_MASK       0xFFFFFFFF  // bits 31:0
 #define CODEC_PUS_SEND_FIFO_SIZE_FIFO_SIZE_OFFSET     0
+
+
+// Defines important flags and default values for the EXT_PROTOCOL_INFO
+#define CODEc_PUS_EXT_PROTOCOL_INFO_SPW_ADDR_MASK 0xFF
+#define CODEC_PUS_EXT_PROTOCOL_INFO_SPW_ADDR_OFFSET 0
 
 
 // Defines important macros for setting, resetting and reading a general register

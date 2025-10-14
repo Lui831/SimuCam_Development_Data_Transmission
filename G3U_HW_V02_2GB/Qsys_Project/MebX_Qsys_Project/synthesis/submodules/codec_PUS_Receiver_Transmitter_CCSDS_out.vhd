@@ -329,16 +329,17 @@ begin
                                     cPRTCo_outFIFO_data_o <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.dest_id(c_cPRTCo_PKG_SEC_HDR_DEST_ID_WIDTH - 9 downto 0);
                                     cPRTCo_CRC16_data_o <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.dest_id(c_cPRTCo_PKG_SEC_HDR_DEST_ID_WIDTH - 9 downto 0);
 
-                                -- When transmiting the eight byte
-                                when 7 =>
-                                    cPRTCo_outFIFO_data_o <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.time(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 1 downto c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 8);
-                                    cPRTCo_CRC16_data_o <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.time(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 1 downto c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 8);
-
-                                -- When transmiting the eight byte
-                                when 8 =>
-                                    cPRTCo_outFIFO_data_o <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.time(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 9 downto 0);
-                                    cPRTCo_CRC16_data_o <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.time(c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 9 downto 0);
-
+                                -- Transmit each byte of the TIME field, parametrized by c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH
+                                when 7 to (7 + (c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH/8) - 1) =>
+                                    cPRTCo_outFIFO_data_o <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.time(
+                                        c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 1 - 8*(s_cPRTCo_state_bytes_count - 7) downto
+                                        c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 8 - 8*(s_cPRTCo_state_bytes_count - 7)
+                                    );
+                                    cPRTCo_CRC16_data_o   <= cPRTCo_inFIFO_data_i.PKG_SEC_HDR.time(
+                                        c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 1 - 8*(s_cPRTCo_state_bytes_count - 7) downto
+                                        c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH - 8 - 8*(s_cPRTCo_state_bytes_count - 7)
+                                    );
+                                    
                                 when others =>
                                     null;
                                 
@@ -352,11 +353,11 @@ begin
                             cPRTCo_CRC16_en_o          <= '1';
 
                             -- If the number of bytes transmitted is equal to 6, transitions to TRANSMITTING_II
-                            if s_cPRTCo_state_bytes_count = 8 then
+                            if s_cPRTCo_state_bytes_count = 6 + (c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH / 8) then
                                 s_cPRTCo_state_bytes_count <= 0;
 
                                 -- If there is some App data to be read from the Avalon MM interface
-                                if to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len)) - 9 > 0 then
+                                if to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len)) - 9 - (c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH / 8) > 0 then
 
                                     -- Determines the address offset of the packet
                                     s_cPRTCo_Avalon_MM_addr <= unsigned(cPRTCo_inFIFO_data_i.PKG_addr);
@@ -441,7 +442,7 @@ begin
                         else
 
                             -- If the output FIFO is ready to receive data and a byte hasn't been transmitted
-                            if ((cPRTCo_outFIFO_txrdy_i = '1' and s_byte_transmitted = '0') and (s_cPRTCo_Avalon_MM_bytes_count + s_cPRTCo_state_bytes_count < to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len)) - 11)) and s_Avalon_MM_read_done = '1' then
+                            if ((cPRTCo_outFIFO_txrdy_i = '1' and s_byte_transmitted = '0') and (s_cPRTCo_Avalon_MM_bytes_count + s_cPRTCo_state_bytes_count < to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len)) - 9 - (c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH / 8))) and s_Avalon_MM_read_done = '1' then
 
                                 -- Switch case for the number of bytes transmitted in this state
                                 case s_cPRTCo_state_bytes_count is
@@ -485,7 +486,7 @@ begin
                                 end if;
 
                                 -- If the maximum number of bytes has been reached, transitions to the TRANSMITING_CRC state
-                                if s_cPRTCo_Avalon_MM_bytes_count + s_cPRTCo_state_bytes_count >= to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len)) - 12 then
+                                if s_cPRTCo_Avalon_MM_bytes_count + s_cPRTCo_state_bytes_count >= to_integer(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len)) - 10 - (c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH / 8) then
 
                                     -- Resets the byte count
                                     s_cPRTCo_state_bytes_count <= 0;
@@ -561,7 +562,7 @@ begin
 
                                     -- Sets the rst values
                                     cPRTCo_CCSDS_rst_o <= '1';
-                                    cPRTCo_CCSDS_rst_value_o <= x"0000" & std_logic_vector(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len) - 11);
+                                    cPRTCo_CCSDS_rst_value_o <= x"0000" & std_logic_vector(unsigned(cPRTCo_inFIFO_data_i.PKG_PRIM_HDR.pkg_data_len) - 9 - (c_cPRTCo_PKG_SEC_HDR_TIME_WIDTH / 8));
 
                                     -- Reads the input FIFO
                                     cPRTCo_inFIFO_rd_en_o <= '1';

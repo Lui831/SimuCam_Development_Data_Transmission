@@ -41,6 +41,17 @@ entity codec_PUS_Registers_Controller_Module is
         cPRCM_output_hdr_fifo_full_i        : in std_logic;
         cPRCM_output_hdr_fifo_almost_full_i : in std_logic;
 
+        -- IN SpW ADDR FIFO signals
+        cPRCM_IN_SpW_ADDR_FIFO_txrdy_i       : in std_logic;
+        cPRCM_IN_SpW_ADDR_FIFO_full_i        : in std_logic;
+        cPRCM_IN_SpW_ADDR_FIFO_almost_full_i : in std_logic;
+
+        -- OUT SpW ADDR FIFO signals
+        cPRCM_OUT_SpW_ADDR_FIFO_rxvalid_i    : in std_logic;
+        cPRCM_OUT_SpW_ADDR_FIFO_empty_i      : in std_logic;
+        cPRCM_OUT_SpW_ADDR_FIFO_almost_empty_i : in std_logic;
+        cPRCM_OUT_SpW_ADDR_FIFO_data_i       : in t_cPSAF_FIFO_data;
+
         -- Agent Write signals
         cPRCM_agent_write_wr_regs_i : in t_codec_PUS_wr_regs;
         cPRCM_agent_write_wr_flag_i : in std_logic;
@@ -57,6 +68,13 @@ entity codec_PUS_Registers_Controller_Module is
         -- Output Header FIFO signals
         cPRCM_output_hdr_fifo_wr_en_o : out std_logic;
         cPRCM_output_hdr_fifo_data_o  : out t_cPFo_FIFO_data;
+
+        -- IN SpW ADDR FIFO signals
+        cPRCM_IN_SpW_ADDR_FIFO_wr_en_o : out std_logic;
+        cPRCM_IN_SpW_ADDR_FIFO_data_o  : out t_cPSAF_FIFO_data;
+
+        -- OUT SpW ADDR FIFO signals
+        cPRCM_OUT_SpW_ADDR_FIFO_rd_en_o : out std_logic;
 
         -- Agent Read signals
         cPRCM_avalon_read_rd_regs_o : out t_codec_PUS_rd_regs;
@@ -80,7 +98,10 @@ entity codec_PUS_Registers_Controller_Module is
         cPRCM_CCSDS_out_fifo_size_o  : out std_logic_vector(c_CPRCM_FIFO_SIZE_WIDTH - 1 downto 0);
 
         -- General reset signal for the inner parts of the Codec PUS
-        cPRCM_gen_proc_rst_o         : out std_logic
+        cPRCM_gen_proc_rst_o         : out std_logic;
+
+        -- External protocol adapter configuration signals
+        cPRCM_external_proto_cfg_spw_addr_o : out std_logic_vector(7 downto 0)
                                     
        
     );
@@ -100,9 +121,11 @@ architecture rtl of codec_PUS_Registers_Controller_Module is
 
     -- Auxiliary signal for marking the data send for the output hdr fifo
     signal s_data_sent_to_output_hdr_fifo : std_logic := '0';
+    signal s_data_sent_to_IN_SpW_ADDR_FIFO : std_logic := '0';
 
     -- Auxiliary signal for marking the data recv for the processor, and auxiliary signal for the rd regs information
     signal s_data_recv_from_input_hdr_fifo : std_logic := '0';
+    signal s_data_recv_from_OUT_SpW_ADDR_FIFO : std_logic := '0';
     signal s_aux_rd_regs : t_codec_PUS_rd_regs;
 
     -- Auxiliary memory signal for holding if the Input Header FIFO was empty
@@ -130,8 +153,13 @@ p_info_to_output_hdr_fifo: process (clk_i, rst_sync_i) is
                 cPRCM_output_hdr_fifo_wr_en_o <= '0';
                 cPRCM_output_hdr_fifo_data_o <= C_cPRTCo_inFIFO_data_in_reset;
 
+                -- Reset the wr and data signals to the IN SpW ADDR fifo
+                cPRCM_IN_SpW_ADDR_FIFO_wr_en_o <= '0';
+                cPRCM_IN_SpW_ADDR_FIFO_data_o <= C_cPSAF_FIFO_data_reset;
+
                 -- Resets the auxiliary signal
                 s_data_sent_to_output_hdr_fifo <= '0';
+                s_data_sent_to_IN_SpW_ADDR_FIFO <= '0';
 
                 -- Resets the auxiliary wr regs
                 s_aux1_wr_regs.handling.data_send_wr_flag <= '1';
@@ -143,10 +171,13 @@ p_info_to_output_hdr_fifo: process (clk_i, rst_sync_i) is
                 if s_wr_regs.handling.data_send_wr_flag = '1' and s_wr_regs.control_reg.en = '1' and s_wr_regs.control_reg.send_en = '1' then
 
                     -- Verify if the FIFO is ready to receive data
-                    if cPRCM_output_hdr_fifo_txrdy_i = '1' and cPRCM_output_hdr_fifo_full_i = '0' and s_data_sent_to_output_hdr_fifo = '0' then
+                    if (cPRCM_output_hdr_fifo_txrdy_i = '1' and cPRCM_output_hdr_fifo_full_i = '0' and s_data_sent_to_output_hdr_fifo = '0')
+                       and (cPRCM_IN_SpW_ADDR_FIFO_txrdy_i = '1' and cPRCM_IN_SpW_ADDR_FIFO_full_i = '0' and s_data_sent_to_IN_SpW_ADDR_FIFO = '0')
+                        then
 
                         -- Set the wr enable signal to '1' to write data
                         cPRCM_output_hdr_fifo_wr_en_o <= '1';
+                        cPRCM_IN_SpW_ADDR_FIFO_wr_en_o <= '1';
 
                         -- Designate the register signals to the output data
                         cPRCM_output_hdr_fifo_data_o.PKG_PRIM_HDR.apid <= s_wr_regs.send_PKG_PRIM_HDR1.apid;
@@ -157,22 +188,28 @@ p_info_to_output_hdr_fifo: process (clk_i, rst_sync_i) is
                         cPRCM_output_hdr_fifo_data_o.PKG_SEC_HDR.subservice_id <= s_wr_regs.send_PKG_SEC_HDR1.subservice_id;
                         cPRCM_output_hdr_fifo_data_o.PKG_SEC_HDR.msg_type_counter <= s_wr_regs.send_PKG_SEC_HDR2.msg_type_counter;
                         cPRCM_output_hdr_fifo_data_o.PKG_SEC_HDR.dest_id <= s_wr_regs.send_PKG_SEC_HDR2.dest_id;
-                        cPRCM_output_hdr_fifo_data_o.PKG_SEC_HDR.time <= s_wr_regs.send_PKG_SEC_HDR3.time;
+                        cPRCM_output_hdr_fifo_data_o.PKG_SEC_HDR.time <= s_wr_regs.send_PKG_SEC_HDR3.time & s_wr_regs.send_PKG_SEC_HDR4.time_ext;
                         cPRCM_output_hdr_fifo_data_o.pkg_addr <= s_wr_regs.send_pkg_addr.pkg_addr;
+
+                        cPRCM_IN_SpW_ADDR_FIFO_data_o.spw_addr <= s_wr_regs.send_extra_info.spw_addr;
+                        cPRCM_IN_SpW_ADDR_FIFO_data_o.spw_status <= (others => '0');  -- Status can be set to zero or other value as needed
 
                         -- Updates the send rdy flag to 0
                         s_aux1_wr_regs.handling.data_send_wr_flag <= '0';
 
                         -- Set the auxiliary signal to indicate data was sent
                         s_data_sent_to_output_hdr_fifo <= '1';
+                        s_data_sent_to_IN_SpW_ADDR_FIFO <= '1';
 
                     else
 
                         -- Deasserts the auxiliary signal
                         s_data_sent_to_output_hdr_fifo <= '0';
+                        s_data_sent_to_IN_SpW_ADDR_FIFO <= '0';
 
                         -- Deactivates the wr signal
                         cPRCM_output_hdr_fifo_wr_en_o <= '0';
+                        cPRCM_IN_SpW_ADDR_FIFO_wr_en_o <= '0';
 
                         -- If the FIFO is full, deasserts the wr enable signal
                         s_aux1_wr_regs.handling.data_send_wr_flag <= '1';
@@ -184,9 +221,11 @@ p_info_to_output_hdr_fifo: process (clk_i, rst_sync_i) is
 
                     -- Deasserts the auxiliary signal
                     s_data_sent_to_output_hdr_fifo <= '0';
+                    s_data_sent_to_IN_SpW_ADDR_FIFO <= '0';
 
                     -- Deactivates the wr signal
                     cPRCM_output_hdr_fifo_wr_en_o <= '0';
+                    cPRCM_IN_SpW_ADDR_FIFO_wr_en_o <= '0';
 
                     -- If the FIFO is full, deasserts the wr enable signal
                     s_aux1_wr_regs.handling.data_send_wr_flag <= '1';
@@ -209,6 +248,7 @@ p_info_to_registers: process (clk_i, rst_sync_i) is
 
                 -- Resets the auxiliary signals
                 s_data_recv_from_input_hdr_fifo <= '0';
+                s_data_recv_from_OUT_SpW_ADDR_FIFO <= '0';
 
                 -- Reset the aux rd regs
                 s_aux_rd_regs <= c_CODEC_PUS_RD_REGS_RST;
@@ -240,20 +280,27 @@ p_info_to_registers: process (clk_i, rst_sync_i) is
 
                 s_aux_rd_regs.recv_status.status_flags <= cPRCM_input_hdr_fifo_data_i.status_flags.ver_flags;
 
+                s_aux_rd_regs.recv_extra_info.spw_addr <= cPRCM_OUT_SpW_ADDR_FIFO_data_i.spw_addr;
+                s_aux_rd_regs.recv_extra_info.status   <= cPRCM_OUT_SpW_ADDR_FIFO_data_i.spw_status;
+
                 -- If the rcv rdy flag is enabled and the receiving is enabled
                 if s_wr_regs.handling.data_rcv_rd_flag = '1' and s_wr_regs.control_reg.en = '1' and s_wr_regs.control_reg.recv_en = '1' then
 
                     -- If the FIFO is not empty and ready to receive data
-                    if cPRCM_input_hdr_fifo_empty_i = '0' and cPRCM_input_hdr_fifo_rxrdy_i = '1' and s_data_recv_from_input_hdr_fifo = '0' then
+                    if (cPRCM_input_hdr_fifo_empty_i = '0' and cPRCM_input_hdr_fifo_rxrdy_i = '1' and s_data_recv_from_input_hdr_fifo = '0') and
+                          (cPRCM_OUT_SpW_ADDR_FIFO_empty_i = '0' and cPRCM_OUT_SpW_ADDR_FIFO_rxvalid_i = '1' and s_data_recv_from_OUT_SpW_ADDR_FIFO = '0')
+                    then
 
                         -- Set the rd enable signal to '1' to read data
                         cPRCM_input_hdr_fifo_rd_en_o <= '1';
+                        cPRCM_OUT_SpW_ADDR_FIFO_rd_en_o <= '1';
 
                         -- Deasserts the rd flag
                         s_aux2_wr_regs.handling.data_rcv_rd_flag <= '0';
 
                         -- Set the auxiliary signal to indicate data was received
                         s_data_recv_from_input_hdr_fifo <= '1';
+                        s_data_recv_from_OUT_SpW_ADDR_FIFO <= '1';
 
                     else
 
@@ -262,6 +309,7 @@ p_info_to_registers: process (clk_i, rst_sync_i) is
 
                         -- Deasserts the auxiliary signal
                         s_data_recv_from_input_hdr_fifo <= '0';
+                        s_data_recv_from_OUT_SpW_ADDR_FIFO <= '0';
 
                         -- asserts the rd flag
                         s_aux2_wr_regs.handling.data_rcv_rd_flag <= '1';
@@ -273,9 +321,11 @@ p_info_to_registers: process (clk_i, rst_sync_i) is
 
                     -- Deactivates the rd enable signal
                     cPRCM_input_hdr_fifo_rd_en_o <= '0';
+                    cPRCM_OUT_SpW_ADDR_FIFO_rd_en_o <= '0';
 
                     -- Deasserts the auxiliary signal
                     s_data_recv_from_input_hdr_fifo <= '0';
+                    s_data_recv_from_OUT_SpW_ADDR_FIFO <= '0';
 
                     -- asserts the rd flag
                     s_aux2_wr_regs.handling.data_rcv_rd_flag <= '1';
@@ -467,6 +517,7 @@ begin
             s_rd_regs.recv_PKG_SEC_HDR2 <= s_aux_rd_regs.recv_PKG_SEC_HDR2;
             s_rd_regs.recv_pkg_addr <= s_aux_rd_regs.recv_pkg_addr;
             s_rd_regs.recv_status <= s_aux_rd_regs.recv_status;
+            s_rd_regs.recv_extra_info <= s_aux_rd_regs.recv_extra_info;
 
             -- Updates the rd regs with the information from the wr regs
             s_rd_regs.control_reg <= s_wr_regs.control_reg;
@@ -476,11 +527,14 @@ begin
             s_rd_regs.send_PKG_SEC_HDR1 <= s_wr_regs.send_PKG_SEC_HDR1;
             s_rd_regs.send_PKG_SEC_HDR2 <= s_wr_regs.send_PKG_SEC_HDR2;
             s_rd_regs.send_PKG_SEC_HDR3 <= s_wr_regs.send_PKG_SEC_HDR3;
+            s_rd_regs.send_PKG_SEC_HDR4 <= s_wr_regs.send_PKG_SEC_HDR4;
+            s_rd_regs.send_extra_info <= s_wr_regs.send_extra_info;
             s_rd_regs.handling <= s_wr_regs.handling;
             s_rd_regs.recv_mem_offset <= s_wr_regs.recv_mem_offset;
             s_rd_regs.recv_fifo_size <= s_wr_regs.recv_fifo_size;
             s_rd_regs.send_mem_offset <= s_wr_regs.send_mem_offset;
             s_rd_regs.send_fifo_size <= s_wr_regs.send_fifo_size;
+            s_rd_regs.external_proto_cfg <= s_wr_regs.external_proto_cfg;
 
             -- If the Input Header FIFO is not empty and data is ready to be received, sets the recv rdy flag
             if cPRCM_input_hdr_fifo_empty_i = '0' and cPRCM_input_hdr_fifo_rxrdy_i = '1' then
@@ -521,5 +575,8 @@ cPRCM_CCSDS_out_fifo_size_o <= s_wr_regs.send_fifo_size.fifo_size;
 
 -- Assigns the general processing reset signal
 cPRCM_gen_proc_rst_o <= s_wr_regs.control_reg.proc_rst;
+
+-- Assigns the configuration signal for the external protocol adapter
+cPRCM_external_proto_cfg_spw_addr_o <= s_wr_regs.external_proto_cfg.spw_addr;
 
 end architecture rtl;

@@ -510,8 +510,13 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                         -- Reseta o registrador de armazenamento
                         s_CCSDS_data_reg                <= (others => '0');
 
-                        -- Transitions the state to ACCUMULATING
-                        s_CCSDS_in_state                  <= ACCUMULATING;
+
+                        -- If the application data is of null size, jumps to accumulating CRC. If not, jumps to ACCUMULATING
+                        if s_data_field_len <= 7 then
+                            s_CCSDS_in_state <= ACCUMULATING_CRC;
+                        else
+                            s_CCSDS_in_state <= ACCUMULATING;
+                        end if;
 
 
                     -- Estado de ACCUMULATING

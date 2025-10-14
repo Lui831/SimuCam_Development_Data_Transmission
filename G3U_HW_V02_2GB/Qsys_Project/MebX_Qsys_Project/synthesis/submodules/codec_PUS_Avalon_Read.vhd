@@ -108,57 +108,74 @@ begin
                     cPAR_avalon_mm_read_data_o <= (others => '0');
                     cPAR_avalon_mm_read_data_o(7 downto 0) <= cPAR_controller_rd_regs.recv_status.status_flags;
                 when 7 =>
+                    -- EXTRA INFO
+                    cPAR_avalon_mm_read_data_o <= (others => '0');
+                    cPAR_avalon_mm_read_data_o(7 downto 0) <= cPAR_controller_rd_regs.recv_extra_info.spw_addr;
+                    cPAR_avalon_mm_read_data_o(15 downto 8) <= cPAR_controller_rd_regs.recv_extra_info.status;
+                when 8 =>
                     -- SEND_PKG_PRIM_HDR1
                     cPAR_avalon_mm_read_data_o <= (others => '0');
                     cPAR_avalon_mm_read_data_o(10 downto 0)  <= cPAR_controller_rd_regs.send_PKG_PRIM_HDR1.apid;
                     cPAR_avalon_mm_read_data_o(26 downto 11) <= cPAR_controller_rd_regs.send_PKG_PRIM_HDR1.pkg_data_len;
-                when 8 =>
+                when 9 =>
                     -- SEND_PKG_PRIM_HDR2
                     cPAR_avalon_mm_read_data_o <= (others => '0');
                     cPAR_avalon_mm_read_data_o(13 downto 0) <= cPAR_controller_rd_regs.send_PKG_PRIM_HDR2.seq_count; 
-                when 9 =>
+                when 10 =>
                     -- SEND_PKG_SEC_HDR1
                     cPAR_avalon_mm_read_data_o <= (others => '0');
                     cPAR_avalon_mm_read_data_o(3 downto 0)   <= cPAR_controller_rd_regs.send_PKG_SEC_HDR1.spacecraft_time_ref;
                     cPAR_avalon_mm_read_data_o(11 downto 4)  <= cPAR_controller_rd_regs.send_PKG_SEC_HDR1.service_id;
                     cPAR_avalon_mm_read_data_o(19 downto 12) <= cPAR_controller_rd_regs.send_PKG_SEC_HDR1.subservice_id;
-                when 10 =>
+                when 11 =>
                     -- SEND_PKG_SEC_HDR2
                     cPAR_avalon_mm_read_data_o <= (others => '0');
                     cPAR_avalon_mm_read_data_o(15 downto 0)  <= cPAR_controller_rd_regs.send_PKG_SEC_HDR2.msg_type_counter;
                     cPAR_avalon_mm_read_data_o(31 downto 16) <= cPAR_controller_rd_regs.send_PKG_SEC_HDR2.dest_id;
-                when 11 =>
+                when 12 =>
                     -- SEND_PKG_SEC_HDR3
                     cPAR_avalon_mm_read_data_o <= (others => '0');
-                    cPAR_avalon_mm_read_data_o(15 downto 0) <= cPAR_controller_rd_regs.send_PKG_SEC_HDR3.time;
-                when 12 =>
+                    cPAR_avalon_mm_read_data_o(31 downto 0) <= cPAR_controller_rd_regs.send_PKG_SEC_HDR3.time;
+                when 13 =>
+                    -- SEND_PKG_SEC_HDR4
+                    cPAR_avalon_mm_read_data_o <= (others => '0');
+                    cPAR_avalon_mm_read_data_o(23 downto 0) <= cPAR_controller_rd_regs.send_PKG_SEC_HDR4.time_ext;
+                when 14 =>
                     -- SEND_PKG_ADDR
                     cPAR_avalon_mm_read_data_o <= cPAR_controller_rd_regs.send_pkg_addr.pkg_addr;
-                when 13 =>
+                when 15 =>
+                    -- EXTRA INFO
+                    cPAR_avalon_mm_read_data_o <= (others => '0');
+                    cPAR_avalon_mm_read_data_o(7 downto 0) <= cPAR_controller_rd_regs.send_extra_info.spw_addr;
+                when 16 =>
                     -- HANDLING SEND
                     cPAR_avalon_mm_read_data_o <= (others => '0');
                     cPAR_avalon_mm_read_data_o(0) <= cPAR_controller_rd_regs.handling.irq_send_clr;
                     cPAR_avalon_mm_read_data_o(8 downto 1) <= cPAR_controller_rd_regs.handling.data_send_success_flags;
                     cPAR_avalon_mm_read_data_o(9) <= cPAR_controller_rd_regs.handling.data_send_wr_flag;
                     cPAR_avalon_mm_read_data_o(10) <= cPAR_controller_rd_regs.handling.data_send_rdy_flag;
-                when 14 =>
+                when 17 =>
                     -- HANDLING RECV
                     cPAR_avalon_mm_read_data_o <= (others => '0');
                     cPAR_avalon_mm_read_data_o(0) <= cPAR_controller_rd_regs.handling.irq_rcv_clr;
                     cPAR_avalon_mm_read_data_o(1) <= cPAR_controller_rd_regs.handling.data_rcv_rd_flag;
                     cPAR_avalon_mm_read_data_o(2) <= cPAR_controller_rd_regs.handling.data_rcv_rdy_flag;
-                when 15 =>
+                when 18 =>
                     -- RECV MEM OFFSET
                     cPAR_avalon_mm_read_data_o <= cPAR_controller_rd_regs.recv_mem_offset.mem_offset;
-                when 16 =>
+                when 19 =>
                     -- RECV FIFO SIZE
                     cPAR_avalon_mm_read_data_o <= cPAR_controller_rd_regs.recv_fifo_size.fifo_size;
-                when 17 =>
+                when 20 =>
                     -- SEND MEM OFFSET
                     cPAR_avalon_mm_read_data_o <= cPAR_controller_rd_regs.send_mem_offset.mem_offset;
-                when 18 =>
+                when 21 =>
                     -- SEND FIFO SIZE
                     cPAR_avalon_mm_read_data_o <= cPAR_controller_rd_regs.send_fifo_size.fifo_size;
+                when 22 =>
+                    -- EXTERNAL PROTO CFG
+                    cPAR_avalon_mm_read_data_o <= (others => '0');
+                    cPAR_avalon_mm_read_data_o(7 downto 0) <= cPAR_controller_rd_regs.external_proto_cfg.spw_addr;
    
 
                 when others =>
