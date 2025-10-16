@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>13/10/2025 17:33:44</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1760387624965</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>16/10/2025 19:56:30</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1760655390600</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\WORKSPACE\Github\SimuCam_Development_Data_Transmission\G3U_HW_V02_2GB\Qsys_Project\software\Simucam_R0_UART_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\MebX_Qsys_Project.sopcinfo</SopcDesignFile>
@@ -2042,6 +2042,18 @@
                 <slaveDescriptor>codec_pus_v01_0</slaveDescriptor>
                 <addressRange>0x90000000 - 0x9000007F</addressRange>
                 <addressSpan>128</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>avalon_mailbox_0_avalon_mm_send_agent</slaveDescriptor>
+                <addressRange>0x90000080 - 0x9000008F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>avalon_mailbox_0_avalon_mm_recv_slave_1</slaveDescriptor>
+                <addressRange>0x90000090 - 0x9000009F</addressRange>
+                <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <LinkerSection>

@@ -394,7 +394,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                     when RECEIVING_II =>
 
                         -- Caso o número de bytes recebidos seja menor que 5
-                        if s_byte_count < 5 then
+                        if s_byte_count < 6 then
 
                             -- Se a FIFO de entrada não estiver vazia e rxvalid estiver ativado
                             if (cPRTCi_inFIFO_empty_i = '0' and cPRTCi_inFIFO_rxvalid_i = '1') and s_byte_transfered = '0' then
@@ -434,6 +434,11 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                                     when x"00000004" =>
                                         s_CCSDS_data_reg(7 downto 0) <= cPRTCi_inFIFO_data_i;
                                         s_byte_count                  <= s_byte_count + 1;
+
+                                    -- Para o sexto. => 
+                                    when x"00000005" =>
+                                        s_byte_count                  <= s_byte_count + 1;
+                                        null; -- SPARE byte for TC
 
                                     -- Para os outros, não faz nada
                                     when others =>
@@ -512,7 +517,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
 
 
                         -- If the application data is of null size, jumps to accumulating CRC. If not, jumps to ACCUMULATING
-                        if s_data_field_len <= 7 then
+                        if s_data_field_len <= 8 then
                             s_CCSDS_in_state <= ACCUMULATING_CRC;
                         else
                             s_CCSDS_in_state <= ACCUMULATING;
@@ -523,7 +528,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                     when ACCUMULATING =>
 
                         -- Caso o número de bytes recebidos seja menor que a quantidade disponível pelo data bus
-                        if s_byte_acc < C_CCSDS_IN_AVALON_DATA_WIDTH / 8 and (s_byte_count + s_byte_acc) < s_data_field_len - 5 - 2 then
+                        if s_byte_acc < C_CCSDS_IN_AVALON_DATA_WIDTH / 8 and (s_byte_count + s_byte_acc) < s_data_field_len - 6 - 2 then
 
                             -- Se a FIFO de entrada não estiver vazia e rxvalid estiver ativado
                             if (cPRTCi_inFIFO_empty_i = '0' and cPRTCi_inFIFO_rxvalid_i = '1') and s_byte_transfered = '0' then
@@ -596,7 +601,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                             end if;
 
                             -- Antes de transicionar para o próximo estado, verifica se há alguma solicitação de limpeza de memória
-                            if s_byte_mem + s_data_field_len - 5 - s_byte_count - s_byte_acc > to_integer(unsigned(cPRTCi_DMA_num_bytes_i)) then
+                            if s_byte_mem + s_data_field_len - 6 - s_byte_count - s_byte_acc > to_integer(unsigned(cPRTCi_DMA_num_bytes_i)) then
 
                                 -- Transitions to the state of RESETING_MEM
                                 s_CCSDS_in_state                <= RESETING_MEM;
@@ -626,7 +631,7 @@ p_CCSDS_in_state_machine : process(clk_i, rst_sync_i) is
                             s_rst_mem_flags <= '1';
 
                             -- Caso haja espaço suficiente para armazenar o pacote
-                            if s_byte_mem - to_integer(unsigned(s_rst_mem.rst_value)) + s_data_field_len - 5 - s_byte_count - s_byte_acc <= to_integer(unsigned(cPRTCi_DMA_num_bytes_i)) then
+                            if s_byte_mem - to_integer(unsigned(s_rst_mem.rst_value)) + s_data_field_len - 6 - s_byte_count - s_byte_acc <= to_integer(unsigned(cPRTCi_DMA_num_bytes_i)) then
 
                                 -- Transiciona para o estado de TRANSFERING
                                 s_CCSDS_in_state <= TRANSFERING;

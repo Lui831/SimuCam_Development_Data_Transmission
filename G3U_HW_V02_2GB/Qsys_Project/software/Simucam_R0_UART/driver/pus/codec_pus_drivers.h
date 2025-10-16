@@ -22,6 +22,30 @@
 /* ------------------------------------------------------------------------------------ */
 // Codec PUS General constants
 
+// Constant for defining an OK Received PKG from the status bits
+#define CODEC_PUS_OK_TC_STATUS 0x0
+#define CODEC_PUS_OK_TC_EXT_PROTOCOL_STATUS 0x0
+
+// Enum for defining the error values for the Codec PUS status bits
+typedef enum{
+    CODEC_PUS_NO_ERR = 0,
+    CODEC_PUS_VER_NUM_ERR = 1,
+    CODEC_PUS_TYPE_ERR    = 2,
+    CODEC_PUS_SEC_HDR_FLAG_ERR = 3,
+    CODEC_PUS_SEQ_ERR          = 4,
+    CODEC_PUS_PUSVNUM_ERR      = 5,
+    CODEC_PUS_SERVICE_ID_ERR   = 6,
+    CODEC_PUS_CRC_ERR          = 7,
+    CODEC_PUS_EOP_ERR          = 8
+} t_codec_pus_status_err_enum;
+
+// Enum for defning the error values for the Codec PUS ext protocol status bits
+typedef enum{
+    CODEC_PUS_EXT_PROT_NO_ERR = 0,
+    CODEC_PUS_EXT_PROT_ADDR_ERR = 1,
+    CODEC_PUS_EXT_PROT_PROT_ID_ERR = 2
+} t_codec_pus_ext_prot_status_err_enum;
+
 // Determines the TIME field size, in bytes
 #define CODEC_PUS_TIME_FIELD_SIZE 7
 

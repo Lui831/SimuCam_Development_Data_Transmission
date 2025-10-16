@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'MebX_Qsys_Project'
  * SOPC Builder design path: ../../MebX_Qsys_Project.sopcinfo
  *
- * Generated: Wed Oct 08 17:08:04 BRT 2025
+ * Generated: Thu Oct 16 19:56:40 GMT-03:00 2025
  */
 
 /*
@@ -162,6 +162,7 @@
 #define __ALTERA_GENERIC_TRISTATE_CONTROLLER
 #define __ALTERA_NIOS2_GEN2
 #define __ALTERA_UP_SD_CARD_AVALON_INTERFACE
+#define __AVALON_MAILBOX
 #define __CODEC_PUS_V01
 #define __DUMB_COMMUNICATION_MODULE_V2
 #define __FTDI_UMFT601A_MODULE
@@ -258,6 +259,34 @@
 #define INCLUDE_TCP
 #define INICHE_DEFAULT_IF "NOT_USED"
 #define IP_FRAGMENTS
+
+
+/*
+ * avalon_mailbox_0_avalon_mm_recv_slave_1 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_avalon_mailbox_0_avalon_mm_recv_slave_1 avalon_mailbox
+#define AVALON_MAILBOX_0_AVALON_MM_RECV_SLAVE_1_BASE 0x90000090
+#define AVALON_MAILBOX_0_AVALON_MM_RECV_SLAVE_1_IRQ -1
+#define AVALON_MAILBOX_0_AVALON_MM_RECV_SLAVE_1_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define AVALON_MAILBOX_0_AVALON_MM_RECV_SLAVE_1_NAME "/dev/avalon_mailbox_0_avalon_mm_recv_slave_1"
+#define AVALON_MAILBOX_0_AVALON_MM_RECV_SLAVE_1_SPAN 16
+#define AVALON_MAILBOX_0_AVALON_MM_RECV_SLAVE_1_TYPE "avalon_mailbox"
+
+
+/*
+ * avalon_mailbox_0_avalon_mm_send_agent configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_avalon_mailbox_0_avalon_mm_send_agent avalon_mailbox
+#define AVALON_MAILBOX_0_AVALON_MM_SEND_AGENT_BASE 0x90000080
+#define AVALON_MAILBOX_0_AVALON_MM_SEND_AGENT_IRQ -1
+#define AVALON_MAILBOX_0_AVALON_MM_SEND_AGENT_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define AVALON_MAILBOX_0_AVALON_MM_SEND_AGENT_NAME "/dev/avalon_mailbox_0_avalon_mm_send_agent"
+#define AVALON_MAILBOX_0_AVALON_MM_SEND_AGENT_SPAN 16
+#define AVALON_MAILBOX_0_AVALON_MM_SEND_AGENT_TYPE "avalon_mailbox"
 
 
 /*
@@ -1008,7 +1037,7 @@
 #define SYSID_QSYS_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_NAME "/dev/sysid_qsys"
 #define SYSID_QSYS_SPAN 8
-#define SYSID_QSYS_TIMESTAMP 1759950724
+#define SYSID_QSYS_TIMESTAMP 1760650190
 #define SYSID_QSYS_TYPE "altera_avalon_sysid_qsys"
 
 

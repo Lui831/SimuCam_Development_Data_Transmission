@@ -181,6 +181,8 @@ C_SRCS += network_utilities.c
 C_SRCS += driver/pus/codec_pus_drivers.c
 C_SRCS += envision_test_function/mem_pool.c
 C_SRCS += envision_test_function/pus.c
+C_SRCS += envision_test_function/control_task.c
+C_SRCS += driver/mailbox/mailbox_drivers.c
 CXX_SRCS :=
 ASM_SRCS :=
 

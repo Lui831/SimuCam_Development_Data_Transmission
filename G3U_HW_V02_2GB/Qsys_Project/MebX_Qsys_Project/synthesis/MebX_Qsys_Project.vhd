@@ -686,6 +686,29 @@ architecture rtl of MebX_Qsys_Project is
 		);
 	end component sgfl_signal_filter_latch_top;
 
+	component mail_mailbox is
+		generic (
+			c_MAIL_FIFO_SIZE : integer := 255
+		);
+		port (
+			reset                              : in  std_logic                     := 'X';             -- reset
+			clock                              : in  std_logic                     := 'X';             -- clk
+			mail_send_avalon_mm_address_i      : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			mail_send_avalon_mm_read_i         : in  std_logic                     := 'X';             -- read
+			mail_send_avalon_mm_read_data_o    : out std_logic_vector(31 downto 0);                    -- readdata
+			mail_send_avalon_mm_write_i        : in  std_logic                     := 'X';             -- write
+			mail_send_avalon_mm_write_data_i   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			mail_send_avalon_mm_wait_request_o : out std_logic;                                        -- waitrequest
+			mail_recv_irq_o                    : out std_logic;                                        -- irq
+			mail_recv_avalon_mm_address_i      : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			mail_recv_avalon_mm_read_i         : in  std_logic                     := 'X';             -- read
+			mail_recv_avalon_mm_read_data_o    : out std_logic_vector(31 downto 0);                    -- readdata
+			mail_recv_avalon_mm_write_i        : in  std_logic                     := 'X';             -- write
+			mail_recv_avalon_mm_wait_request_o : out std_logic;                                        -- waitrequest
+			mail_recv_avalon_mm_write_data_i   : in  std_logic_vector(31 downto 0) := (others => 'X')  -- writedata
+		);
+	end component mail_mailbox;
+
 	component codec_PUS_to_SpW_Connecter is
 		port (
 			clk_i                                   : in  std_logic                    := 'X';             -- clk
@@ -1353,6 +1376,18 @@ architecture rtl of MebX_Qsys_Project is
 			nios2_gen2_0_instruction_master_read                             : in  std_logic                     := 'X';             -- read
 			nios2_gen2_0_instruction_master_readdata                         : out std_logic_vector(31 downto 0);                    -- readdata
 			nios2_gen2_0_instruction_master_readdatavalid                    : out std_logic;                                        -- readdatavalid
+			avalon_mailbox_0_avalon_mm_recv_slave_1_address                  : out std_logic_vector(1 downto 0);                     -- address
+			avalon_mailbox_0_avalon_mm_recv_slave_1_write                    : out std_logic;                                        -- write
+			avalon_mailbox_0_avalon_mm_recv_slave_1_read                     : out std_logic;                                        -- read
+			avalon_mailbox_0_avalon_mm_recv_slave_1_readdata                 : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			avalon_mailbox_0_avalon_mm_recv_slave_1_writedata                : out std_logic_vector(31 downto 0);                    -- writedata
+			avalon_mailbox_0_avalon_mm_recv_slave_1_waitrequest              : in  std_logic                     := 'X';             -- waitrequest
+			avalon_mailbox_0_avalon_mm_send_agent_address                    : out std_logic_vector(1 downto 0);                     -- address
+			avalon_mailbox_0_avalon_mm_send_agent_write                      : out std_logic;                                        -- write
+			avalon_mailbox_0_avalon_mm_send_agent_read                       : out std_logic;                                        -- read
+			avalon_mailbox_0_avalon_mm_send_agent_readdata                   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			avalon_mailbox_0_avalon_mm_send_agent_writedata                  : out std_logic_vector(31 downto 0);                    -- writedata
+			avalon_mailbox_0_avalon_mm_send_agent_waitrequest                : in  std_logic                     := 'X';             -- waitrequest
 			clock_bridge_afi_50_s0_address                                   : out std_logic_vector(11 downto 0);                    -- address
 			clock_bridge_afi_50_s0_write                                     : out std_logic;                                        -- write
 			clock_bridge_afi_50_s0_read                                      : out std_logic;                                        -- read
@@ -1707,19 +1742,20 @@ architecture rtl of MebX_Qsys_Project is
 
 	component MebX_Qsys_Project_irq_mapper is
 		port (
-			clk           : in  std_logic                     := 'X'; -- clk
-			reset         : in  std_logic                     := 'X'; -- reset
-			receiver0_irq : in  std_logic                     := 'X'; -- irq
-			receiver1_irq : in  std_logic                     := 'X'; -- irq
-			receiver2_irq : in  std_logic                     := 'X'; -- irq
-			receiver3_irq : in  std_logic                     := 'X'; -- irq
-			receiver4_irq : in  std_logic                     := 'X'; -- irq
-			receiver5_irq : in  std_logic                     := 'X'; -- irq
-			receiver6_irq : in  std_logic                     := 'X'; -- irq
-			receiver7_irq : in  std_logic                     := 'X'; -- irq
-			receiver8_irq : in  std_logic                     := 'X'; -- irq
-			receiver9_irq : in  std_logic                     := 'X'; -- irq
-			sender_irq    : out std_logic_vector(31 downto 0)         -- irq
+			clk            : in  std_logic                     := 'X'; -- clk
+			reset          : in  std_logic                     := 'X'; -- reset
+			receiver0_irq  : in  std_logic                     := 'X'; -- irq
+			receiver1_irq  : in  std_logic                     := 'X'; -- irq
+			receiver2_irq  : in  std_logic                     := 'X'; -- irq
+			receiver3_irq  : in  std_logic                     := 'X'; -- irq
+			receiver4_irq  : in  std_logic                     := 'X'; -- irq
+			receiver5_irq  : in  std_logic                     := 'X'; -- irq
+			receiver6_irq  : in  std_logic                     := 'X'; -- irq
+			receiver7_irq  : in  std_logic                     := 'X'; -- irq
+			receiver8_irq  : in  std_logic                     := 'X'; -- irq
+			receiver9_irq  : in  std_logic                     := 'X'; -- irq
+			receiver10_irq : in  std_logic                     := 'X'; -- irq
+			sender_irq     : out std_logic_vector(31 downto 0)         -- irq
 		);
 	end component MebX_Qsys_Project_irq_mapper;
 
@@ -2014,7 +2050,7 @@ architecture rtl of MebX_Qsys_Project is
 	end component mebx_qsys_project_m1_clock_bridge;
 
 	signal m2_ddr2_memory_afi_clk_clk                                                              : std_logic;                      -- m2_ddr2_memory:afi_clk -> [SpaceWire_Channel_A:clk_200_i, SpaceWire_Channel_B:clk_200_i, SpaceWire_Channel_C:clk_200_i, SpaceWire_Channel_D:clk_200_i, SpaceWire_Channel_E:clk_100_i, SpaceWire_Channel_E:clk_200_i, SpaceWire_Channel_F:clk_200_i, SpaceWire_Channel_G:clk_200_i, SpaceWire_Channel_H:clk_200_i, Sync_Signal_Filter_Latch_0:clk_200_i, mm_interconnect_1:m2_ddr2_memory_afi_clk_clk, rst_controller_003:clk]
-	signal m2_ddr2_memory_afi_half_clk_clk                                                         : std_logic;                      -- m2_ddr2_memory:afi_half_clk -> [Dumb_Communication_Module_v2_Timer:clock_sink_100_clk_i, FTDI_UMFT601A_Module:clock_sink_clk_i, Memory_Filler:clock_sink_clk_i, RMAP_Echoing:clk_100_i, SpaceWire_Channel_A:clk_100_i, SpaceWire_Channel_B:clk_100_i, SpaceWire_Channel_C:clk_100_i, SpaceWire_Channel_D:clk_100_i, SpaceWire_Channel_F:clk_100_i, SpaceWire_Channel_G:clk_100_i, SpaceWire_Channel_H:clk_100_i, SpaceWire_Mux_Ch_H:clock_i, clock_bridge_afi_50:s0_clk, codec_pus_to_spw_connecter_v01_0:clk_i, codec_pus_v01_0:clk_i, ddr2_address_span_extender:clk, ext_flash:clk_clk, irq_mapper:clk, irq_synchronizer:sender_clk, irq_synchronizer_001:sender_clk, irq_synchronizer_002:sender_clk, irq_synchronizer_003:sender_clk, jtag_uart_0:clk, m1_clock_bridge:s0_clk, mm_interconnect_0:clk_100_clk_clk, mm_interconnect_1:clk_100_clk_clk, mm_interconnect_1:m2_ddr2_memory_afi_half_clk_clk, mm_interconnect_2:clk_100_clk_clk, nios2_gen2_0:clk, onchip_memory2_0:clk, onchip_memory:clk, rs232_uart:clk, rst_controller_002:clk, rst_controller_004:clk, rst_controller_006:clk, rst_controller_007:clk, sysid_qsys:clock, tristate_conduit_bridge_0:clk, uart_module_top_0:clock_sink_100_clk_i]
+	signal m2_ddr2_memory_afi_half_clk_clk                                                         : std_logic;                      -- m2_ddr2_memory:afi_half_clk -> [Dumb_Communication_Module_v2_Timer:clock_sink_100_clk_i, FTDI_UMFT601A_Module:clock_sink_clk_i, Memory_Filler:clock_sink_clk_i, RMAP_Echoing:clk_100_i, SpaceWire_Channel_A:clk_100_i, SpaceWire_Channel_B:clk_100_i, SpaceWire_Channel_C:clk_100_i, SpaceWire_Channel_D:clk_100_i, SpaceWire_Channel_F:clk_100_i, SpaceWire_Channel_G:clk_100_i, SpaceWire_Channel_H:clk_100_i, SpaceWire_Mux_Ch_H:clock_i, avalon_mailbox_0:clock, clock_bridge_afi_50:s0_clk, codec_pus_to_spw_connecter_v01_0:clk_i, codec_pus_v01_0:clk_i, ddr2_address_span_extender:clk, ext_flash:clk_clk, irq_mapper:clk, irq_synchronizer:sender_clk, irq_synchronizer_001:sender_clk, irq_synchronizer_002:sender_clk, irq_synchronizer_003:sender_clk, jtag_uart_0:clk, m1_clock_bridge:s0_clk, mm_interconnect_0:clk_100_clk_clk, mm_interconnect_1:clk_100_clk_clk, mm_interconnect_1:m2_ddr2_memory_afi_half_clk_clk, mm_interconnect_2:clk_100_clk_clk, nios2_gen2_0:clk, onchip_memory2_0:clk, onchip_memory:clk, rs232_uart:clk, rst_controller_002:clk, rst_controller_004:clk, rst_controller_006:clk, rst_controller_007:clk, sysid_qsys:clock, tristate_conduit_bridge_0:clk, uart_module_top_0:clock_sink_100_clk_i]
 	signal m1_ddr2_memory_afi_half_clk_clk                                                         : std_logic;                      -- m1_ddr2_memory:afi_half_clk -> [m1_clock_bridge:m0_clk, mm_interconnect_4:m1_ddr2_memory_afi_half_clk_clk, rst_controller_005:clk]
 	signal codec_pus_to_spw_connecter_v01_0_codec_pus_signals_conduit_infifo_data_signal           : std_logic_vector(7 downto 0);   -- codec_pus_to_spw_connecter_v01_0:codec_PUS_conduit_inFIFO_data_i -> codec_pus_v01_0:conduit_inFIFO_data_i
 	signal codec_pus_to_spw_connecter_v01_0_codec_pus_signals_conduit_outfifo_full_signal          : std_logic;                      -- codec_pus_to_spw_connecter_v01_0:codec_PUS_conduit_outFIFO_full_i -> codec_pus_v01_0:conduit_outFIFO_full_i
@@ -2176,6 +2212,18 @@ architecture rtl of MebX_Qsys_Project is
 	signal mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_read                                    : std_logic;                      -- mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_read -> mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_read:in
 	signal mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_write                                   : std_logic;                      -- mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_write -> mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_write:in
 	signal mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata                               : std_logic_vector(31 downto 0);  -- mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_writedata -> jtag_uart_0:av_writedata
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_readdata                      : std_logic_vector(31 downto 0);  -- avalon_mailbox_0:mail_recv_avalon_mm_read_data_o -> mm_interconnect_0:avalon_mailbox_0_avalon_mm_recv_slave_1_readdata
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_waitrequest                   : std_logic;                      -- avalon_mailbox_0:mail_recv_avalon_mm_wait_request_o -> mm_interconnect_0:avalon_mailbox_0_avalon_mm_recv_slave_1_waitrequest
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_address                       : std_logic_vector(1 downto 0);   -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_recv_slave_1_address -> avalon_mailbox_0:mail_recv_avalon_mm_address_i
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_read                          : std_logic;                      -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_recv_slave_1_read -> avalon_mailbox_0:mail_recv_avalon_mm_read_i
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_write                         : std_logic;                      -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_recv_slave_1_write -> avalon_mailbox_0:mail_recv_avalon_mm_write_i
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_writedata                     : std_logic_vector(31 downto 0);  -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_recv_slave_1_writedata -> avalon_mailbox_0:mail_recv_avalon_mm_write_data_i
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_readdata                        : std_logic_vector(31 downto 0);  -- avalon_mailbox_0:mail_send_avalon_mm_read_data_o -> mm_interconnect_0:avalon_mailbox_0_avalon_mm_send_agent_readdata
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_waitrequest                     : std_logic;                      -- avalon_mailbox_0:mail_send_avalon_mm_wait_request_o -> mm_interconnect_0:avalon_mailbox_0_avalon_mm_send_agent_waitrequest
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_address                         : std_logic_vector(1 downto 0);   -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_send_agent_address -> avalon_mailbox_0:mail_send_avalon_mm_address_i
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_read                            : std_logic;                      -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_send_agent_read -> avalon_mailbox_0:mail_send_avalon_mm_read_i
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_write                           : std_logic;                      -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_send_agent_write -> avalon_mailbox_0:mail_send_avalon_mm_write_i
+	signal mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_writedata                       : std_logic_vector(31 downto 0);  -- mm_interconnect_0:avalon_mailbox_0_avalon_mm_send_agent_writedata -> avalon_mailbox_0:mail_send_avalon_mm_write_data_i
 	signal mm_interconnect_0_ftdi_umft601a_module_avalon_slave_config_readdata                     : std_logic_vector(31 downto 0);  -- FTDI_UMFT601A_Module:avalon_slave_config_readdata_o -> mm_interconnect_0:FTDI_UMFT601A_Module_avalon_slave_config_readdata
 	signal mm_interconnect_0_ftdi_umft601a_module_avalon_slave_config_waitrequest                  : std_logic;                      -- FTDI_UMFT601A_Module:avalon_slave_config_waitrequest_o -> mm_interconnect_0:FTDI_UMFT601A_Module_avalon_slave_config_waitrequest
 	signal mm_interconnect_0_ftdi_umft601a_module_avalon_slave_config_address                      : std_logic_vector(7 downto 0);   -- mm_interconnect_0:FTDI_UMFT601A_Module_avalon_slave_config_address -> FTDI_UMFT601A_Module:avalon_slave_config_address_i
@@ -2471,21 +2519,22 @@ architecture rtl of MebX_Qsys_Project is
 	signal m1_ddr2_memory_afi_clk_clk                                                              : std_logic;                      -- m1_ddr2_memory:afi_clk -> [mm_interconnect_4:m1_ddr2_memory_afi_clk_clk, rst_controller_008:clk]
 	signal irq_mapper_receiver0_irq                                                                : std_logic;                      -- codec_pus_v01_0:IRQ_send_recv_o -> irq_mapper:receiver0_irq
 	signal irq_mapper_receiver1_irq                                                                : std_logic;                      -- codec_pus_v01_0:IRQ_send_send_o -> irq_mapper:receiver1_irq
-	signal irq_mapper_receiver2_irq                                                                : std_logic;                      -- jtag_uart_0:av_irq -> irq_mapper:receiver2_irq
-	signal irq_mapper_receiver5_irq                                                                : std_logic;                      -- rs232_uart:irq -> irq_mapper:receiver5_irq
-	signal irq_mapper_receiver7_irq                                                                : std_logic;                      -- FTDI_UMFT601A_Module:rx_interrupt_sender_irq_o -> irq_mapper:receiver7_irq
-	signal irq_mapper_receiver9_irq                                                                : std_logic;                      -- FTDI_UMFT601A_Module:tx_interrupt_sender_irq_o -> irq_mapper:receiver9_irq
+	signal irq_mapper_receiver2_irq                                                                : std_logic;                      -- avalon_mailbox_0:mail_recv_irq_o -> irq_mapper:receiver2_irq
+	signal irq_mapper_receiver3_irq                                                                : std_logic;                      -- jtag_uart_0:av_irq -> irq_mapper:receiver3_irq
+	signal irq_mapper_receiver6_irq                                                                : std_logic;                      -- rs232_uart:irq -> irq_mapper:receiver6_irq
+	signal irq_mapper_receiver8_irq                                                                : std_logic;                      -- FTDI_UMFT601A_Module:rx_interrupt_sender_irq_o -> irq_mapper:receiver8_irq
+	signal irq_mapper_receiver10_irq                                                               : std_logic;                      -- FTDI_UMFT601A_Module:tx_interrupt_sender_irq_o -> irq_mapper:receiver10_irq
 	signal nios2_gen2_0_irq_irq                                                                    : std_logic_vector(31 downto 0);  -- irq_mapper:sender_irq -> nios2_gen2_0:irq
-	signal irq_mapper_receiver3_irq                                                                : std_logic;                      -- irq_synchronizer:sender_irq -> irq_mapper:receiver3_irq
+	signal irq_mapper_receiver4_irq                                                                : std_logic;                      -- irq_synchronizer:sender_irq -> irq_mapper:receiver4_irq
 	signal irq_synchronizer_receiver_irq                                                           : std_logic_vector(0 downto 0);   -- timer_1ms:irq -> irq_synchronizer:receiver_irq
-	signal irq_mapper_receiver4_irq                                                                : std_logic;                      -- irq_synchronizer_001:sender_irq -> irq_mapper:receiver4_irq
+	signal irq_mapper_receiver5_irq                                                                : std_logic;                      -- irq_synchronizer_001:sender_irq -> irq_mapper:receiver5_irq
 	signal irq_synchronizer_001_receiver_irq                                                       : std_logic_vector(0 downto 0);   -- timer_1us:irq -> irq_synchronizer_001:receiver_irq
-	signal irq_mapper_receiver6_irq                                                                : std_logic;                      -- irq_synchronizer_002:sender_irq -> irq_mapper:receiver6_irq
+	signal irq_mapper_receiver7_irq                                                                : std_logic;                      -- irq_synchronizer_002:sender_irq -> irq_mapper:receiver7_irq
 	signal irq_synchronizer_002_receiver_irq                                                       : std_logic_vector(0 downto 0);   -- sync:pre_sync_interrupt_sender_irq_o -> irq_synchronizer_002:receiver_irq
-	signal irq_mapper_receiver8_irq                                                                : std_logic;                      -- irq_synchronizer_003:sender_irq -> irq_mapper:receiver8_irq
+	signal irq_mapper_receiver9_irq                                                                : std_logic;                      -- irq_synchronizer_003:sender_irq -> irq_mapper:receiver9_irq
 	signal irq_synchronizer_003_receiver_irq                                                       : std_logic_vector(0 downto 0);   -- sync:sync_interrupt_sender_irq_o -> irq_synchronizer_003:receiver_irq
 	signal rst_controller_001_reset_out_reset                                                      : std_logic;                      -- rst_controller_001:reset_out -> [Sync_Signal_Filter_Latch_0:reset_i, clock_bridge_afi_50:m0_reset, irq_synchronizer:receiver_reset, irq_synchronizer_001:receiver_reset, irq_synchronizer_002:receiver_reset, irq_synchronizer_003:receiver_reset, mm_interconnect_3:clock_bridge_afi_50_m0_reset_reset_bridge_in_reset_reset, rst_controller:reset_sink_reset, rst_controller_001_reset_out_reset:in, sync:reset_sink_reset_i]
-	signal rst_controller_002_reset_out_reset                                                      : std_logic;                      -- rst_controller_002:reset_out -> [Dumb_Communication_Module_v2_Timer:reset_sink_reset_i, FTDI_UMFT601A_Module:reset_sink_reset_i, Memory_Filler:reset_sink_reset_i, RMAP_Echoing:reset_i, SpaceWire_Mux_Ch_H:reset_i, clock_bridge_afi_50:s0_reset, codec_pus_to_spw_connecter_v01_0:rst_i, codec_pus_v01_0:rst_sync_i, ddr2_address_span_extender:reset, m1_clock_bridge:s0_reset, mm_interconnect_0:codec_pus_v01_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:FTDI_UMFT601A_Module_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:m1_clock_bridge_s0_reset_reset_bridge_in_reset_reset, mm_interconnect_2:uart_module_top_0_reset_sink_reset_bridge_in_reset_reset, onchip_memory2_0:reset, onchip_memory:reset, rst_controller_002_reset_out_reset:in, rst_translator:in_reset, uart_module_top_0:reset_sink_reset_i]
+	signal rst_controller_002_reset_out_reset                                                      : std_logic;                      -- rst_controller_002:reset_out -> [Dumb_Communication_Module_v2_Timer:reset_sink_reset_i, FTDI_UMFT601A_Module:reset_sink_reset_i, Memory_Filler:reset_sink_reset_i, RMAP_Echoing:reset_i, SpaceWire_Mux_Ch_H:reset_i, avalon_mailbox_0:reset, clock_bridge_afi_50:s0_reset, codec_pus_to_spw_connecter_v01_0:rst_i, codec_pus_v01_0:rst_sync_i, ddr2_address_span_extender:reset, m1_clock_bridge:s0_reset, mm_interconnect_0:codec_pus_v01_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:FTDI_UMFT601A_Module_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:m1_clock_bridge_s0_reset_reset_bridge_in_reset_reset, mm_interconnect_2:uart_module_top_0_reset_sink_reset_bridge_in_reset_reset, onchip_memory2_0:reset, onchip_memory:reset, rst_controller_002_reset_out_reset:in, rst_translator:in_reset, uart_module_top_0:reset_sink_reset_i]
 	signal rst_controller_002_reset_out_reset_req                                                  : std_logic;                      -- rst_controller_002:reset_req -> [onchip_memory2_0:reset_req, onchip_memory:reset_req, rst_translator:reset_req_in]
 	signal rst_controller_003_reset_out_reset                                                      : std_logic;                      -- rst_controller_003:reset_out -> [SpaceWire_Channel_A:reset_i, SpaceWire_Channel_B:reset_i, SpaceWire_Channel_C:reset_i, SpaceWire_Channel_D:reset_i, SpaceWire_Channel_E:reset_i, SpaceWire_Channel_F:reset_i, SpaceWire_Channel_G:reset_i, SpaceWire_Channel_H:reset_i, mm_interconnect_1:m2_ddr2_memory_avl_translator_reset_reset_bridge_in_reset_reset, mm_interconnect_1:m2_ddr2_memory_soft_reset_reset_bridge_in_reset_reset]
 	signal rst_controller_004_reset_out_reset                                                      : std_logic;                      -- rst_controller_004:reset_out -> [ext_flash:reset_reset, mm_interconnect_0:ext_flash_reset_reset_bridge_in_reset_reset, tristate_conduit_bridge_0:reset]
@@ -2645,8 +2694,8 @@ begin
 			avalon_master_data_read_o         => ftdi_umft601a_module_avalon_master_data_read,                           --                      .read
 			avalon_master_data_write_o        => ftdi_umft601a_module_avalon_master_data_write,                          --                      .write
 			avalon_master_data_writedata_o    => ftdi_umft601a_module_avalon_master_data_writedata,                      --                      .writedata
-			rx_interrupt_sender_irq_o         => irq_mapper_receiver7_irq,                                               --   rx_interrupt_sender.irq
-			tx_interrupt_sender_irq_o         => irq_mapper_receiver9_irq                                                --   tx_interrupt_sender.irq
+			rx_interrupt_sender_irq_o         => irq_mapper_receiver8_irq,                                               --   rx_interrupt_sender.irq
+			tx_interrupt_sender_irq_o         => irq_mapper_receiver10_irq                                               --   tx_interrupt_sender.irq
 		);
 
 	memory_filler : component mfil_memory_filler_top
@@ -3293,6 +3342,28 @@ begin
 			filtered_sig_o   => sync_filtered_sig_filtered_sig_signal      --   conduit_end_filtered_sig.filtered_sig_signal
 		);
 
+	avalon_mailbox_0 : component mail_mailbox
+		generic map (
+			c_MAIL_FIFO_SIZE => 10
+		)
+		port map (
+			reset                              => rst_controller_002_reset_out_reset,                                    --                  reset.reset
+			clock                              => m2_ddr2_memory_afi_half_clk_clk,                                       --                  clock.clk
+			mail_send_avalon_mm_address_i      => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_address,       --   avalon_mm_send_agent.address
+			mail_send_avalon_mm_read_i         => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_read,          --                       .read
+			mail_send_avalon_mm_read_data_o    => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_readdata,      --                       .readdata
+			mail_send_avalon_mm_write_i        => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_write,         --                       .write
+			mail_send_avalon_mm_write_data_i   => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_writedata,     --                       .writedata
+			mail_send_avalon_mm_wait_request_o => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_waitrequest,   --                       .waitrequest
+			mail_recv_irq_o                    => irq_mapper_receiver2_irq,                                              --      avalon_irq_sender.irq
+			mail_recv_avalon_mm_address_i      => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_address,     -- avalon_mm_recv_slave_1.address
+			mail_recv_avalon_mm_read_i         => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_read,        --                       .read
+			mail_recv_avalon_mm_read_data_o    => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_readdata,    --                       .readdata
+			mail_recv_avalon_mm_write_i        => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_write,       --                       .write
+			mail_recv_avalon_mm_wait_request_o => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_waitrequest, --                       .waitrequest
+			mail_recv_avalon_mm_write_data_i   => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_writedata    --                       .writedata
+		);
+
 	clock_bridge_afi_50 : component mebx_qsys_project_clock_bridge_afi_50
 		generic map (
 			DATA_WIDTH          => 32,
@@ -3586,7 +3657,7 @@ begin
 			av_write_n     => mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_write_ports_inv, --                  .write_n
 			av_writedata   => mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata,       --                  .writedata
 			av_waitrequest => mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_waitrequest,     --                  .waitrequest
-			av_irq         => irq_mapper_receiver2_irq                                         --               irq.irq
+			av_irq         => irq_mapper_receiver3_irq                                         --               irq.irq
 		);
 
 	m1_clock_bridge : component mebx_qsys_project_m1_clock_bridge
@@ -3950,7 +4021,7 @@ begin
 			readdata      => mm_interconnect_2_rs232_uart_s1_readdata,        --                    .readdata
 			rxd           => rs232_uart_rxd,                                  -- external_connection.export
 			txd           => rs232_uart_txd,                                  --                    .export
-			irq           => irq_mapper_receiver5_irq                         --                 irq.irq
+			irq           => irq_mapper_receiver6_irq                         --                 irq.irq
 		);
 
 	rst_controller : component rst_controller_top
@@ -4136,6 +4207,18 @@ begin
 			nios2_gen2_0_instruction_master_read                             => nios2_gen2_0_instruction_master_read,                                               --                                                     .read
 			nios2_gen2_0_instruction_master_readdata                         => nios2_gen2_0_instruction_master_readdata,                                           --                                                     .readdata
 			nios2_gen2_0_instruction_master_readdatavalid                    => nios2_gen2_0_instruction_master_readdatavalid,                                      --                                                     .readdatavalid
+			avalon_mailbox_0_avalon_mm_recv_slave_1_address                  => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_address,                  --              avalon_mailbox_0_avalon_mm_recv_slave_1.address
+			avalon_mailbox_0_avalon_mm_recv_slave_1_write                    => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_write,                    --                                                     .write
+			avalon_mailbox_0_avalon_mm_recv_slave_1_read                     => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_read,                     --                                                     .read
+			avalon_mailbox_0_avalon_mm_recv_slave_1_readdata                 => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_readdata,                 --                                                     .readdata
+			avalon_mailbox_0_avalon_mm_recv_slave_1_writedata                => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_writedata,                --                                                     .writedata
+			avalon_mailbox_0_avalon_mm_recv_slave_1_waitrequest              => mm_interconnect_0_avalon_mailbox_0_avalon_mm_recv_slave_1_waitrequest,              --                                                     .waitrequest
+			avalon_mailbox_0_avalon_mm_send_agent_address                    => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_address,                    --                avalon_mailbox_0_avalon_mm_send_agent.address
+			avalon_mailbox_0_avalon_mm_send_agent_write                      => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_write,                      --                                                     .write
+			avalon_mailbox_0_avalon_mm_send_agent_read                       => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_read,                       --                                                     .read
+			avalon_mailbox_0_avalon_mm_send_agent_readdata                   => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_readdata,                   --                                                     .readdata
+			avalon_mailbox_0_avalon_mm_send_agent_writedata                  => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_writedata,                  --                                                     .writedata
+			avalon_mailbox_0_avalon_mm_send_agent_waitrequest                => mm_interconnect_0_avalon_mailbox_0_avalon_mm_send_agent_waitrequest,                --                                                     .waitrequest
 			clock_bridge_afi_50_s0_address                                   => mm_interconnect_0_clock_bridge_afi_50_s0_address,                                   --                               clock_bridge_afi_50_s0.address
 			clock_bridge_afi_50_s0_write                                     => mm_interconnect_0_clock_bridge_afi_50_s0_write,                                     --                                                     .write
 			clock_bridge_afi_50_s0_read                                      => mm_interconnect_0_clock_bridge_afi_50_s0_read,                                      --                                                     .read
@@ -4485,19 +4568,20 @@ begin
 
 	irq_mapper : component MebX_Qsys_Project_irq_mapper
 		port map (
-			clk           => m2_ddr2_memory_afi_half_clk_clk,    --       clk.clk
-			reset         => rst_controller_006_reset_out_reset, -- clk_reset.reset
-			receiver0_irq => irq_mapper_receiver0_irq,           -- receiver0.irq
-			receiver1_irq => irq_mapper_receiver1_irq,           -- receiver1.irq
-			receiver2_irq => irq_mapper_receiver2_irq,           -- receiver2.irq
-			receiver3_irq => irq_mapper_receiver3_irq,           -- receiver3.irq
-			receiver4_irq => irq_mapper_receiver4_irq,           -- receiver4.irq
-			receiver5_irq => irq_mapper_receiver5_irq,           -- receiver5.irq
-			receiver6_irq => irq_mapper_receiver6_irq,           -- receiver6.irq
-			receiver7_irq => irq_mapper_receiver7_irq,           -- receiver7.irq
-			receiver8_irq => irq_mapper_receiver8_irq,           -- receiver8.irq
-			receiver9_irq => irq_mapper_receiver9_irq,           -- receiver9.irq
-			sender_irq    => nios2_gen2_0_irq_irq                --    sender.irq
+			clk            => m2_ddr2_memory_afi_half_clk_clk,    --        clk.clk
+			reset          => rst_controller_006_reset_out_reset, --  clk_reset.reset
+			receiver0_irq  => irq_mapper_receiver0_irq,           --  receiver0.irq
+			receiver1_irq  => irq_mapper_receiver1_irq,           --  receiver1.irq
+			receiver2_irq  => irq_mapper_receiver2_irq,           --  receiver2.irq
+			receiver3_irq  => irq_mapper_receiver3_irq,           --  receiver3.irq
+			receiver4_irq  => irq_mapper_receiver4_irq,           --  receiver4.irq
+			receiver5_irq  => irq_mapper_receiver5_irq,           --  receiver5.irq
+			receiver6_irq  => irq_mapper_receiver6_irq,           --  receiver6.irq
+			receiver7_irq  => irq_mapper_receiver7_irq,           --  receiver7.irq
+			receiver8_irq  => irq_mapper_receiver8_irq,           --  receiver8.irq
+			receiver9_irq  => irq_mapper_receiver9_irq,           --  receiver9.irq
+			receiver10_irq => irq_mapper_receiver10_irq,          -- receiver10.irq
+			sender_irq     => nios2_gen2_0_irq_irq                --     sender.irq
 		);
 
 	irq_synchronizer : component altera_irq_clock_crosser
@@ -4510,7 +4594,7 @@ begin
 			receiver_reset => rst_controller_001_reset_out_reset, -- receiver_clk_reset.reset
 			sender_reset   => rst_controller_006_reset_out_reset, --   sender_clk_reset.reset
 			receiver_irq   => irq_synchronizer_receiver_irq,      --           receiver.irq
-			sender_irq(0)  => irq_mapper_receiver3_irq            --             sender.irq
+			sender_irq(0)  => irq_mapper_receiver4_irq            --             sender.irq
 		);
 
 	irq_synchronizer_001 : component altera_irq_clock_crosser
@@ -4523,7 +4607,7 @@ begin
 			receiver_reset => rst_controller_001_reset_out_reset, -- receiver_clk_reset.reset
 			sender_reset   => rst_controller_006_reset_out_reset, --   sender_clk_reset.reset
 			receiver_irq   => irq_synchronizer_001_receiver_irq,  --           receiver.irq
-			sender_irq(0)  => irq_mapper_receiver4_irq            --             sender.irq
+			sender_irq(0)  => irq_mapper_receiver5_irq            --             sender.irq
 		);
 
 	irq_synchronizer_002 : component altera_irq_clock_crosser
@@ -4536,7 +4620,7 @@ begin
 			receiver_reset => rst_controller_001_reset_out_reset, -- receiver_clk_reset.reset
 			sender_reset   => rst_controller_006_reset_out_reset, --   sender_clk_reset.reset
 			receiver_irq   => irq_synchronizer_002_receiver_irq,  --           receiver.irq
-			sender_irq(0)  => irq_mapper_receiver6_irq            --             sender.irq
+			sender_irq(0)  => irq_mapper_receiver7_irq            --             sender.irq
 		);
 
 	irq_synchronizer_003 : component altera_irq_clock_crosser
@@ -4549,7 +4633,7 @@ begin
 			receiver_reset => rst_controller_001_reset_out_reset, -- receiver_clk_reset.reset
 			sender_reset   => rst_controller_006_reset_out_reset, --   sender_clk_reset.reset
 			receiver_irq   => irq_synchronizer_003_receiver_irq,  --           receiver.irq
-			sender_irq(0)  => irq_mapper_receiver8_irq            --             sender.irq
+			sender_irq(0)  => irq_mapper_receiver9_irq            --             sender.irq
 		);
 
 	rst_controller_001 : component mebx_qsys_project_rst_controller_001

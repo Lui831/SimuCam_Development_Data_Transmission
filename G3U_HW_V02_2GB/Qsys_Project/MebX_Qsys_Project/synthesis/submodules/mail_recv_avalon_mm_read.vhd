@@ -1,0 +1,163 @@
+--------------------------------------------------------------------------------------------------------------------------------------
+-- mail_recv_avalon_mm_read.vhd
+-- Authors: Luiz H. A. Santos, Pedro A. W. Dian, João P. Fogetti, Rafaella C. Zeron.
+-- Date: 30-04-2025
+-- Description: this code is responsible for defining the HDL of the Recv Avalon MM Read module.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------
+-- Important libraries
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+use work.mail_main_pkg.all;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------
+-- Entity declaration
+
+entity mail_recv_avalon_mm_read is
+
+	port(
+
+        -- Input Signals --
+
+        -- Reset and clock signals
+		clk_i                   : in  std_logic;
+		rst_i                   : in  std_logic;
+
+        -- Avalon MM Interface Input Signals
+		mail_avalon_mm_i : in t_mail_recv_read_avalon_mm_from_inteface_i;
+
+		-- Input signals from the FIFO
+		mail_fifo_i : in t_mail_recv_read_avalon_mm_from_fifo_i;
+
+		-- Input control register
+		mail_cntrl_reg_i : in t_mail_recv_read_avalon_mm_from_system_i;
+
+        -- Output Signals --
+
+        -- Output Signals for the FIFO
+        mail_fifo_o : out t_mail_recv_read_avalon_mm_to_fifo_o;
+
+        -- Avalon MM Interface Output Signals
+		mail_avalon_mm_o : out t_mail_recv_read_avalon_mm_to_inteface_o
+
+	);
+
+end entity mail_recv_avalon_mm_read;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------
+-- Architecture declaration
+
+architecture rtl of mail_recv_avalon_mm_read is
+
+	signal s_data_acquired : std_logic;
+	signal s_int_wait_request : std_logic;
+
+begin
+
+    -- Process for receiving write requests and writing data
+	p_avalon_mm_read : process(clk_i, rst_i) is
+
+		procedure p_read_all_registers(v_read_addr : t_mail_read_address) is
+		begin
+            
+            -- Case for the read addresses
+            case v_read_addr is
+
+                -- Control Register
+                when "00" =>
+					mail_avalon_mm_o.read_data(0) <= mail_cntrl_reg_i.proc_rst;
+					mail_avalon_mm_o.read_data(1) <= mail_cntrl_reg_i.en;
+					mail_avalon_mm_o.read_data(2) <= mail_cntrl_reg_i.en_irq;
+					mail_avalon_mm_o.read_data(3) <= mail_cntrl_reg_i.clr_irq;
+
+				-- Status Register
+				when "01" =>
+					mail_avalon_mm_o.read_data(0) <= mail_fifo_i.empty;
+					mail_avalon_mm_o.read_data(1) <= mail_fifo_i.full;
+					mail_avalon_mm_o.read_data(17 downto 2) <= mail_fifo_i.msg_num;
+
+				-- Other registers
+				when others =>
+					null;
+
+            end case;
+
+		end procedure p_read_all_registers;
+
+    variable v_read_addr : t_mail_read_address := (others => '0');
+
+	begin
+		if (rst_i = '1') then
+			mail_avalon_mm_o.read_data    <= (others => '0');
+			s_int_wait_request <= '1';
+			s_data_acquired <= '0';
+			v_read_addr := (others => '0');
+			mail_fifo_o.rd_en <= '0';
+
+		elsif (rising_edge(clk_i)) then
+			mail_avalon_mm_o.read_data    <= (others => '0');
+			s_data_acquired <= '0';
+			s_int_wait_request <= '1';
+
+			if s_data_acquired = '0' then
+				
+				if (mail_avalon_mm_i.read = '1') then
+
+                    -- If the address regards the reading of the FIFO
+					if (mail_avalon_mm_i.address = x"02") then
+
+						-- If the FIFO is ready to send data
+						if (mail_fifo_i.empty = '0' and mail_fifo_i.rxvalid = '1') and s_data_acquired = '0' then
+							-- Read the data from the FIFO
+							mail_fifo_o.rd_en <= '1';
+							mail_avalon_mm_o.read_data <= mail_fifo_i.rd_data;
+							v_read_addr := mail_avalon_mm_i.address;
+							s_int_wait_request <= '0';
+							s_data_acquired <= '1';
+						-- If the FIFO is empty, just not executes the read operation
+						elsif mail_fifo_i.empty = '1' then
+							s_int_wait_request <= '0';
+							s_data_acquired <= '1';
+						-- If the FIFO is not ready, reset the read request signal
+						else
+							-- If the FIFO is not ready, reset the read request signal
+							mail_fifo_o.rd_en <= '0';
+							s_int_wait_request <= '1';
+						end if;
+
+					else
+						-- If the address is not for the FIFO, read the control register
+						mail_fifo_o.rd_en <= '0';
+						v_read_addr := mail_avalon_mm_i.address;
+						s_int_wait_request <= '0';
+						s_data_acquired <= '1';
+						p_read_all_registers(v_read_addr);
+					end if;
+
+				end if;
+
+			else
+
+				s_int_wait_request <= '1';
+				s_data_acquired <= '0';
+				mail_fifo_o.rd_en <= '0';
+
+			end if;
+			
+		end if;
+	end process p_avalon_mm_read;
+
+	-- Assign the wait request signal, based on the internal wait request and the read signal
+	mail_avalon_mm_o.wait_request <= s_int_wait_request and mail_avalon_mm_i.read;
+
+end architecture rtl;
+
+--------------------------------------------------------------------------------------------------------------------------------------

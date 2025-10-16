@@ -67,7 +67,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </table>
   <table class="blueBar">
    <tr>
-    <td class="l">2025.10.08.16:12:04</td>
+    <td class="l">2025.10.16.18:29:50</td>
     <td class="r">Datasheet</td>
    </tr>
   </table>
@@ -120,6 +120,9 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
      <br/>&#160;&#160;
      <a href="#module_Memory_Filler"><b>Memory_Filler</b>
      </a> Memory_Filler 1.0
+     <br/>&#160;&#160;
+     <a href="#module_avalon_mailbox_0"><b>avalon_mailbox_0</b>
+     </a> avalon_mailbox 1.0
      <br/>&#160;&#160;
      <a href="#module_clock_bridge_afi_50"><b>clock_bridge_afi_50</b>
      </a> altera_avalon_mm_clock_crossing_bridge 18.1
@@ -391,6 +394,45 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
     <td class="empty"></td>
     <td class="empty"></td>
     <td class="addr"><span style="color:#989898">0x</span>8a000000</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_avalon_mailbox_0"><b>avalon_mailbox_0</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">avalon_mm_send_agent&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="addr"><span style="color:#989898">0x</span>90000080</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">avalon_mm_recv_slave_1&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="addr"><span style="color:#989898">0x</span>90000090</td>
     <td class="empty"></td>
     <td class="empty"></td>
     <td class="empty"></td>
@@ -2579,6 +2621,91 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
     </tr>
    </table>
   </div>
+  <a name="module_avalon_mailbox_0"> </a>
+  <div>
+   <hr/>
+   <h2>avalon_mailbox_0</h2>avalon_mailbox v1.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="6">
+       <a href="#module_nios2_gen2_0">nios2_gen2_0</a>
+      </td>
+      <td class="from">data_master&#160;&#160;</td>
+      <td class="main" rowspan="12">avalon_mailbox_0</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;avalon_mm_recv_slave_1</td>
+     </tr>
+     <tr>
+      <td class="from">data_master&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;avalon_mm_send_agent</td>
+     </tr>
+     <tr>
+      <td class="from">irq&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;avalon_irq_sender</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_clk_100">clk_100</a>
+      </td>
+      <td class="from">clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clock</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_clk_50">clk_50</a>
+      </td>
+      <td class="from">clk_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;reset</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">c_MAIL_FIFO_SIZE</td>
+        <td class="parametervalue">10</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
   <a name="module_clk_100"> </a>
   <div>
    <hr/>
@@ -2591,7 +2718,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <a href="#module_m2_ddr2_memory">m2_ddr2_memory</a>
       </td>
       <td class="from">afi_half_clk&#160;&#160;</td>
-      <td class="main" rowspan="79">clk_100</td>
+      <td class="main" rowspan="82">clk_100</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;clk_in</td>
@@ -2742,6 +2869,22 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <td class="from">clk&#160;&#160;</td>
       <td class="neighbor" rowspan="2">
        <a href="#module_ddr2_address_span_extender">ddr2_address_span_extender</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clock</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">clk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_avalon_mailbox_0">avalon_mailbox_0</a>
       </td>
      </tr>
      <tr>
@@ -18624,7 +18767,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <a href="#module_clk_100">clk_100</a>
       </td>
       <td class="from">clk&#160;&#160;</td>
-      <td class="main" rowspan="70">nios2_gen2_0</td>
+      <td class="main" rowspan="77">nios2_gen2_0</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;clk</td>
@@ -18699,6 +18842,42 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <td></td>
       <td></td>
       <td class="to">&#160;&#160;irq</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">data_master&#160;&#160;</td>
+      <td class="neighbor" rowspan="6">
+       <a href="#module_avalon_mailbox_0">avalon_mailbox_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;avalon_mm_recv_slave_1</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">data_master&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;avalon_mm_send_agent</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">irq&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;avalon_irq_sender</td>
      </tr>
      <tr style="height:6px">
       <td></td>
@@ -19683,7 +19862,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">dataSlaveMapParam</td>
-        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='ddr2_address_span_extender.windowed_slave' start='0x0' end='0x80000000' type='altera_address_span_extender.windowed_slave' /&gt;&lt;slave name='nios2_gen2_0.debug_mem_slave' start='0x80000000' end='0x80000800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='uart_module_top_0.avalon_slave_uart' start='0x80000800' end='0x80000C00' type='uart_module_top.avalon_slave_uart' /&gt;&lt;slave name='Dumb_Communication_Module_v2_Timer.avalon_slave_dcom' start='0x80000C00' end='0x80001000' type='Dumb_Communication_Module_v2.avalon_slave_dcom' /&gt;&lt;slave name='ddr2_address_span_extender.cntl' start='0x80002C00' end='0x80002C08' type='altera_address_span_extender.cntl' /&gt;&lt;slave name='sysid_qsys.control_slave' start='0x80002C80' end='0x80002C88' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0x80002C90' end='0x80002C98' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='onchip_memory.s1' start='0x80200000' end='0x802C0000' type='altera_avalon_onchip_memory2.s1' /&gt;&lt;slave name='Altera_UP_SD_Card_Avalon_Interface_0.avalon_sdcard_slave' start='0x82000000' end='0x82000400' type='Altera_UP_SD_Card_Avalon_Interface.avalon_sdcard_slave' /&gt;&lt;slave name='sync.avalon_mm_slave' start='0x82000400' end='0x82000800' type='Sync.avalon_mm_slave' /&gt;&lt;slave name='rst_controller.avalon_rst_controller_slave' start='0x82000800' end='0x82000840' type='rst_controller.avalon_rst_controller_slave' /&gt;&lt;slave name='timer_1us.s1' start='0x82000840' end='0x82000860' type='altera_avalon_timer.s1' /&gt;&lt;slave name='timer_1ms.s1' start='0x82000860' end='0x82000880' type='altera_avalon_timer.s1' /&gt;&lt;slave name='pio_ctrl_io_lvds.s1' start='0x820008A0' end='0x820008B0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_LED_painel.s1' start='0x82000900' end='0x82000910' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_adc_fo.s1' start='0x82000910' end='0x82000920' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_cs_n.s1' start='0x82000920' end='0x82000930' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_sck.s1' start='0x82000930' end='0x82000940' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_sdi.s1' start='0x82000940' end='0x82000950' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_sdo.s1' start='0x82000950' end='0x82000960' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m2_ddr2_i2c_scl.s1' start='0x82000960' end='0x82000970' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m2_ddr2_i2c_sda.s1' start='0x82000970' end='0x82000980' type='altera_avalon_pio.s1' /&gt;&lt;slave name='temp_sda.s1' start='0x82000980' end='0x82000990' type='altera_avalon_pio.s1' /&gt;&lt;slave name='temp_scl.s1' start='0x82000990' end='0x820009A0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sd_card_wp_n.s1' start='0x820009A0' end='0x820009B0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_EXT.s1' start='0x820009B0' end='0x820009C0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_DIP.s1' start='0x820009C0' end='0x820009D0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_LED.s1' start='0x820009D0' end='0x820009E0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_BUTTON.s1' start='0x820009E0' end='0x820009F0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m1_ddr2_i2c_scl.s1' start='0x820009F0' end='0x82000A00' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m1_ddr2_i2c_sda.s1' start='0x82000A00' end='0x82000A10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_ftdi_umft601a_module_reset.s1' start='0x82000B00' end='0x82000B10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_iso_logic_signal_enable.s1' start='0x82000B10' end='0x82000B20' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_rmap_echoing_module_reset.s1' start='0x82000C00' end='0x82000C10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_spw_mux_ch_h_select.s1' start='0x82000D00' end='0x82000D10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='ext_flash.uas' start='0x84000000' end='0x88000000' type='altera_generic_tristate_controller.uas' /&gt;&lt;slave name='onchip_memory2_0.s1' start='0x88000000' end='0x88020000' type='altera_avalon_onchip_memory2.s1' /&gt;&lt;slave name='Memory_Filler.avalon_slave_config' start='0x8A000000' end='0x8A000400' type='Memory_Filler.avalon_slave_config' /&gt;&lt;slave name='FTDI_UMFT601A_Module.avalon_slave_config' start='0x8A001000' end='0x8A001400' type='FTDI_UMFT601A_Module.avalon_slave_config' /&gt;&lt;slave name='codec_pus_v01_0.avalon_agent' start='0x90000000' end='0x90000080' type='codec_pus_v01.avalon_agent' /&gt;&lt;/address-map&gt;</td>
+        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='ddr2_address_span_extender.windowed_slave' start='0x0' end='0x80000000' type='altera_address_span_extender.windowed_slave' /&gt;&lt;slave name='nios2_gen2_0.debug_mem_slave' start='0x80000000' end='0x80000800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='uart_module_top_0.avalon_slave_uart' start='0x80000800' end='0x80000C00' type='uart_module_top.avalon_slave_uart' /&gt;&lt;slave name='Dumb_Communication_Module_v2_Timer.avalon_slave_dcom' start='0x80000C00' end='0x80001000' type='Dumb_Communication_Module_v2.avalon_slave_dcom' /&gt;&lt;slave name='ddr2_address_span_extender.cntl' start='0x80002C00' end='0x80002C08' type='altera_address_span_extender.cntl' /&gt;&lt;slave name='sysid_qsys.control_slave' start='0x80002C80' end='0x80002C88' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0x80002C90' end='0x80002C98' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='onchip_memory.s1' start='0x80200000' end='0x802C0000' type='altera_avalon_onchip_memory2.s1' /&gt;&lt;slave name='Altera_UP_SD_Card_Avalon_Interface_0.avalon_sdcard_slave' start='0x82000000' end='0x82000400' type='Altera_UP_SD_Card_Avalon_Interface.avalon_sdcard_slave' /&gt;&lt;slave name='sync.avalon_mm_slave' start='0x82000400' end='0x82000800' type='Sync.avalon_mm_slave' /&gt;&lt;slave name='rst_controller.avalon_rst_controller_slave' start='0x82000800' end='0x82000840' type='rst_controller.avalon_rst_controller_slave' /&gt;&lt;slave name='timer_1us.s1' start='0x82000840' end='0x82000860' type='altera_avalon_timer.s1' /&gt;&lt;slave name='timer_1ms.s1' start='0x82000860' end='0x82000880' type='altera_avalon_timer.s1' /&gt;&lt;slave name='pio_ctrl_io_lvds.s1' start='0x820008A0' end='0x820008B0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_LED_painel.s1' start='0x82000900' end='0x82000910' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_adc_fo.s1' start='0x82000910' end='0x82000920' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_cs_n.s1' start='0x82000920' end='0x82000930' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_sck.s1' start='0x82000930' end='0x82000940' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_sdi.s1' start='0x82000940' end='0x82000950' type='altera_avalon_pio.s1' /&gt;&lt;slave name='csense_sdo.s1' start='0x82000950' end='0x82000960' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m2_ddr2_i2c_scl.s1' start='0x82000960' end='0x82000970' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m2_ddr2_i2c_sda.s1' start='0x82000970' end='0x82000980' type='altera_avalon_pio.s1' /&gt;&lt;slave name='temp_sda.s1' start='0x82000980' end='0x82000990' type='altera_avalon_pio.s1' /&gt;&lt;slave name='temp_scl.s1' start='0x82000990' end='0x820009A0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sd_card_wp_n.s1' start='0x820009A0' end='0x820009B0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_EXT.s1' start='0x820009B0' end='0x820009C0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_DIP.s1' start='0x820009C0' end='0x820009D0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_LED.s1' start='0x820009D0' end='0x820009E0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_BUTTON.s1' start='0x820009E0' end='0x820009F0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m1_ddr2_i2c_scl.s1' start='0x820009F0' end='0x82000A00' type='altera_avalon_pio.s1' /&gt;&lt;slave name='m1_ddr2_i2c_sda.s1' start='0x82000A00' end='0x82000A10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_ftdi_umft601a_module_reset.s1' start='0x82000B00' end='0x82000B10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_iso_logic_signal_enable.s1' start='0x82000B10' end='0x82000B20' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_rmap_echoing_module_reset.s1' start='0x82000C00' end='0x82000C10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='pio_spw_mux_ch_h_select.s1' start='0x82000D00' end='0x82000D10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='ext_flash.uas' start='0x84000000' end='0x88000000' type='altera_generic_tristate_controller.uas' /&gt;&lt;slave name='onchip_memory2_0.s1' start='0x88000000' end='0x88020000' type='altera_avalon_onchip_memory2.s1' /&gt;&lt;slave name='Memory_Filler.avalon_slave_config' start='0x8A000000' end='0x8A000400' type='Memory_Filler.avalon_slave_config' /&gt;&lt;slave name='FTDI_UMFT601A_Module.avalon_slave_config' start='0x8A001000' end='0x8A001400' type='FTDI_UMFT601A_Module.avalon_slave_config' /&gt;&lt;slave name='codec_pus_v01_0.avalon_agent' start='0x90000000' end='0x90000080' type='codec_pus_v01.avalon_agent' /&gt;&lt;slave name='avalon_mailbox_0.avalon_mm_send_agent' start='0x90000080' end='0x90000090' type='avalon_mailbox.avalon_mm_send_agent' /&gt;&lt;slave name='avalon_mailbox_0.avalon_mm_recv_slave_1' start='0x90000090' end='0x900000A0' type='avalon_mailbox.avalon_mm_recv_slave_1' /&gt;&lt;/address-map&gt;</td>
        </tr>
        <tr>
         <td class="parametername">tightlyCoupledDataMaster0MapParam</td>
@@ -19735,7 +19914,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">internalIrqMaskSystemInfo</td>
-        <td class="parametervalue">196863</td>
+        <td class="parametervalue">197119</td>
        </tr>
        <tr>
         <td class="parametername">customInstSlavesSystemInfo</td>
@@ -23076,7 +23255,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">timestamp</td>
-        <td class="parametervalue">1759950724</td>
+        <td class="parametervalue">1760650190</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -23101,7 +23280,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">TIMESTAMP</td>
-        <td class="parametervalue">1759950724</td>
+        <td class="parametervalue">1760650190</td>
        </tr>
       </table>
      </td>
@@ -24093,8 +24272,8 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </div>
   <table class="blueBar">
    <tr>
-    <td class="l">generation took 0,00 seconds</td>
-    <td class="r">rendering took 0,15 seconds</td>
+    <td class="l">generation took 0,01 seconds</td>
+    <td class="r">rendering took 0,13 seconds</td>
    </tr>
   </table>
  </body>
