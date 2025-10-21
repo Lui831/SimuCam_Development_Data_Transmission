@@ -112,7 +112,7 @@ begin
 				if (mail_avalon_mm_i.read = '1') then
 
                     -- If the address regards the reading of the FIFO
-					if (mail_avalon_mm_i.address = x"02") then
+					if (mail_avalon_mm_i.address = "10") then
 
 						-- If the FIFO is ready to send data
 						if (mail_fifo_i.empty = '0' and mail_fifo_i.rxvalid = '1') and s_data_acquired = '0' then
